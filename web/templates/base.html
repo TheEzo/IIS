@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}{% endblock %} | IIS</title>
+    <meta name="description" content="IIS project" />
+
+
+    <!-- NOTE: no favicon link, as long as it remains in the root directory. -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div>
+        {% block body %}{% endblock %}
+    </div>
+
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+    {% block footer %}{% endblock %}
+</body>
+</html>
