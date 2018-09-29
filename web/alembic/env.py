@@ -16,7 +16,7 @@ fileConfig(config.config_file_name)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 import sys, os
-sys.path.append(os.getcwd())
+sys.path.append(os.path.join(os.getcwd(), '..'))
 from web.core import models
 target_metadata = models.Base.metadata
 

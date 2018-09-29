@@ -1,0 +1,48 @@
+<!-- A grey horizontal navbar that becomes vertical on small screens -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('costumes') }}">Kostýmy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('accessories') }}">Doplňky</a>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+        {% if current_user.is_authenticated() %}
+            <li class="nav-item">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Účet
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-header">{{ current_user.get_name() }}</div>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url_for('profile') }}">Profil</a>
+                    <a class="dropdown-item" href="{{ url_for('orders') }}">Moje objednávky</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{ url_for('logout') }}">Odhlásit se</a>
+                </div>
+            </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('login') }}">Přihlásit</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('register') }}">Registrovat</a>
+            </li>
+
+        {% endif %}
+        {#        <li class="nav-item">#}
+        {#            <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">Admin</a>#}
+        {#            <div class="dropdown-menu">#}
+        {#                <a class="dropdown-item" href="#">Profil</a>#}
+        {#                <a class="dropdown-item" data-toggle="modal" href="#login-modal">Přihlásit</a>#}
+        {#                <a class="dropdown-item" href="#">Registrovat</a>#}
+        {#            </div>#}
+        {#        </li>#}
+
+    </ul>
+
+</nav>

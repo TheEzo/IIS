@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrace{% endblock %}
+
+{% block body %}
+    <h1>Registrace</h1>
+    <form action="{{ url_for('register') }}" method="post">
+        <div class="form-group row{% if form.jmeno.errors %} has-danger{% endif %}">
+            <div class="col">
+                <label>{{ form.jmeno.label }}*</label>
+                {{ form.jmeno(class="form-control") }}
+                <div class="invalid-feedback">{{ form.jmeno.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.prijmeni.label }}*</label>
+                {{ form.prijmeni(class="form-control") }}
+                <div class="invalid-feedback">{{ form.prijmeni.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.rc.label }}*</label>
+                {{ form.rc(class="form-control") }}
+                <div class="invalid-feedback">{{ form.rc.errors[0] }}</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <label>{{ form.mesto.label }}</label>
+                {{ form.mesto(class="form-control") }}
+                <div class="invalid-feedback">{{ form.mesto.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.ulice.label }}</label>
+                {{ form.ulice(class="form-control") }}
+                <div class="invalid-feedback">{{ form.ulice.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.cislo_popisne.label }}</label>
+                {{ form.cislo_popisne(class="form-control") }}
+                <div class="invalid-feedback">{{ form.cislo_popisne.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.tel_cislo.label }}</label>
+                {{ form.tel_cislo(class="form-control") }}
+                <div class="invalid-feedback">{{ form.tel_cislo.errors[0] }}</div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <label>{{ form.email.label }}*</label>
+                {{ form.email(class="form-control") }}
+                <div class="invalid-feedback">{{ form.email.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.password.label }}*</label>
+                {{ form.password(class="form-control") }}
+                <div class="invalid-feedback">{{ form.password.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.password_check.label }}*</label>
+                {{ form.password_check(class="form-control") }}
+                <div class="invalid-feedback">{{ form.password_check.errors[0] }}</div>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Registrovat" class="btn btn-primary">
+            <span class="">Pole označená * jsou povinná</span>
+        </div>
+    </form>
+{% endblock %}

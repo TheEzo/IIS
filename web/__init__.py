@@ -1,11 +1,52 @@
-from flask import Flask
+from flask import Flask, redirect, url_for, session, g
 from web.views import configure_views
+from web.core.login import configure_login, User
+from web.core.models import Osoba
 
+from flask_login import LoginManager
+import base64
 
 def create_app():
     app = Flask(__name__, static_url_path='/static', static_folder='./static')
     app.secret_key = '#$secret_key%&'
 
     configure_views(app)
+
+    login_manager = LoginManager(app)
+    configure_login(app)
+
+    @login_manager.unauthorized_handler
+    def unauthorized():
+        return redirect(url_for('login'))
+
+    @login_manager.request_loader
+    def load_user_from_request(request):
+        # first, try to login using the api_key url arg
+        # todo: co to dela???
+        api_key = request.args.get('api_key')
+        if api_key:
+            user = User.query.filter_by(api_key=api_key).first()
+            if user:
+                return user
+
+        # next, try to login using Basic Auth
+        api_key = request.headers.get('Authorization')
+        if api_key:
+            api_key = api_key.replace('Basic ', '', 1)
+            try:
+                api_key = base64.b64decode(api_key)
+            except TypeError:
+                pass
+            user = User.query.filter_by(api_key=api_key).first()
+            if user:
+                return user
+
+        # finally, return None if both methods did not login the user
+        return User(None)
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        u = Osoba.query.filter_by(rc=user_id).first()
+        return User(u.rc, u.email, u.jmeno, u.prijmeni)
 
     return app
