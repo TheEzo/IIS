@@ -1,8 +1,8 @@
 """init
 
-Revision ID: c3b684aaffee
+Revision ID: 3fcb97bb3275
 Revises: 
-Create Date: 2018-10-01 20:42:51.195708
+Create Date: 2018-10-01 22:16:13.049560
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'c3b684aaffee'
+revision = '3fcb97bb3275'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -80,12 +80,12 @@ def upgrade():
     op.create_table('osoba',
     sa.Column('rc', sa.String(length=10), nullable=False),
     sa.Column('email', sa.String(length=256), nullable=False),
-    sa.Column('heslo', sa.String(length=256), nullable=True),
+    sa.Column('heslo', sa.String(length=256), nullable=False),
     sa.Column('jmeno', sa.String(length=128), nullable=False),
     sa.Column('prijmeni', sa.String(length=128), nullable=False),
     sa.Column('ulice', sa.String(length=256), nullable=True),
-    sa.Column('cislo_popisne', sa.Integer(), nullable=True),
-    sa.Column('tel_cilo', sa.Integer(), nullable=True),
+    sa.Column('cislo_popisne', sa.String(length=10), nullable=True),
+    sa.Column('tel_cilo', sa.String(length=10), nullable=True),
     sa.Column('obec_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['obec_id'], ['obec.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('rc')
