@@ -47,6 +47,8 @@ def create_app():
     @login_manager.user_loader
     def load_user(user_id):
         u = Osoba.query.filter_by(rc=user_id).first()
+        if not u:
+            return User(None)
         return User(u.rc, u.email, u.jmeno, u.prijmeni)
 
     return app

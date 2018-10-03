@@ -52,7 +52,7 @@ class Osoba(Base):
     __tablename__ = 'osoba'
 
     rc = Column(String(10), primary_key=True)
-    email = Column(String(256), nullable=False)
+    email = Column(String(256), nullable=False, unique=True)
     heslo = Column(String(256), nullable=False)
     jmeno = Column(String(128), nullable=False)
     prijmeni = Column(String(128), nullable=False)

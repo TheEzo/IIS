@@ -3,16 +3,17 @@
 
 from web.core.db_connector import session
 from web.core.models import *
+from werkzeug.security import generate_password_hash
 
 
-def get_user(email, password):
-    return Osoba.query.filter_by(email=email, heslo=password).first()
+def get_user(email):
+    return Osoba.query.filter_by(email=email).first()
+
 
 def create_user(*args, **kwargs):
-    from web.core.login import hash_password
     stmt = Osoba(rc=kwargs['rc'],
                  email=kwargs['email'],
-                 heslo=hash_password(kwargs['password']),
+                 heslo=generate_password_hash(kwargs['password']),
                  jmeno=kwargs['jmeno'],
                  prijmeni=kwargs['prijmeni'],
                  ulice=kwargs.get('ulice'),
