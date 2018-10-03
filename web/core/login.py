@@ -39,7 +39,7 @@ def configure_login(app):
         if not check_password_hash(u.heslo, data.get('password')):
             flash('Nesprávný email nebo heslo', 'alert-danger')
             return redirect(url_for('login'))
-        user = User(email=u.email, id=u.rc, name=u.jmeno, surname=u.prijmeni)
+        user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
         next = request.args.get('next')
         flash('Příhlášení proběhlo úspěšně', 'alert-success')
@@ -47,10 +47,13 @@ def configure_login(app):
 
 
 class User:
-    def __init__(self, id, email='', name='', surname=''):
-        self.id = id
+    def __init__(self, rc, email='', name='', surname=''):
+        self.id = rc
         self.email = email
         self.name = name + ' ' + surname
+        employee = db.get_employee_data(rc)
+        self.employee = employee is not None
+        self.admin = True if employee and employee.pozice == 'vedouci' else False
 
     def is_authenticated(self):
         if self.id:
@@ -60,8 +63,11 @@ class User:
     def is_active(self):
         return True
 
+    def is_employee(self):
+        return self.employee
+
     def is_admin(self):
-        pass # TODO
+        return self.admin
 
     def get_id(self):
         return self.id
