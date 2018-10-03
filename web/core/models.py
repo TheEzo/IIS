@@ -53,12 +53,12 @@ class Osoba(Base):
 
     rc = Column(String(10), primary_key=True)
     email = Column(String(256), nullable=False)
-    heslo = Column(String(256))
+    heslo = Column(String(256), nullable=False)
     jmeno = Column(String(128), nullable=False)
     prijmeni = Column(String(128), nullable=False)
-    ulice = Column(String(256))
-    cislo_popisne = Column(Integer)
-    tel_cilo = Column(Integer)
+    ulice = Column(String(256), nullable=True)
+    cislo_popisne = Column(String(10), nullable=True)
+    tel_cilo = Column(String(10))
 
     obec_id = Column(Integer, ForeignKey('obec.id', ondelete='CASCADE'))
 
