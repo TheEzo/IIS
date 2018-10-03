@@ -37,7 +37,7 @@ class Register(MethodView):
             return render_template('register.html', form=form)
         db.create_user(**form.data)
         u = db.get_user(form.data.get('email'))
-        user = User(email=u.email, id=u.rc, name=u.jmeno, surname=u.prijmeni)
+        user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
         flash('Registrace proběhla úspěšně', 'alert-success')
         return render_template('home.html')

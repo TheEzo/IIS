@@ -20,4 +20,12 @@ def create_user(*args, **kwargs):
                  cislo_popisne=kwargs.get('cislo_popisne'),
                  tel_cilo=kwargs.get('tel_cislo'))
     session.add(stmt)
+    stmt = Klient(clenstvi='bronzove',
+                  osoba_rc=kwargs['rc'])
+    session.add(stmt)
     session.commit()
+
+
+def get_employee_data(rc):
+    return Zamestnanec.query.filter_by(osoba_rc=rc).first()
+
