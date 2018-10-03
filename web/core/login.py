@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import hashlib, uuid
-
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from flask import redirect, request, abort, url_for, flash, request, render_template, jsonify
 from wtforms import StringField, Form, PasswordField
 from wtforms.validators import email, regexp, ValidationError, data_required
+from werkzeug.security import check_password_hash
 
 from web.core import db
 
@@ -19,10 +18,6 @@ class LoginForm(Form):
                                                   data_required('Pole musí být vyplněno')])
 
 
-def hash_password(password):
-    return hashlib.sha512(password.encode('utf-8')).hexdigest()
-
-
 def configure_login(app):
     @app.route("/logout")
     def logout():
@@ -31,21 +26,23 @@ def configure_login(app):
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
+        if current_user.is_authenticated():
+            return redirect(url_for('home'))
         if not request.form:
             return render_template('login.html', form=LoginForm())
         form = LoginForm(request.form)
-        if not form.validate():
-            return render_template('login.html', form=form)
         data = form.data
-
-        hashed_password = hash_password(data.get('password'))
-        u = db.get_user(data.get('email'), hashed_password)
+        u = db.get_user(data.get('email'))
         if not u:
-            flash("Přihlášení se nezdařilo", 'alert-danger')
+            flash('Email nebyl rozpoznán. <a href="' + url_for('register') + '">Registrovat?</a>', 'alert-danger')
+            return redirect(url_for('login'))
+        if not check_password_hash(u.heslo, data.get('password')):
+            flash('Nesprávný email nebo heslo', 'alert-danger')
             return redirect(url_for('login'))
         user = User(email=u.email, id=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
         next = request.args.get('next')
+        flash('Příhlášení proběhlo úspěšně', 'alert-success')
         return redirect(next or url_for('home'))
 
 
