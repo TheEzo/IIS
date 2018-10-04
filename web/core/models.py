@@ -12,7 +12,6 @@ class Doplnek(Base):
 
     id = Column(Integer, primary_key=True)
     nazev = Column(String(128), nullable=False)
-    stari = Column(Date)
     popis_vyuziti = Column(String(512), nullable=False)
     datum_vyroby = Column(Date)
     velikost = Column(Enum('S', 'M', 'L', 'XL', 'XXL', 'XXXL'))
@@ -36,7 +35,7 @@ class Kostym(Base):
     material = Column(String(45), nullable=False)
     popis = Column(String(512), nullable=False)
     velikost = Column(Enum('S', 'M', 'L', 'XL', 'XXL', 'XXXL'))
-    stari = Column(Date, nullable=False)
+    datum_vyroby = Column(Date, nullable=False)
     opotrebeni = Column(Enum(u'nove', u'stare', u'zanovni'))
     pocet = Column(Integer)
 
