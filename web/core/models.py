@@ -51,13 +51,13 @@ class Osoba(Base):
     __tablename__ = 'osoba'
 
     rc = Column(String(10), primary_key=True)
-    email = Column(String(256), nullable=False, unique=True)
+    email = Column(String(200), nullable=False, unique=True)
     heslo = Column(String(256), nullable=False)
     jmeno = Column(String(128), nullable=False)
     prijmeni = Column(String(128), nullable=False)
     ulice = Column(String(256), nullable=True)
     cislo_popisne = Column(String(10), nullable=True)
-    tel_cilo = Column(String(10))
+    tel_cislo = Column(String(10))
 
     obec_id = Column(Integer, ForeignKey('obec.id', ondelete='CASCADE'))
 

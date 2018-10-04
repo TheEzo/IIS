@@ -79,7 +79,7 @@ def upgrade():
     )
     op.create_table('osoba',
     sa.Column('rc', sa.String(length=10), nullable=False),
-    sa.Column('email', sa.String(length=256), nullable=False),
+    sa.Column('email', sa.String(length=200), nullable=False),
     sa.Column('heslo', sa.String(length=256), nullable=False),
     sa.Column('jmeno', sa.String(length=128), nullable=False),
     sa.Column('prijmeni', sa.String(length=128), nullable=False),

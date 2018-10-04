@@ -78,3 +78,4 @@ class User:
     def get_name(self):
         return self.name
 
+# TODO: add decorators for admin, employee and login required

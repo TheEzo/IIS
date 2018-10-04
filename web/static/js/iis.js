@@ -1,3 +1,40 @@
+var Debug = {
+    /**
+     * Logs object into the console with specific label.
+     *
+     * @param {object} object
+     * @param {string} label
+     * @param {object} style: default style is green background with white font color; object style is css object in the correct form
+     */
+    log: function (object, label, style) {
+        var default_style = {'background-color': '#007F04', 'color': 'white'};
+        style = decodeURIComponent($.param($.extend(default_style, ((typeof style === 'undefined') ? {} : style))))
+            .replace(/=/g, ': ').replace(/&/g, '; ');
+
+        var obj_specifier;
+        switch (typeof object) {
+            case 'string':
+            case 'undefined':
+                obj_specifier = '%s';
+                break;
+
+            case 'boolean':
+            case 'number':
+                obj_specifier = ((parseInt(object) !== parseFloat(object)) ? '%f' : '%d');
+                break;
+
+            case 'object':
+            case 'function':
+            case 'xml':
+            default:
+                obj_specifier = '%O';
+                break;
+        }
+
+        console.log('%c ' + ((typeof label === 'undefined') ? 'debug' : label) + ': %c  ' + obj_specifier, style, 'background-color: white;', object);
+    }
+};
+
 var Web = {
     passwordControl: function () {
         var pass = $('#password').val();
@@ -20,19 +57,35 @@ var Admin = {
         $('#users-table').DataTable({
             processing: true,
             serverSide: true,
-            sAjaxSource: "users-data",
+            ajax: {
+                url: "/users_data",
+                type: "POST"
+            },
+            sPaginationType: "full_numbers",
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
             columns: [
-                {data: "time"},
-                {data: "MeanCurrent"},
-            ]
-            // columns: [
-            //     {"data": "name"},
-            //     {"data": "position"},
-            //     {"data": "office"},
-            //     {"data": "extn"},
-            //     {"data": "start_date"},
-            //     {"data": "salary"}
-            // ]
+                {data: "name"},
+                {data: "surename"},
+                {data: "email"},
+                {data: "city"},
+                {data: 'addr'},
+                {data: 'phone'},
+                {data: 'role'},
+                {data: 'action'}
+            ],
+            language: {
+                processing: 'Loading...',
+                infoFiltered: "" // remove text "filtered from XY entried"
+            },
+            pagingType: "full_numbers",
+            columnDefs: [
+                {targets: 2, orderable: false},
+                {targets: 4, orderable: false},
+                {targets: 5, orderable: false},
+                {targets: 6, orderable: false},
+                {targets: 7, orderable: false}
+            ],
+            order: [[0, 'desc']]
         });
     }
 };
