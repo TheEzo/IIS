@@ -56,7 +56,7 @@ class User:
         self.admin = True if employee and employee.pozice == 'vedouci' else False
 
     def is_authenticated(self):
-        if self.id:
+        if self.id is not None:
             return True
         return False
 
@@ -77,5 +77,3 @@ class User:
 
     def get_name(self):
         return self.name
-
-# TODO: add decorators for admin, employee and login required

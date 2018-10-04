@@ -1,10 +1,12 @@
 from flask import render_template, jsonify, request
 from flask.views import MethodView
+from web.roles import admin, employee
 
 from web.core import db
 
 
 class Users(MethodView):
+    @admin
     def get(self):
         return render_template('users.html')
 
@@ -51,9 +53,11 @@ def configure(app):
                      view_func=UsersData.as_view('users-data'))
 
     @app.route('/users_edit')
+    @admin
     def users_edit():
         pass
 
     @app.route('/users_delete')
+    @admin
     def users_delete():
         pass

@@ -1,4 +1,5 @@
-from flask import Flask, redirect, url_for, session, g
+from flask import Flask, redirect, url_for, abort
+
 from web.views import configure_views
 from web.core.login import configure_login, User
 from web.core.models import Osoba
@@ -52,3 +53,4 @@ def create_app():
         return User(u.rc, u.email, u.jmeno, u.prijmeni)
 
     return app
+

@@ -1,0 +1,31 @@
+from functools import wraps
+from flask_login import current_user
+from flask import abort, redirect, url_for
+
+# role decorators
+def admin(func):
+    @wraps(func)
+    def _admin(*args, **kwargs):
+        if current_user.is_admin():
+            return func(*args, **kwargs)
+        return abort(403)
+
+    return _admin
+
+
+def employee(func):
+    @wraps(func)
+    def _employee(*args, **kwargs):
+        if current_user.is_employee():
+            return func(*args, **kwargs)
+        return abort(403)
+    return _employee
+
+
+def login_required(func):
+    @wraps(func)
+    def decorated_view(*args, **kwargs):
+        if not current_user.is_authenticated():
+            return redirect(url_for('login'))
+        return func(*args, **kwargs)
+    return decorated_view

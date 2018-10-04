@@ -3,8 +3,8 @@
 
 from flask import render_template, request, redirect, url_for
 from flask.views import MethodView
-from flask_login import login_required
 
+from web.roles import login_required
 from web.core import db
 
 
