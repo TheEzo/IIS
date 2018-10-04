@@ -1,3 +1,6 @@
 venv
 venv36
 .idea
+run.py
+web/alembic.ini
+web/core/db_connector.py
