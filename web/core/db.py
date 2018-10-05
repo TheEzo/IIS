@@ -83,3 +83,8 @@ def insert_base_users():
                        pozice='vedouci')
     session.add(stmt)
     session.commit()
+
+
+def delete_user(rc):
+    session.delete(Osoba(rc=rc))
+    session.commit()

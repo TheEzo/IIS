@@ -19,6 +19,7 @@ class Doplnek(Base):
     material = Column(String(45), nullable=False)
     pocet = Column(Integer)
     opotrebeni = Column(Enum(u'nove', u'stare', u'zanovni'))
+    obrazek = Column(String(100))
 
 
 class Barva(Base):
@@ -38,6 +39,7 @@ class Kostym(Base):
     datum_vyroby = Column(Date, nullable=False)
     opotrebeni = Column(Enum(u'nove', u'stare', u'zanovni'))
     pocet = Column(Integer)
+    obrazek = Column(String(100))
 
 
 class Obec(Base):

@@ -51,7 +51,7 @@ class User:
         self.id = rc
         self.email = email
         self.name = name + ' ' + surname
-        employee = db.get_employee_data(rc)
+        employee = db.get_employee_data(rc) if rc else None
         self.employee = employee is not None
         self.admin = True if employee and employee.pozice == 'vedouci' else False
 
