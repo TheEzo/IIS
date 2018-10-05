@@ -6,6 +6,7 @@ from flask.views import MethodView
 from web.core import db
 from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField
 from wtforms.validators import data_required
+from web.roles import employee
 
 class AddAccessory(Form):
     nazev = StringField("Název",[validators.Length(min=5, max=128),data_required('Pole musí být vyplněno')])
@@ -19,10 +20,12 @@ class AddAccessory(Form):
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
 
 class CostumesAdmin(MethodView):
+    @employee
     def get(self):
 
         return render_template('accessories_admin.html', form = AddAccessory())
 
+    @employee
     def post(self):
 
         form = AddAccessory(request.form)
