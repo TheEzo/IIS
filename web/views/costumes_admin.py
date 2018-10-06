@@ -4,7 +4,7 @@
 from flask import render_template, request, redirect, url_for
 from flask.views import MethodView
 from web.core import db
-from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField
+from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
 from wtforms.validators import data_required
 from web.roles import employee
 
@@ -17,6 +17,7 @@ class AddCostume(Form):
                            choices=[('nove', 'Nové'), ('stare', 'Staré'), ('zanovni', 'Zánovní')])
     pocet = IntegerField("Počet", [data_required('Pole musí být vyplněno')])
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
+    obrazek = FileField("Obrázek")
 
 
 class CostumesAdmin(MethodView):

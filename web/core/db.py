@@ -88,3 +88,7 @@ def insert_base_users():
 def delete_user(rc):
     session.delete(Osoba(rc=rc))
     session.commit()
+
+def get_costumes_data(limit,offset):
+    return session.query(Kostym).\
+        limit(limit).offset(offset)
