@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from flask_login import login_user, logout_user, current_user
-from flask import redirect, request, abort, url_for, flash, request, render_template, jsonify
+from flask import redirect, request, abort, url_for, flash, request, render_template, jsonify, session
 from wtforms import StringField, Form, PasswordField
 from wtforms.validators import email, regexp, ValidationError, data_required
 from werkzeug.security import check_password_hash
@@ -41,9 +41,8 @@ def configure_login(app):
             return redirect(url_for('login'))
         user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
-        next = request.args.get('next')
         flash('Příhlášení proběhlo úspěšně', 'alert-success')
-        return redirect(next or url_for('home'))
+        return redirect(url_for('home'))
 
 
 class User:

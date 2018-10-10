@@ -1,10 +1,11 @@
 from functools import wraps
 from flask_login import current_user
-from flask import abort, redirect, url_for
+from flask import abort, redirect, url_for, session, request
 
 # role decorators
 def admin(func):
     @wraps(func)
+    @login_required
     def _admin(*args, **kwargs):
         if current_user.is_admin():
             return func(*args, **kwargs)
@@ -15,6 +16,7 @@ def admin(func):
 
 def employee(func):
     @wraps(func)
+    @login_required
     def _employee(*args, **kwargs):
         if current_user.is_employee():
             return func(*args, **kwargs)

@@ -1,4 +1,5 @@
-from flask import Flask, redirect, url_for, abort
+from flask import Flask, redirect, url_for, session, request
+from datetime import timedelta
 
 from web.views import configure_views
 from web.core.login import configure_login, User
@@ -6,6 +7,7 @@ from web.core.models import Osoba
 
 from flask_login import LoginManager
 import base64
+
 
 def create_app():
     app = Flask(__name__, static_url_path='/static', static_folder='./static')
@@ -52,5 +54,9 @@ def create_app():
             return User(None)
         return User(u.rc, u.email, u.jmeno, u.prijmeni)
 
+    @app.before_request
+    def make_session_permanent():
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(minutes=30)
     return app
 
