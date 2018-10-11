@@ -2,8 +2,8 @@
 {% block title %}Správa uživatelů{% endblock %}
 
 {% block body %}
-<table id="users-table" class="table table-striped table-bordered">
-    <thead>
+    <table id="users-table" class="table table-striped table-bordered">
+        <thead>
         <tr>
             <th>Jméno</th>
             <th>Přijmení</th>
@@ -11,18 +11,62 @@
             <th>Město</th>
             <th>Adresa</th>
             <th>Telefonní číslo</th>
+            <th>Členství</th>
             <th>Role</th>
             <th>Akce</th>
-            <th class="hidden">id</th>
+            <th class="hidden"></th>
         </tr>
-    </thead>
-</table>
+        </thead>
+    </table>
+
+    <!-- The Modal -->
+    <div class="modal" id="users_edit">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Upravit uživatele <span id="user_name"></span></h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <form id="users-update-form" action="{{ url_for('users_edit') }}" method="post">
+                        <div class="col">
+                            <label>Členství</label>
+                            <select name="membership" id="edit-membership" class="form-control">
+                                <option value="bronzove">Bronzové</option>
+                                <option value="stribrne">Stříbrné</option>
+                                <option value="zlate">Zlaté</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="col">
+                            <label>Role</label>
+                            <select id="edit-role" name="role" class="form-control">
+                                <option value="zakaznik">Zákazník</option>
+                                <option value="zamestnanec">Zaměstnanec</option>
+                                <option value="vedouci">Vedoucí</option>
+                            </select>
+                        </div>
+                        <input class="hidden" id="edit-rc" name="rc">
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="edit_confirm">Save</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
 
 {% block footer %}
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             Admin.usersDatatable();
+            $('#edit_confirm').on('click', Admin.sendEdit);
         })
     </script>
 {% endblock %}
