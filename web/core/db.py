@@ -58,9 +58,10 @@ def add_accessory(*args, **kwargs):
 
 
 def get_users_data():
-    return session.query(Osoba, Zamestnanec.pozice, Obec.nazev)\
+    return session.query(Osoba, Zamestnanec.pozice, Obec.nazev, Klient.clenstvi)\
         .outerjoin(Zamestnanec, Osoba.rc == Zamestnanec.osoba_rc)\
         .outerjoin(Obec, Osoba.obec_id == Obec.id)\
+        .outerjoin(Klient, Osoba.rc == Klient.osoba_rc)\
         .all()
 
 
@@ -86,7 +87,23 @@ def insert_base_users():
 
 
 def delete_user(rc):
-    session.delete(Osoba(rc=rc))
+    session.query(Osoba).filter(Osoba.rc==rc).delete()
+    session.commit()
+
+
+def update_user(**kwargs):
+    session.query(Klient).filter(Klient.osoba_rc==kwargs['rc']).\
+        update({'clenstvi': kwargs['membership'][0]})
+    if kwargs['role'][0] == 'zakaznik':
+        session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc'][0]).delete()
+    else:
+        if session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc']).first():
+            session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc']). \
+                update({'pozice': kwargs['role'][0]})
+        else:
+            stmt = Zamestnanec(osoba_rc=kwargs['rc'][0],
+                               pozice=kwargs['membership'][0])
+            session.add(stmt)
     session.commit()
 
 def get_products_data(limit,offset,url):
@@ -96,3 +113,15 @@ def get_products_data(limit,offset,url):
     else:
         return session.query(Doplnek).\
             limit(limit).offset(offset)
+
+    return True
+
+
+def get_user_profile(email):
+    # TODO pridat objednavky
+    return session.query(Osoba, Zamestnanec.pozice, Obec.nazev, Klient.clenstvi) \
+        .outerjoin(Zamestnanec, Osoba.rc == Zamestnanec.osoba_rc) \
+        .outerjoin(Obec, Osoba.obec_id == Obec.id) \
+        .outerjoin(Klient, Osoba.rc == Klient.osoba_rc) \
+        .filter(Osoba.email == email)\
+        .first()

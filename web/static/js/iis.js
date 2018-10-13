@@ -57,6 +57,7 @@ var Admin = {
         $('#users-table').DataTable({
             processing: true,
             serverSide: true,
+            autoWidth: false,
             ajax: {
                 url: "/users_data",
                 type: "POST"
@@ -70,11 +71,13 @@ var Admin = {
                 {data: "city"},
                 {data: 'addr'},
                 {data: 'phone'},
+                {data: 'membership'},
                 {data: 'role'},
-                {data: 'action'}
+                {data: 'action'},
+                {data: 'rc'}
             ],
             language: {
-                processing: 'Loading...',
+                processing: 'Načítání...',
                 infoFiltered: "" // remove text "filtered from XY entried"
             },
             pagingType: "full_numbers",
@@ -83,10 +86,39 @@ var Admin = {
                 {targets: 4, orderable: false},
                 {targets: 5, orderable: false},
                 {targets: 6, orderable: false},
-                {targets: 7, orderable: false}
+                {targets: 7, orderable: false},
+                {targets: 8, orderable: false},
+                {targets: 9, className: 'hidden'}
             ],
             order: [[0, 'desc']]
         });
+    },
+
+    usersModal: function(el) {
+        var row = el.closest('tr').children();
+        $('#user_name').html(row[0].innerHTML + ' ' + row[1].innerHTML);
+        $('#edit-rc').val(row[9].innerHTML)  ;
+        var membership = row[6].innerHTML;
+        var role = row[7].innerHTML;
+        $('#edit-role option').each(function(){
+            if ($(this).text() == role)
+                $(this).prop('selected', true);
+        });
+        $('#edit-membership option').each(function(){
+            if ($(this).text() == membership)
+                $(this).prop('selected', true);
+        });
+    },
+
+    sendEdit: function () {
+        $.ajax({
+            type: 'POST',
+            url: '/users_edit',
+            data: $('#users-update-form').serialize(),
+            success: function(){
+                window.location.reload();
+            }
+        })
     }
 };
 
