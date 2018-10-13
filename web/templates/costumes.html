@@ -2,52 +2,13 @@
 {% block title %}Kostýmy{% endblock %}
 
 {% block body %}
-    <div id="kostymy_vypis"></div>
+    <div id="vypis"></div>
     <div id="info"></div>
 
 {% endblock %}
 
 {% block footer %}
     <script>
-    $(document).ready(function(){
-        var limit = 6;
-        var start = 0;
-        var action = 'inactive';
-        function load_data(limit,start) {
-            $.ajax({
-                url: "/costumes_list",
-                method: "POST",
-                dataType: 'json',
-                data: JSON.stringify({limit:limit,start:start}),
-                contentType: 'application/json;charset=UTF-8',
-                success:function (data) {
-                    $('#kostymy_vypis').append(data);
-                    if (data == ""){
-                        action = 'active';
-                    }
-                    else
-                        action = 'inactive';
-                }
-                });
-        }
-        if(action == 'inactive') {
-            action = 'active';
-            load_data(limit, start);
-        }
-
-        $(window).scroll(function () {
-            if(($(window).scrollTop() == $(document).height() - $(window).height()) &&
-                action == 'inactive')
-            {
-                action = 'active';
-                start = start + limit;
-                setTimeout(function () {
-                    load_data(limit,start);
-                },1000);
-                load_data(limit,start);
-            }
-
-        })
-     })
+        loadData("/costumes_list");
     </script>
 {% endblock %}

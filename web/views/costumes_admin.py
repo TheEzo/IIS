@@ -7,6 +7,7 @@ from web.core import db
 from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
 from wtforms.validators import data_required
 from web.roles import employee
+from wtforms.widgets import CheckboxInput
 
 class AddCostume(Form):
     vyrobce = StringField("Výrobce",[validators.Length(min=1, max=45),data_required('Pole musí být vyplněno')])
@@ -17,7 +18,7 @@ class AddCostume(Form):
                            choices=[('nove', 'Nové'), ('stare', 'Staré'), ('zanovni', 'Zánovní')])
     pocet = IntegerField("Počet", [data_required('Pole musí být vyplněno')])
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
-    obrazek = FileField("Obrázek")
+    obrazek = FileField("Náhled")
 
 
 class CostumesAdmin(MethodView):

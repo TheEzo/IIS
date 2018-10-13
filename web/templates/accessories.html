@@ -2,5 +2,13 @@
 {% block title %}Doplňky{% endblock %}
 
 {% block body %}
-    doplnky
+    <div id="vypis"></div>
+    <div id="info"></div>
+
+{% endblock %}
+
+{% block footer %}
+    <script>
+        loadData("/accessories_list");
+    </script>
 {% endblock %}

@@ -89,6 +89,10 @@ def delete_user(rc):
     session.delete(Osoba(rc=rc))
     session.commit()
 
-def get_costumes_data(limit,offset):
-    return session.query(Kostym).\
-        limit(limit).offset(offset)
+def get_products_data(limit,offset,url):
+    if(url == '/costumes_list'):
+        return session.query(Kostym).\
+            limit(limit).offset(offset)
+    else:
+        return session.query(Doplnek).\
+            limit(limit).offset(offset)

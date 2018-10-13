@@ -10,21 +10,16 @@ class Costumes(MethodView):
 
         return render_template('costumes.html')
 
-#class getCostumes(MethodView):
- #   def post(self):
-
 
 def configure(app):
     app.add_url_rule('/costumes',
                  view_func=Costumes.as_view('costumes'))
 
-    #app.add_url_rule('/costumes_list',
-     #                view_func=getCostumes.as_view('costumes-list'))
 
     @app.route('/costumes_list',methods = ['POST'])
-    def getData():
+    def getCostumeData():
         request_json = request.get_json()
-        costumes = db.get_costumes_data(request_json.get('limit'),request_json.get('start'))
+        costumes = db.get_products_data(request_json.get('limit'),request_json.get('start'),request_json.get('url'))
         templates_list = []
         for costume in costumes:
             templates_list.append(render_template('costume_template.html',costume = costume))

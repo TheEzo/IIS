@@ -89,3 +89,45 @@ var Admin = {
         });
     }
 };
+
+
+function loadData(url){
+        var limit = 6;
+        var start = 0;
+        var action = 'inactive';
+        function load_data(limit,start) {
+            $.ajax({
+                url: url,
+                method: "POST",
+                dataType: 'json',
+                data: JSON.stringify({limit:limit,start:start,url:url}),
+                contentType: 'application/json;charset=UTF-8',
+                success:function (data) {
+                    $('#vypis').append(data);
+                    if (data == ""){
+                        action = 'active';
+                    }
+                    else
+                        action = 'inactive';
+                }
+                });
+        }
+        if(action == 'inactive') {
+            action = 'active';
+            load_data(limit, start);
+        }
+
+        $(window).scroll(function () {
+            if(($(window).scrollTop() == $(document).height() - $(window).height()) &&
+                action == 'inactive')
+            {
+                action = 'active';
+                start = start + limit;
+                setTimeout(function () {
+                    load_data(limit,start);
+                },1000);
+                load_data(limit,start);
+            }
+
+        })
+}

@@ -4,7 +4,7 @@
 from flask import render_template, request, redirect, url_for
 from flask.views import MethodView
 from web.core import db
-from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField
+from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
 from wtforms.validators import data_required
 from web.roles import employee
 
@@ -18,6 +18,7 @@ class AddAccessory(Form):
     material = StringField("Materiál", [validators.Length(min=2, max=45),data_required('Pole musí být vyplněno')])
     typ = StringField("Typ", [validators.Length(min=2, max=45),data_required('Pole musí být vyplněno')])
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
+    obrazek = FileField("Náhled")
 
 class CostumesAdmin(MethodView):
     @employee
