@@ -4,3 +4,4 @@ venv36
 run.py
 web/alembic.ini
 web/core/db_connector.py
+*.pyc
