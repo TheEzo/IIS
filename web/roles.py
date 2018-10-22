@@ -9,6 +9,7 @@ def admin(func):
     def _admin(*args, **kwargs):
         if current_user.is_admin():
             return func(*args, **kwargs)
+
         return abort(403)
 
     return _admin

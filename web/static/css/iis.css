@@ -12,3 +12,13 @@
 .hidden {
     display: none;
 }
+
+.pointer {
+    cursor: pointer;
+}
+
+#submit-order {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+}

@@ -4,11 +4,15 @@
 {% block body %}
     <div id="vypis"></div>
     <div id="info"></div>
+    <button id="submit-order" class="btn btn-success">Rezervovat vybrané</button>
 
 {% endblock %}
 
 {% block footer %}
     <script>
         loadData("/accessories_list");
+        $('#submit-order').on('click', function (){
+            Web.confirmOrder('accessories');
+        });
     </script>
 {% endblock %}

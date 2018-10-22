@@ -41,6 +41,7 @@ def configure_login(app):
             return redirect(url_for('login'))
         user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
+        session['cart'] = {'costumes': [], 'accessories': []}
         flash('Příhlášení proběhlo úspěšně', 'alert-success')
         return redirect(url_for('home'))
 

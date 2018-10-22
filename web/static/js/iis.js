@@ -49,6 +49,25 @@ var Web = {
             $('#pw-check').html('Hesla se neshodují');
             $('#register-submit').prop('disabled', true);
         }
+    },
+
+    confirmOrder: function (type) {
+        let items = [];
+        $('.border .order-checkbox:checked').each(function () {
+            items.push($(this).val());
+        });
+        if (!items)
+            return;
+        $.ajax({
+            url: '/orders',
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({type: type, values: items}),
+            success: function (res) {
+                window.location.reload();
+            }
+        });
     }
 };
 
@@ -94,17 +113,17 @@ var Admin = {
         });
     },
 
-    usersModal: function(el) {
+    usersModal: function (el) {
         var row = el.closest('tr').children();
         $('#user_name').html(row[0].innerHTML + ' ' + row[1].innerHTML);
-        $('#edit-rc').val(row[9].innerHTML)  ;
+        $('#edit-rc').val(row[9].innerHTML);
         var membership = row[6].innerHTML;
         var role = row[7].innerHTML;
-        $('#edit-role option').each(function(){
+        $('#edit-role option').each(function () {
             if ($(this).text() == role)
                 $(this).prop('selected', true);
         });
-        $('#edit-membership option').each(function(){
+        $('#edit-membership option').each(function () {
             if ($(this).text() == membership)
                 $(this).prop('selected', true);
         });
@@ -115,7 +134,7 @@ var Admin = {
             type: 'POST',
             url: '/users_edit',
             data: $('#users-update-form').serialize(),
-            success: function(){
+            success: function () {
                 window.location.reload();
             }
         })
@@ -123,43 +142,44 @@ var Admin = {
 };
 
 
-function loadData(url){
-        var limit = 6;
-        var start = 0;
-        var action = 'inactive';
-        function load_data(limit,start) {
-            $.ajax({
-                url: url,
-                method: "POST",
-                dataType: 'json',
-                data: JSON.stringify({limit:limit,start:start,url:url}),
-                contentType: 'application/json;charset=UTF-8',
-                success:function (data) {
-                    $('#vypis').append(data);
-                    if (data == ""){
-                        action = 'active';
-                    }
-                    else
-                        action = 'inactive';
+function loadData(url) {
+    var limit = 6;
+    var start = 0;
+    var action = 'inactive';
+
+    function load_data(limit, start) {
+        $.ajax({
+            url: url,
+            method: "POST",
+            dataType: 'json',
+            data: JSON.stringify({limit: limit, start: start, url: url}),
+            contentType: 'application/json;charset=UTF-8',
+            success: function (data) {
+                $('#vypis').append(data);
+                if (data == "") {
+                    action = 'active';
                 }
-                });
-        }
-        if(action == 'inactive') {
+                else
+                    action = 'inactive';
+            }
+        });
+    }
+
+    if (action == 'inactive') {
+        action = 'active';
+        load_data(limit, start);
+    }
+
+    $(window).scroll(function () {
+        if (($(window).scrollTop() == $(document).height() - $(window).height()) &&
+            action == 'inactive') {
             action = 'active';
+            start = start + limit;
+            setTimeout(function () {
+                load_data(limit, start);
+            }, 1000);
             load_data(limit, start);
         }
 
-        $(window).scroll(function () {
-            if(($(window).scrollTop() == $(document).height() - $(window).height()) &&
-                action == 'inactive')
-            {
-                action = 'active';
-                start = start + limit;
-                setTimeout(function () {
-                    load_data(limit,start);
-                },1000);
-                load_data(limit,start);
-            }
-
-        })
+    })
 }
