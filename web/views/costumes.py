@@ -22,5 +22,5 @@ def configure(app):
         costumes = db.get_products_data(request_json.get('limit'),request_json.get('start'),request_json.get('url'))
         templates_list = []
         for costume in costumes:
-            templates_list.append(render_template('costume_template.html',costume = costume))
+            templates_list.append(render_template('costume_template.html',data = costume))
         return jsonify(templates_list)

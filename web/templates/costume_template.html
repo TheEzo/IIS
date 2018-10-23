@@ -8,30 +8,36 @@
 
     <div>
         <div class="col-lg">
-                Výrobce: {{costume.vyrobce }}
+                Výrobce: {{data[0].vyrobce }}
         </div>
         <div class="col-sm">
-                Materiál {{ costume.material }}
+                Materiál {{ data[0].material }}
         </div>
         <div class="col-sm-1">
-                Velikost
+                Velikost {{data[0].velikost }}
         </div>
         <div class="col-sm-1">
-                Opotřebení
+                Opotřebení {{data[0].opotrebeni }}
         </div>
         <div class="col-sm-1">
-              Počet
+              Počet {{data[0].pocet }}
         </div>
         <div class="col-sm-1">
-              Datum výroby
+              Datum výroby {{data[0].datum_vyroby }}
+        </div>
+        <div class="col-sm-1">
+              Barva {{data[1].barva }}
+        </div>
+        <div class="col-sm-1">
+              Vyuziti {{data[2].druh_akce }}
         </div>
     </div>
     <div>
         <div class="col-lg">
-                Popis: {{ costume.popis }}
+                Popis: {{ data[0].popis }}
         </div>
         <div class="col-lg">
-               Obědnat: <input type="checkbox" title="Obědnat" class="order-checkbox" value="{{ costume.id }}">
+               Obědnat: <input type="checkbox" title="Obědnat" class="order-checkbox" value="{{ data[0].id }}">
         </div>
     </div>
  </div>

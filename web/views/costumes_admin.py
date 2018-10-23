@@ -1,13 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask.views import MethodView
 from web.core import db
 from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
 from wtforms.validators import data_required
 from web.roles import employee
 from wtforms.widgets import CheckboxInput
+
 
 class AddCostume(Form):
     vyrobce = StringField("Výrobce",[validators.Length(min=1, max=45),data_required('Pole musí být vyplněno')])
@@ -25,6 +26,20 @@ class CostumesAdmin(MethodView):
     @employee
     def get(self):
 
+        colors = db.get_colors()
+        colors_list = []
+        for color in colors:
+            colors_list.append((color.barva,color.barva))
+        barva = SelectField("Barva",choices=colors_list)
+        setattr(AddCostume,"barva",barva)
+
+        uses = db.get_uses()
+        uses_list = []
+        for uses in uses:
+            uses_list.append((uses.id, uses.druh_akce))
+        vyuziti = SelectField("Využití", choices=uses_list)
+        setattr(AddCostume, "vyuziti", vyuziti)
+
         return render_template('costumes_admin.html', form = AddCostume())
 
     @employee
@@ -33,6 +48,7 @@ class CostumesAdmin(MethodView):
 
         db.add_costume(**form.data)
 
+        flash('Kostým byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
 
 def configure(app):
