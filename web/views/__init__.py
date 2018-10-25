@@ -5,7 +5,7 @@ from web.views import register
 from web.views import profile
 from web.views import costumes
 from web.views import accessories
-from web.views import orders
+from web.views import cart
 from web.views import manage_orders
 from web.views import users
 from web.views import costumes_admin
@@ -20,7 +20,7 @@ def configure_views(app):
     profile.configure(app)
     accessories.configure(app)
     costumes.configure(app)
-    orders.configure(app)
+    cart.configure(app)
     manage_orders.configure(app)
     users.configure(app)
     costumes_admin.configure(app)

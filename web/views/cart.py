@@ -8,11 +8,10 @@ from web.roles import login_required
 from web.core import db
 
 
-class Orders(MethodView):
+class Cart(MethodView):
     @login_required
     def get(self):
-
-        return render_template('orders.html')
+        return render_template('cart.html')
 
     def post(self):
         data = request.json
@@ -29,4 +28,4 @@ class Orders(MethodView):
 
 def configure(app):
     app.add_url_rule('/orders',
-                 view_func=Orders.as_view('orders'))
+                     view_func=Cart.as_view('carat'))

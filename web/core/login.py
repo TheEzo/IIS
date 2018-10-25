@@ -41,7 +41,11 @@ def configure_login(app):
             return redirect(url_for('login'))
         user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
+<<<<<<< Updated upstream
         session['cart'] = {'costumes': [], 'accessories': []}
+=======
+        session['cart'] = []
+>>>>>>> Stashed changes
         flash('Příhlášení proběhlo úspěšně', 'alert-success')
         return redirect(url_for('home'))
 
