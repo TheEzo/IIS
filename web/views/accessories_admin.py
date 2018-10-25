@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from flask.views import MethodView
 from web.core import db
 from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
@@ -23,6 +23,12 @@ class AddAccessory(Form):
 class CostumesAdmin(MethodView):
     @employee
     def get(self):
+        colors = db.get_colors()
+        colors_list = []
+        for color in colors:
+            colors_list.append((color.barva, color.barva))
+        barva = SelectField("Barva", choices=colors_list)
+        setattr(AddAccessory, "barva", barva)
 
         return render_template('accessories_admin.html', form = AddAccessory())
 
@@ -31,7 +37,7 @@ class CostumesAdmin(MethodView):
 
         form = AddAccessory(request.form)
         db.add_accessory(**form.data)
-
+        flash('Doplněk byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
 
 def configure(app):

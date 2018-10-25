@@ -40,6 +40,17 @@ def add_costume(*args, **kwargs):
                   opotrebeni=kwargs['opotrebeni'],
                   pocet=kwargs['pocet'])
     session.add(stmt)
+
+    new_costume = session.query(Kostym).order_by(Kostym.id.desc()).first()
+
+    stmt = KostymVyuziti(vyuziti_id=kwargs['vyuziti'],
+                         kostym_id=new_costume.id)
+    session.add(stmt)
+
+    stmt = BarvaKostym(barva=kwargs['barva'],
+                       kostym_id=new_costume.id)
+    session.add(stmt)
+
     session.commit()
 
 
@@ -54,6 +65,13 @@ def add_accessory(*args, **kwargs):
                    material=kwargs['material'],
                    )
     session.add(stmt)
+
+    new_accessory = session.query(Doplnek).order_by(Doplnek.id.desc()).first()
+
+    stmt = DoplnekBarva(barva=kwargs['barva'],
+                       doplnek_id=new_accessory.id)
+    session.add(stmt)
+
     session.commit()
 
 
@@ -108,13 +126,27 @@ def update_user(**kwargs):
 
 def get_products_data(limit,offset,url):
     if(url == '/costumes_list'):
-        return session.query(Kostym).\
-            limit(limit).offset(offset)
+        return session.query(Kostym,Barva, Vyuziti)\
+            .outerjoin(BarvaKostym, Kostym.id == BarvaKostym.kostym_id)\
+            .outerjoin(Barva,BarvaKostym.barva == Barva.barva) \
+            .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
+            .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id)\
+            .order_by(Kostym.id.asc())\
+            .limit(limit).offset(offset)
     else:
-        return session.query(Doplnek).\
-            limit(limit).offset(offset)
+        return session.query(Doplnek, Barva)\
+            .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
+            .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
+            .order_by(Doplnek.id.asc())\
+            .limit(limit).offset(offset)
 
-    return True
+def get_colors():
+    return session.query(Barva)\
+    .all()
+
+def get_uses():
+    return session.query(Vyuziti)\
+    .all()
 
 
 def get_user_profile(email):

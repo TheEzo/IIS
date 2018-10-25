@@ -23,5 +23,5 @@ def configure(app):
         accessories = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
         templates_list = []
         for accessory in accessories:
-            templates_list.append(render_template('accessory_template.html', accessory=accessory))
+            templates_list.append(render_template('accessory_template.html', data=accessory))
         return jsonify(templates_list)
