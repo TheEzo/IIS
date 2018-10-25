@@ -51,24 +51,19 @@ var Web = {
         }
     },
 
-    confirmOrder: function (type) {
-        let items = [];
-        $('.border .order-checkbox:checked').each(function () {
-            items.push($(this).val());
-        });
-        if (!items)
-            return;
-        $.ajax({
-            url: '/orders',
-            type: "POST",
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({type: type, values: items}),
-            success: function (res) {
-                window.location.reload();
-            }
-        });
-    }
+    confirmOrder: function (type,action,item) {
+            $.ajax({
+                url: '/cart',
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/json',
+                data: JSON.stringify({type: type, values: item, action: action}),
+                success: function (res) {
+                    window.location.reload();
+                }
+            });
+        }
+
 };
 
 var Admin = {

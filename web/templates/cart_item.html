@@ -1,0 +1,56 @@
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/iis.js') }}"></script>
+
+
+<div class="row border">
+    <div>
+        {{ data._fields[0] }}
+    </div>
+ </div>
+<div class="row border">
+    <div>
+        <div class="col-lg">
+            {% if data._fields[0] == "Kostym" %}
+                Výrobce: {{data[0].vyrobce }}
+            {% else %}
+                Název: {{data[0].nazev }}
+            {% endif %}
+        </div>
+        <div class="col-sm">
+                Materiál {{ data[0].material }}
+        </div>
+        <div class="col-sm-1">
+                Velikost {{data[0].velikost }}
+        </div>
+        <div class="col-sm-1">
+                Počet
+                {% if data._fields[0] == "Kostym" %}
+                    {{ cos_count[ data[0].id|string] }}
+                {% else %}
+                    {{ acc_count[data[0].id|string] }}
+                {% endif %}
+        </div>
+    </div>
+    <div>
+        <button class="remove btn btn-danger" name="{{ data._fields[0]  }}" value="{{ data[0].id }}">Odebrat</button>
+    </div>
+ </div>
+
+
+
+
+<script>
+        $('.remove').click(function (e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            var type;
+            if ($(this).attr("name") == "Kostym")
+                type = "costumes";
+            else
+                type = "accessories";
+            Web.confirmOrder(type,'remove',$(this).attr("value"));
+        });
+</script>

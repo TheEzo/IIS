@@ -124,6 +124,9 @@ def update_user(**kwargs):
             session.add(stmt)
     session.commit()
 
+def get_customers():
+    return session.query()
+
 def get_products_data(limit,offset,url):
     if(url == '/costumes_list'):
         return session.query(Kostym,Barva, Vyuziti)\
@@ -139,6 +142,22 @@ def get_products_data(limit,offset,url):
             .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
             .order_by(Doplnek.id.asc())\
             .limit(limit).offset(offset)
+
+def get_product(id,type):
+    if(type == "costumes"):
+        return session.query(Kostym,Barva, Vyuziti)\
+            .outerjoin(BarvaKostym, Kostym.id == BarvaKostym.kostym_id)\
+            .outerjoin(Barva,BarvaKostym.barva == Barva.barva) \
+            .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
+            .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id)\
+            .filter(Kostym.id == id)
+    else:
+        return session.query(Doplnek, Barva)\
+            .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
+            .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
+            .filter(Doplnek.id == id)
+
+
 
 def get_colors():
     return session.query(Barva)\

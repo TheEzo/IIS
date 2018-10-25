@@ -22,3 +22,9 @@
     bottom: 40px;
     right: 40px;
 }
+
+#cart-remove {
+    position: fixed;
+    bottom: 80px;
+    right: 40px;
+}

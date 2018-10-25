@@ -1,4 +1,3 @@
-
 <div class="row border">
     <div>
         <div class="col-sm-4">
@@ -36,9 +35,14 @@
         <div class="col-lg">
                 Popis: {{ data[0].popis }}
         </div>
-        <div class="col-lg">
-               Obědnat: <input type="checkbox" title="Obědnat" class="order-checkbox" value="{{ data[0].id }}">
-        </div>
+        <button class="add btn btn-success" value="{{ data[0].id }}">Do košíku</button>
     </div>
  </div>
 
+<script>
+        $('.add').click(function (e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            Web.confirmOrder('costumes','add',$(this).attr("value"));
+        });
+</script>
