@@ -20,6 +20,8 @@ class Doplnek(Base):
     pocet = Column(Integer)
     opotrebeni = Column(Enum(u'nove', u'stare', u'zanovni'))
     obrazek = Column(String(100))
+    cena = Column(Integer, nullable=False)
+    vyrobce = Column(String(45), nullable=False)
 
 
 class Barva(Base):
@@ -32,6 +34,7 @@ class Kostym(Base):
     __tablename__ = 'kostym'
 
     id = Column(Integer, primary_key=True)
+    nazev = Column(String(128), nullable=False)
     vyrobce = Column(String(45), nullable=False)
     material = Column(String(45), nullable=False)
     popis = Column(String(512), nullable=False)
@@ -40,13 +43,7 @@ class Kostym(Base):
     opotrebeni = Column(Enum(u'nove', u'stare', u'zanovni'))
     pocet = Column(Integer)
     obrazek = Column(String(100))
-
-
-class Obec(Base):
-    __tablename__ = 'obec'
-
-    id = Column(Integer, primary_key=True)
-    nazev = Column(String(256), nullable=False)
+    cena = Column(Integer, nullable=False)
 
 
 class Osoba(Base):
@@ -59,9 +56,8 @@ class Osoba(Base):
     prijmeni = Column(String(128), nullable=False)
     ulice = Column(String(256), nullable=True)
     cislo_popisne = Column(String(10), nullable=True)
+    obec = Column(String(60), nullable=True)
     tel_cislo = Column(String(10))
-
-    obec_id = Column(Integer, ForeignKey('obec.id', ondelete='CASCADE'))
 
 
 class Klient(Base):
@@ -89,7 +85,6 @@ class Vypujcka(Base):
     nazev_akce = Column(String(256), nullable=False)
     datum_vypujceni = Column(Date, nullable=False)
     vracen = Column(Integer, nullable=False)
-    cena = Column(Integer, nullable=False)
 
     klient = Column(String(10), ForeignKey('osoba.rc', ondelete='CASCADE'))
     zamestnanec = Column(String(10), ForeignKey('osoba.rc', ondelete='CASCADE'))
