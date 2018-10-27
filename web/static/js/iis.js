@@ -57,7 +57,7 @@ var Web = {
                 type: "POST",
                 dataType: 'json',
                 contentType: 'application/json',
-                data: JSON.stringify({type: type, values: item, action: action}),
+                data: JSON.stringify({type: type, value: item, action: action}),
                 success: function (res) {
                     window.location.reload();
                 }
@@ -133,6 +133,40 @@ var Admin = {
                 window.location.reload();
             }
         })
+    },
+
+    ordersDatatable: function () {
+        $('#orders-table').DataTable({
+            processing: true,
+            serverSide: true,
+            autoWidth: false,
+            ajax: {
+                url: "/orders_data",
+                type: "POST"
+            },
+            sPaginationType: "full_numbers",
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            columns: [
+                {data: "action_name"},
+                {data: "date"},
+                {data: "returned"}
+            ],
+            columnDefs: [{
+                targets: [2],
+                render: function (data) {
+                    if (data == 0){
+                        return "<i style='color: red' class=\"fas fa-times-circle\"></i>"
+                    }
+                    else
+                        return "<i style='color: green' class=\"fas fa-check-circle\"></i>"
+                }
+            }],
+            language: {
+                processing: 'Načítání...',
+                infoFiltered: "" // remove text "filtered from XY entried"
+            },
+            pagingType: "full_numbers",
+        });
     }
 };
 

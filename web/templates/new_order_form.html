@@ -9,17 +9,16 @@
                 {{ form.nazev_akce(**{'class': 'form-control' + (' is-invalid'  if form.nazev_akce.errors else '') }) }}
                 <div class="invalid-feedback">{{ form.nazev_akce.errors[0] }}</div>
             </div>
-            <div class="col">
-                <label>{{ form.cena.label }}*</label>
-                {{ form.cena(**{'class': 'form-control' + (' is-invalid'  if form.cena.errors else '') }) }}
-                <div class="invalid-feedback">{{ form.cena.errors[0] }}</div>
-            </div>
         </div>
-        <div class="row">
+        <div class="form-group row">
             <div class="col">
                 <input type="submit" value="Vytvořit rezervaci" class="btn btn-primary">
                 <span class="">Pole označená * jsou povinná</span>
             </div>
+            <div class="col">
+                <h2>Celkem: {{ session['cart']['prize'] }}</h2>
+            </div>
         </div>
     </form>
+
 {% endblock %}

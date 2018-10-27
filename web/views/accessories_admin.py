@@ -8,8 +8,10 @@ from wtforms import StringField, Form, SelectField, validators, TextAreaField,In
 from wtforms.validators import data_required
 from web.roles import employee
 
+
 class AddAccessory(Form):
     nazev = StringField("Název",[validators.Length(min=5, max=128),data_required('Pole musí být vyplněno')])
+    vyrobce = StringField("Výrobce", [validators.Length(min=1, max=45), data_required('Pole musí být vyplněno')])
     popis_vyuziti = TextAreaField("Popis využití", [validators.Length(min=10, max=512),data_required('Pole musí být vyplněno')])
     velikost = SelectField("Velikost",choices=[('S','S'),('M','M'),('L','L'),('XL','XL'),('XXL','XXL'),('XXXL','XXXL')])
     opotrebeni = SelectField("Opotřebení",
@@ -18,6 +20,7 @@ class AddAccessory(Form):
     material = StringField("Materiál", [validators.Length(min=2, max=45),data_required('Pole musí být vyplněno')])
     typ = StringField("Typ", [validators.Length(min=2, max=45),data_required('Pole musí být vyplněno')])
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
+    cena = IntegerField("Cena za kus",[data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
 
 class CostumesAdmin(MethodView):

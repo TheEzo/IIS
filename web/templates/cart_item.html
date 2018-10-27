@@ -12,26 +12,30 @@
 <div class="row border">
     <div>
         <div class="col-lg">
-            {% if data._fields[0] == "Kostym" %}
-                Výrobce: {{data[0].vyrobce }}
-            {% else %}
-                Název: {{data[0].nazev }}
-            {% endif %}
+            Název: {{data[0].nazev }}
         </div>
         <div class="col-sm">
-                Materiál {{ data[0].material }}
+            Výrobce: {{data[0].vyrobce }}
         </div>
-        <div class="col-sm-1">
-                Velikost {{data[0].velikost }}
+        <div class="col-sm">
+            Cena: {{data[0].cena }}
         </div>
         <div class="col-sm-1">
                 Počet
                 {% if data._fields[0] == "Kostym" %}
                     {{ cos_count[ data[0].id|string] }}
                 {% else %}
-                    {{ acc_count[data[0].id|string] }}
+                    {{ acc_count[data[0].id|string]  }}
                 {% endif %}
         </div>
+    </div>
+    <div class="col-sm-1">
+        Celkem
+        {% if data._fields[0] == "Kostym" %}
+            {{ cos_count[ data[0].id|string] }}
+        {% else %}
+            {{ acc_count[data[0].id|string] }}
+        {% endif %}
     </div>
     <div>
         <button class="remove btn btn-danger" name="{{ data._fields[0]  }}" value="{{ data[0].id }}">Odebrat</button>

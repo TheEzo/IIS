@@ -4,6 +4,8 @@
 from web.core.db_connector import session
 from web.core.models import *
 from werkzeug.security import generate_password_hash
+import time
+from flask_login import current_user
 
 
 def get_user(email):
@@ -75,10 +77,40 @@ def add_accessory(*args, **kwargs):
     session.commit()
 
 
+def create_order(*args, **kwargs):
+    stmt = Vypujcka(nazev_akce=kwargs['nazev_akce'],
+                    vracen=0,
+                    datum_vypujceni=time.strftime("%d.%m.%Y"),
+                    klient=current_user.get_id(),
+                    zamestnanec=current_user.get_id(),
+                    )
+    session.add(stmt)
+
+    new_order_id = session.query(Vypujcka).order_by(Vypujcka.id.desc()).first()
+
+
+    for item in args[0]['costumes']:
+
+        stmt = VypujckaKostym(kostym_id=item,
+                                  vypujcka_id=new_order_id.id)
+        session.add(stmt)
+
+    for item in args[0]['accessories']:
+        stmt = DoplnekVypujcka(doplnek_id=item,
+                                  vypujcka_id=new_order_id.id)
+        session.add(stmt)
+
+    session.commit()
+
+
+def get_user_orders(rc):
+    return session.query(Vypujcka).filter(Vypujcka.klient == rc)\
+            .all()
+
+
 def get_users_data():
-    return session.query(Osoba, Zamestnanec.pozice, Obec.nazev, Klient.clenstvi)\
+    return session.query(Osoba, Zamestnanec.pozice, Klient.clenstvi)\
         .outerjoin(Zamestnanec, Osoba.rc == Zamestnanec.osoba_rc)\
-        .outerjoin(Obec, Osoba.obec_id == Obec.id)\
         .outerjoin(Klient, Osoba.rc == Klient.osoba_rc)\
         .all()
 
@@ -124,8 +156,6 @@ def update_user(**kwargs):
             session.add(stmt)
     session.commit()
 
-def get_customers():
-    return session.query()
 
 def get_products_data(limit,offset,url):
     if(url == '/costumes_list'):
@@ -151,7 +181,7 @@ def get_product(id,type):
             .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
             .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id)\
             .filter(Kostym.id == id)
-    else:
+    elif(type == "accessories"):
         return session.query(Doplnek, Barva)\
             .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
             .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
@@ -166,6 +196,12 @@ def get_colors():
 def get_uses():
     return session.query(Vyuziti)\
     .all()
+
+def get_prize(pruduct,id):
+    if (pruduct == "costumes"):
+        return session.query(Kostym.cena).filter_by(id=id).first()
+    elif(pruduct == "accessories"):
+        return session.query(Doplnek.cena).filter_by(id=id).first()
 
 
 def get_user_profile(email):

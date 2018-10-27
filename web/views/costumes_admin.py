@@ -11,6 +11,7 @@ from wtforms.widgets import CheckboxInput
 
 
 class AddCostume(Form):
+    nazev = StringField("Název", [validators.Length(min=5, max=128), data_required('Pole musí být vyplněno')])
     vyrobce = StringField("Výrobce",[validators.Length(min=1, max=45),data_required('Pole musí být vyplněno')])
     material = StringField("Materiál", [validators.Length(min=2, max=45),data_required('Pole musí být vyplněno')])
     popis = TextAreaField("Popis", [validators.Length(min=10, max=512),data_required('Pole musí být vyplněno')])
@@ -19,6 +20,7 @@ class AddCostume(Form):
                            choices=[('nove', 'Nové'), ('stare', 'Staré'), ('zanovni', 'Zánovní')])
     pocet = IntegerField("Počet", [data_required('Pole musí být vyplněno')])
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
+    cena = IntegerField("Cena za kus", [data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
 
 

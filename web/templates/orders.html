@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Přehled rezervací{% endblock %}
+
+{% block body %}
+    <table id="orders-table" class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Název akce</th>
+            <th>Datum</th>
+            <th>Vráceno</th>
+
+        </tr>
+        </thead>
+    </table>
+
+{% endblock %}
+
+{% block footer %}
+    <script>
+        $(document).ready(function () {
+            Admin.ordersDatatable();
+        })
+    </script>
+{% endblock %}

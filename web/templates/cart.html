@@ -7,6 +7,12 @@
             {% include 'cart_item.html' %}
         {% endwith %}
     {% endfor %}
+    {% if session['cart']['prize'] == 0 %}
+        Košík je prázdný
+    {% else %}
+        Celkem: {{ session['cart']['prize'] }}
+    {% endif %}
+
     <form action="{{ url_for('new-order') }}" method="get">
     <button id="submit-order" class="btn btn-success">Dokončit rezervaci</button>
     </form>

@@ -21,7 +21,7 @@ class UsersData(MethodView):
             role = 'Zaměstnanec' if role == 'zamestnanec' else 'Vedoucí'
         else:
             role = 'Zákazník'
-        membership = data[3]
+        membership = data[2]
         if membership == 'zlate':
             membership = 'Zlaté'
         elif membership == 'stribrne':
@@ -32,7 +32,7 @@ class UsersData(MethodView):
             name=user.jmeno,
             surename=user.prijmeni,
             email=user.email,
-            city=data[2] if data[2] else '  ',
+            city=user.obec if user.obec else '  ',
             addr='%s %s' % (street, num),
             phone=user.tel_cislo if user.tel_cislo else '',
             membership=membership,

@@ -9,44 +9,55 @@ from collections import Counter
 from web.roles import login_required
 from web.core import db
 
-
 class Cart(MethodView):
+
+    def actualizePrize(self,action,type,id):
+        if(action=="add"):
+            session['cart']['prize'] += db.get_prize(type,id)[0]
+        elif(action=="remove"):
+            session['cart']['prize'] -= db.get_prize(type, id)[0]
+            if (session['cart']['prize'] < 0):
+                session['cart']['prize'] = 0
+
+
     @login_required
     def get(self):
         items = []
-        costumes_count = Counter(session['cart']['costumes'])
-        accessories_count = Counter(session['cart']['accessories'])
 
-        for id, num in costumes_count.items():
+        for id in session['cart']['costumes']:
             items += db.get_product(id, "costumes")
 
-        for id, num in accessories_count.items():
+        for id in session['cart']['accessories']:
             items += db.get_product(id, "accessories")
-        return render_template('cart.html', items=items, cos_count=costumes_count, acc_count=accessories_count)
+
+
+        return render_template('cart.html', items=list(set(items)), cos_count=Counter(session['cart']['costumes']), acc_count=Counter(session['cart']['accessories']))
 
     def post(self):
         data = request.json
         if(data['action'] == 'add'):
             if data['type'] == 'costumes':
-                session['cart']['costumes'] += data['values']
+                session['cart']['costumes'] += data['value']
             elif data['type'] == 'accessories':
-                session['cart']['accessories'] += data['values']
+                session['cart']['accessories'] += data['value']
             else:
                 flash('Něco se pokazilo', 'alert-danger')
                 return jsonify({})
+
+            self.actualizePrize(data['action'],data['type'],data['value'])
             flash("Položky byly přidány do košíku", 'alert-success')
         elif (data['action'] == 'remove'):
             if data['type'] == 'costumes':
-                for item in data['values']:
+                for item in data['value']:
                     session['cart']['costumes'].remove(item)
             elif data['type'] == 'accessories':
-                for item in data['values']:
+                for item in data['value']:
                     session['cart']['accessories'].remove(item)
             else:
                 flash('Něco se pokazilo', 'alert-danger')
                 return jsonify({})
             flash("Položky byly odebrány z košíku", 'alert-success')
-
+            self.actualizePrize(data['action'], data['type'], data['value'])
         return jsonify({})
 
 
