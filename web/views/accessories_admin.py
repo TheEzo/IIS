@@ -23,6 +23,7 @@ class AddAccessory(Form):
     cena = IntegerField("Cena za kus",[data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
 
+
 class CostumesAdmin(MethodView):
     @employee
     def get(self):
@@ -42,6 +43,7 @@ class CostumesAdmin(MethodView):
         db.add_accessory(**form.data)
         flash('Doplněk byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
+
 
 def configure(app):
     app.add_url_rule('/accessories-admin',
