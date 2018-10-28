@@ -1,44 +1,60 @@
-<div class="row border">
-    <div>
-        <div class="col-sm-4">
+<div class="container-fluid list_item col-sm-4">
+    <div class="border" style="padding: 10px;height: 800px;">
+    <div class="row thumbnail">
+        <div class="col-sm ">
             Thumbnail
         </div>
     </div>
 
-    <div>
-        <div class="col-lg">
-                Výrobce: {{data[0].vyrobce }}
-        </div>
+    <div class="row item-title">
         <div class="col-sm">
-                Materiál {{ data[0].material }}
-        </div>
-        <div class="col-sm-1">
-                Velikost {{data[0].velikost }}
-        </div>
-        <div class="col-sm-1">
-                Opotřebení {{data[0].opotrebeni }}
-        </div>
-        <div class="col-sm-1">
-              Počet {{data[0].pocet }}
-        </div>
-        <div class="col-sm-1">
-              Datum výroby {{data[0].datum_vyroby }}
-        </div>
-        <div class="col-sm-1">
-              Barva {{data[1].barva }}
-        </div>
-        <div class="col-sm-1">
-              Vyuziti {{data[2].druh_akce }}
-        </div>
-        <div class="col-sm-1">
-              Cena {{ data[0].cena }}
+            <span class="text-decorator">{{data[0].nazev }}</span>
         </div>
     </div>
-    <div>
-        <div class="col-lg">
-                Popis: {{ data[0].popis }}
+
+    <div class="row item-producer">
+        <div class="col-sm">
+                {{ data[0].vyrobce }}
         </div>
-        <button class="add btn btn-success" value="{{ data[0].id }}">Do košíku</button>
+    </div>
+    <hr>
+    <div class="item-datas">
+        <div class="row">
+            <div class="col-sm-6">
+                    <span class="text-decorator">Velikost:</span> {{ data[0].velikost }}
+            </div>
+            <div class="col-sm-6">
+                    <span class="text-decorator">Počet kusů:</span>  {{ data[0].pocet }}
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                    <span class="text-decorator">Opotřebení:</span>  {{ data[0].opotrebeni }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                    <span class="text-decorator">Vyrobeno:</span>  {{ data[0].datum_vyroby }}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row item-description">
+        <div class="col-lg">
+                {{ data[0].popis }}
+        </div>
+
+    </div>
+    <hr>
+    <div class="row item-footer">
+        <div class="col-sm-8">
+             <button class="add btn btn-success" value="{{ data[0].id }}">Do košíku</button>
+        </div>
+        <div class="col-sm-4">
+               <span class="text-decorator">{{ data[0].cena }},-</span>
+        </div>
+    </div>
     </div>
  </div>
 

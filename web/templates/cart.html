@@ -2,18 +2,27 @@
 {% block title %}Košík{% endblock %}
 
 {% block body %}
+    {% if session['cart']['prize'] == 0 %}
+        <h3 align="center">Košík je prázdný</h3>
+    {% else %}
     {% for item in items %}
         {% with data=item, cos_count=cos_count,acc_count=acc_count%}
             {% include 'cart_item.html' %}
         {% endwith %}
     {% endfor %}
-    {% if session['cart']['prize'] == 0 %}
-        Košík je prázdný
-    {% else %}
-        Celkem: {{ session['cart']['prize'] }}
-    {% endif %}
-
     <form action="{{ url_for('new-order') }}" method="get">
-    <button id="submit-order" class="btn btn-success">Dokončit rezervaci</button>
+        <div id="submit-order" class="row form-group">
+            <div class="col-sm-6">
+
+                   <span style="font-size: 1.3em" class="text-decorator">Celkem:</span><span style="font-size: 1.5em"> {{ session['cart']['prize'] }},-</span>
+
+            </div>
+            <div class="col-sm-4">
+
+                    <button  class="btn btn-success">Dokončit rezervaci</button>
+
+            </div>
+        </div>
     </form>
+    {% endif %}
 {% endblock %}

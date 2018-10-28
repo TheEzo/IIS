@@ -34,13 +34,15 @@ def get_employee_data(rc):
 
 
 def add_costume(*args, **kwargs):
-    stmt = Kostym(vyrobce=kwargs['vyrobce'],
+    stmt = Kostym(nazev=kwargs['nazev'],
+                  vyrobce=kwargs['vyrobce'],
                   material=kwargs['material'],
                   popis=kwargs['popis'],
                   velikost=kwargs['velikost'],
                   datum_vyroby=kwargs['datum_vyroby'],
                   opotrebeni=kwargs['opotrebeni'],
-                  pocet=kwargs['pocet'])
+                  pocet=kwargs['pocet'],
+                  cena=kwargs['cena'])
     session.add(stmt)
 
     new_costume = session.query(Kostym).order_by(Kostym.id.desc()).first()
@@ -58,6 +60,7 @@ def add_costume(*args, **kwargs):
 
 def add_accessory(*args, **kwargs):
     stmt = Doplnek(nazev=kwargs['nazev'],
+                  vyrobce=kwargs['vyrobce'],
                    popis_vyuziti=kwargs['popis_vyuziti'],
                    datum_vyroby=kwargs['datum_vyroby'],
                    velikost=kwargs['velikost'],
@@ -65,6 +68,7 @@ def add_accessory(*args, **kwargs):
                    pocet=kwargs['pocet'],
                    typ=kwargs['typ'],
                    material=kwargs['material'],
+                  cena=kwargs['cena']
                    )
     session.add(stmt)
 

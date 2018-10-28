@@ -37,9 +37,9 @@ class Cart(MethodView):
         data = request.json
         if(data['action'] == 'add'):
             if data['type'] == 'costumes':
-                session['cart']['costumes'] += data['value']
+                session['cart']['costumes'].append(data['value'])
             elif data['type'] == 'accessories':
-                session['cart']['accessories'] += data['value']
+                session['cart']['accessories'].append(data['value'])
             else:
                 flash('Něco se pokazilo', 'alert-danger')
                 return jsonify({})
@@ -48,11 +48,9 @@ class Cart(MethodView):
             flash("Položky byly přidány do košíku", 'alert-success')
         elif (data['action'] == 'remove'):
             if data['type'] == 'costumes':
-                for item in data['value']:
-                    session['cart']['costumes'].remove(item)
+                    session['cart']['costumes'].remove(data['value'])
             elif data['type'] == 'accessories':
-                for item in data['value']:
-                    session['cart']['accessories'].remove(item)
+                    session['cart']['accessories'].remove(data['value'])
             else:
                 flash('Něco se pokazilo', 'alert-danger')
                 return jsonify({})

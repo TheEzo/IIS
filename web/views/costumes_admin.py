@@ -38,7 +38,7 @@ class CostumesAdmin(MethodView):
         uses = db.get_uses()
         uses_list = []
         for uses in uses:
-            uses_list.append((uses.id, uses.druh_akce))
+            uses_list.append((str(uses.id), uses.druh_akce))
         vyuziti = SelectField("Využití", choices=uses_list)
         setattr(AddCostume, "vyuziti", vyuziti)
 

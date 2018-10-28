@@ -28,3 +28,61 @@
     bottom: 80px;
     right: 40px;
 }
+
+.list_item {
+    padding: 3px;
+    float: left;
+
+}
+
+.thumbnail {
+    height: 250px
+}
+
+.item-title {
+    height: 10%;
+    font-size: 1.3em;
+}
+
+.item-producer {
+    font-size: 1.2em;
+    height: 4%;
+}
+
+.item-datas {
+    font-size: 1.07em;
+    height: 10%;
+}
+
+.item-description {
+    height: 25%;
+}
+
+.item-footer {
+    font-size: 1.4em;
+    vertical-align: baseline;
+}
+
+.text-decorator {
+    font-weight: bold;
+}
+
+.cart-item {
+    padding: 3px;
+    float: left;
+}
+
+.cart-item-title {
+    height: 6%;
+    font-size: 1.3em;
+    margin-top: 0.8em;
+}
+
+.cart-item-producer{
+    font-size: 1.2em;
+    height: 6%;
+}
+
+.cart-item-datas {
+    height: 9%;
+}

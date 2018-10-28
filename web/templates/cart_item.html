@@ -3,25 +3,33 @@
         crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='js/iis.js') }}"></script>
 
-
-<div class="row border">
-    <div>
-        {{ data._fields[0] }}
+<div class=" cart_item  col-sm-6" >
+<div class="border" style="padding: 10px;height:450px;">
+    <div class="row thumbnail" >
+        <div class="col-sm">
+            Thumbnail
+        </div>
     </div>
- </div>
-<div class="row border">
-    <div>
-        <div class="col-lg">
-            Název: {{data[0].nazev }}
-        </div>
+    <div class="row cart-item-title">
         <div class="col-sm">
-            Výrobce: {{data[0].vyrobce }}
+            <span class="text-decorator">{{data[0].nazev }}</span>
         </div>
+    </div>
+    <div class="row cart-item-producer">
         <div class="col-sm">
-            Cena: {{data[0].cena }}
+                {{ data[0].vyrobce }}
         </div>
-        <div class="col-sm-1">
-                Počet
+    </div>
+    <hr>
+    <div class="row cart-item-datas">
+        <div class="col-sm-4">
+            <span class="text-decorator">Velikost:</span>  {{data[0].velikost }}
+        </div>
+        <div class="col-sm-4">
+            <span class="text-decorator">Cena za kus:</span>  {{data[0].cena }}
+        </div>
+        <div class="col-sm-4">
+            <span class="text-decorator">Počet kusů:</span>
                 {% if data._fields[0] == "Kostym" %}
                     {{ cos_count[ data[0].id|string] }}
                 {% else %}
@@ -29,18 +37,13 @@
                 {% endif %}
         </div>
     </div>
-    <div class="col-sm-1">
-        Celkem
-        {% if data._fields[0] == "Kostym" %}
-            {{ cos_count[ data[0].id|string] }}
-        {% else %}
-            {{ acc_count[data[0].id|string] }}
-        {% endif %}
+    <div class="row">
+        <div class="col-sm">
+                <button class="remove btn btn-danger" name="{{ data._fields[0]  }}" value="{{ data[0].id }}">Odebrat z košíku</button>
+        </div>
     </div>
-    <div>
-        <button class="remove btn btn-danger" name="{{ data._fields[0]  }}" value="{{ data[0].id }}">Odebrat</button>
-    </div>
- </div>
+</div>
+</div>
 
 
 
