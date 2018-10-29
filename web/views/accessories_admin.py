@@ -45,6 +45,7 @@ class AccessoriesAdmin(MethodView):
         flash('Doplněk byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
 
+
 def configure(app):
     app.add_url_rule('/accessories-admin',
                  view_func=AccessoriesAdmin.as_view('accessories-admin'))

@@ -11,7 +11,7 @@ from web.core.db import insert_base_users
 
 # revision identifiers, used by Alembic.
 revision = '5cf6b23adadf'
-down_revision = '4044288fd3d0'
+down_revision = '53f1e32580ae'
 branch_labels = None
 depends_on = None
 

@@ -60,7 +60,7 @@ def add_costume(*args, **kwargs):
 
 def add_accessory(*args, **kwargs):
     stmt = Doplnek(nazev=kwargs['nazev'],
-                  vyrobce=kwargs['vyrobce'],
+                   vyrobce=kwargs['vyrobce'],
                    popis_vyuziti=kwargs['popis_vyuziti'],
                    datum_vyroby=kwargs['datum_vyroby'],
                    velikost=kwargs['velikost'],
@@ -68,14 +68,14 @@ def add_accessory(*args, **kwargs):
                    pocet=kwargs['pocet'],
                    typ=kwargs['typ'],
                    material=kwargs['material'],
-                  cena=kwargs['cena']
+                   cena=kwargs['cena']
                    )
     session.add(stmt)
 
     new_accessory = session.query(Doplnek).order_by(Doplnek.id.desc()).first()
 
     stmt = DoplnekBarva(barva=kwargs['barva'],
-                       doplnek_id=new_accessory.id)
+                        doplnek_id=new_accessory.id)
     session.add(stmt)
 
     session.commit()
@@ -127,6 +127,7 @@ def insert_base_users():
                  jmeno='Tomas',
                  prijmeni='Willaschek',
                  ulice='',
+                 obec='',
                  cislo_popisne='',
                  tel_cislo='')
     session.add(stmt)
