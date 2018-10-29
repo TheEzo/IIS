@@ -11,18 +11,10 @@
         {% endwith %}
     {% endfor %}
     <form action="{{ url_for('new-order') }}" method="get">
-        <div id="submit-order" class="row form-group">
-            <div class="col-sm-6">
-
-                   <span style="font-size: 1.3em" class="text-decorator">Celkem:</span><span style="font-size: 1.5em"> {{ session['cart']['prize'] }},-</span>
-
-            </div>
-            <div class="col-sm-4">
-
-                    <button  class="btn btn-success">Dokončit rezervaci</button>
-
-            </div>
-        </div>
+    <div class="border" id="reservation-info-line">
+        <span style="font-size: 1.3em" class="text-decorator">Celkem:</span><span style="font-size: 1.5em"> {{ session['cart']['prize'] }},-</span>
+        <button style="margin-left: 10px"  class="btn btn-success">Dokončit rezervaci</button>
+    </div>
     </form>
     {% endif %}
 {% endblock %}

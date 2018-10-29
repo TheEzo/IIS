@@ -1,5 +1,5 @@
 <div class="container-fluid list_item col-sm-4">
-     <div class="border" style="padding: 10px;height: 800px;">
+     <div class="border" style="padding: 10px;min-height: 800px;">
         <div class="row thumbnail">
             <div class="col-sm " >
                 Thumbnail
@@ -30,7 +30,12 @@
             </div>
             <div class="row">
                 <div class="col-sm">
-                        <span class="text-decorator">Opotřebení:</span>  {{ data[0].opotrebeni }}
+                    <span class="text-decorator">Barva:</span>  {{ data[1].barva }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <span class="text-decorator">Typ:</span>  {{ data[0].typ }}
                 </div>
             </div>
             <div class="row">

@@ -7,7 +7,17 @@ from web.core import db
 from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
 from wtforms.validators import data_required
 from web.roles import employee
-from wtforms.widgets import CheckboxInput
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
+
+
+class Barva(db.Barva):
+    def __repr__(self):
+        return "%s" % (self.barva)
+
+class Vyuziti(db.Vyuziti):
+    def __repr__(self):
+        return "%s" % (self.druh_akce)
+
 
 
 class AddCostume(Form):
@@ -22,34 +32,21 @@ class AddCostume(Form):
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
     cena = IntegerField("Cena za kus", [data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
-
+    barva = QuerySelectField("Barva", query_factory=lambda: Barva.query, allow_blank=False)
+    vyuziti = QuerySelectField("Využití", query_factory=lambda: Vyuziti.query, allow_blank=False)
 
 class CostumesAdmin(MethodView):
     @employee
     def get(self):
-
-        colors = db.get_colors()
-        colors_list = []
-        for color in colors:
-            colors_list.append((color.barva,color.barva))
-        barva = SelectField("Barva",choices=colors_list)
-        setattr(AddCostume,"barva",barva)
-
-        uses = db.get_uses()
-        uses_list = []
-        for uses in uses:
-            uses_list.append((str(uses.id), uses.druh_akce))
-        vyuziti = SelectField("Využití", choices=uses_list)
-        setattr(AddCostume, "vyuziti", vyuziti)
-
         return render_template('costumes_admin.html', form = AddCostume())
 
     @employee
     def post(self):
         form = AddCostume(request.form)
+        if not form.validate():
+            return render_template('costumes_admin.html', form=form)
 
         db.add_costume(**form.data)
-
         flash('Kostým byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
 

@@ -4,7 +4,7 @@
 <script src="{{ url_for('static', filename='js/iis.js') }}"></script>
 
 <div class=" cart-item  col-sm-6" >
-<div class="border" style="padding: 10px; height:450px;">
+<div class="border" style="padding: 10px; min-height:450px;">
     <div class="row thumbnail" >
         <div class="col-sm">
             Thumbnail
@@ -22,10 +22,10 @@
     </div>
     <hr>
     <div class="row cart-item-datas">
-        <div class="col-sm-4">
+        <div class="col-sm-3">
             <span class="text-decorator">Velikost:</span>  {{data[0].velikost }}
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-5">
             <span class="text-decorator">Cena za kus:</span>  {{data[0].cena }}
         </div>
         <div class="col-sm-4">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm">
+        <div class="col-sm-12">
                 <button class="remove btn btn-danger" name="{{ data._fields[0]  }}" value="{{ data[0].id }}">Odebrat z košíku</button>
         </div>
     </div>

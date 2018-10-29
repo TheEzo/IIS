@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}Kostýmy{% endblock %}
+{% block title %}Doplněk {% endblock %}
 
 {% block body %}
     <h1>Přidat doplněk</h1>
@@ -14,6 +14,11 @@
                 <label>{{ form.vyrobce.label }}*</label>
                 {{ form.vyrobce(**{'class': 'form-control' + (' is-invalid'  if form.vyrobce.errors else '') }) }}
                 <div class="invalid-feedback">{{ form.vyrobce.errors[0] }}</div>
+            </div>
+            <div class="col">
+                <label>{{ form.typ.label }}*</label>
+                {{ form.typ(**{'class': 'form-control' + (' is-invalid'  if form.typ.errors else '') }) }}
+                <div class="invalid-feedback">{{ form.typ.errors[0] }}</div>
             </div>
         </div>
         <div class="form-group row">

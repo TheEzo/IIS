@@ -4,10 +4,15 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask.views import MethodView
 from web.core import db
-from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
+from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField, ValidationError
 from wtforms.validators import data_required
 from web.roles import employee
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
+
+class Barva(db.Barva):
+    def __repr__(self):
+        return "%s" % (self.barva)
 
 class AddAccessory(Form):
     nazev = StringField("Název",[validators.Length(min=5, max=128),data_required('Pole musí být vyplněno')])
@@ -22,16 +27,11 @@ class AddAccessory(Form):
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
     cena = IntegerField("Cena za kus",[data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
+    barva = QuerySelectField("Barva",query_factory=lambda: Barva.query,allow_blank=False)
 
-class CostumesAdmin(MethodView):
+class AccessoriesAdmin(MethodView):
     @employee
     def get(self):
-        colors = db.get_colors()
-        colors_list = []
-        for color in colors:
-            colors_list.append((color.barva, color.barva))
-        barva = SelectField("Barva", choices=colors_list)
-        setattr(AddAccessory, "barva", barva)
 
         return render_template('accessories_admin.html', form = AddAccessory())
 
@@ -39,10 +39,12 @@ class CostumesAdmin(MethodView):
     def post(self):
 
         form = AddAccessory(request.form)
+        if not form.validate():
+            return render_template('accessories_admin.html', form=form)
         db.add_accessory(**form.data)
         flash('Doplněk byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
 
 def configure(app):
     app.add_url_rule('/accessories-admin',
-                 view_func=CostumesAdmin.as_view('accessories-admin'))
+                 view_func=AccessoriesAdmin.as_view('accessories-admin'))
