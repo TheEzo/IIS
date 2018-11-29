@@ -231,11 +231,11 @@ def get_all_orders():
         price += sum([record.Doplnek.cena for record in orders_accessories if record[0] == order.Vypujcka.id])
         costumes = [record.Kostym.nazev + ' (' + record.Kostym.velikost + ')' for record in orders_costumes if record[0] == order.Vypujcka.id]
         accessories = [record.Doplnek.nazev + ' (' + record.Doplnek.velikost + ')' for record in orders_accessories if record[0] == order.Vypujcka.id]
-        price *= (order.Vypujcka.datum_vraceni - order.Vypujcka.datum_vraceni).days
+        price *= (order.Vypujcka.datum_vraceni - order.Vypujcka.datum_vypujceni).days
         res.append(dict(
             name=order.Vypujcka.nazev_akce,
-            date_from=order.Vypujcka.datum_vypujceni,
-            date_to=order.Vypujcka.datum_vraceni,
+            date_from=(order.Vypujcka.datum_vypujceni).strftime('%d-%m-%Y'),
+            date_to=(order.Vypujcka.datum_vraceni).strftime('%d-%m-%Y'),
             returned='Vráceno' if order.Vypujcka.vracen else 'Nevráceno',
             orderer=str(order.Osoba.jmeno) + ' ' + str(order.Osoba.prijmeni),
             costumes=', '.join(costumes),
