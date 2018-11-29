@@ -3,18 +3,13 @@ from flask import render_template, request,jsonify
 from web.core import db
 from flask_login import current_user
 
+
 class Orders(MethodView):
     def get(self):
         return render_template('orders.html')
 
 
 class OrdersView(MethodView):
-    #def process_user(self,data):
-     #   return dict(
-      #      nazev_akce = data.nazev_akce,
-       #     datum_vypujceni = data.datum_vypujceni,
-        #    vraceno = data.vraceno
-        #)
 
     def post(self):
         orders = db.get_user_orders(current_user.get_id())

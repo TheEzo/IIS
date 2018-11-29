@@ -6,6 +6,7 @@ from web.core.models import *
 from werkzeug.security import generate_password_hash
 import time
 from flask_login import current_user
+from datetime import datetime
 
 
 def get_user(email):
@@ -193,27 +194,52 @@ def get_product(id,type):
             .filter(Doplnek.id == id)
 
 
-
 def get_colors():
-    return session.query(Barva)\
-    .all()
+    return session.query(Barva).all()
+
 
 def get_uses():
-    return session.query(Vyuziti)\
-    .all()
+    return session.query(Vyuziti).all()
+
 
 def get_prize(pruduct,id):
-    if (pruduct == "costumes"):
+    if pruduct == "costumes":
         return session.query(Kostym.cena).filter_by(id=id).first()
-    elif(pruduct == "accessories"):
+    elif pruduct == "accessories":
         return session.query(Doplnek.cena).filter_by(id=id).first()
 
 
 def get_user_profile(email):
     # TODO pridat objednavky
-    return session.query(Osoba, Zamestnanec.pozice, Obec.nazev, Klient.clenstvi) \
+    return session.query(Osoba, Zamestnanec.pozice, Klient.clenstvi) \
         .outerjoin(Zamestnanec, Osoba.rc == Zamestnanec.osoba_rc) \
-        .outerjoin(Obec, Osoba.obec_id == Obec.id) \
         .outerjoin(Klient, Osoba.rc == Klient.osoba_rc) \
         .filter(Osoba.email == email)\
         .first()
+
+
+def get_all_orders():
+    orders = session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).all()
+    orders_costumes = session.query(VypujckaKostym.vypujcka_id, Kostym)\
+        .outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all()
+    orders_accessories = session.query(DoplnekVypujcka.vypujcka_id, Doplnek)\
+        .outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all()
+
+    res = []
+    for order in orders:
+        price = sum([record.Kostym.cena for record in orders_costumes if record[0] == order.Vypujcka.id])
+        price += sum([record.Doplnek.cena for record in orders_accessories if record[0] == order.Vypujcka.id])
+        costumes = [record.Kostym.nazev + ' (' + record.Kostym.velikost + ')' for record in orders_costumes if record[0] == order.Vypujcka.id]
+        accessories = [record.Doplnek.nazev + ' (' + record.Doplnek.velikost + ')' for record in orders_accessories if record[0] == order.Vypujcka.id]
+        price *= (order.Vypujcka.datum_vraceni - order.Vypujcka.datum_vraceni).days
+        res.append(dict(
+            name=order.Vypujcka.nazev_akce,
+            date_from=order.Vypujcka.datum_vypujceni,
+            date_to=order.Vypujcka.datum_vraceni,
+            returned='Vráceno' if order.Vypujcka.vracen else 'Nevráceno',
+            orderer=str(order.Osoba.jmeno) + ' ' + str(order.Osoba.prijmeni),
+            costumes=', '.join(costumes),
+            accessories=', '.join(accessories),
+            price=price
+        ))
+    return res

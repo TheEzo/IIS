@@ -84,6 +84,7 @@ class Vypujcka(Base):
     id = Column(Integer, primary_key=True)
     nazev_akce = Column(String(256), nullable=False)
     datum_vypujceni = Column(Date, nullable=False)
+    datum_vraceni = Column(Date, nullable=False)
     vracen = Column(Integer, nullable=False)
 
     klient = Column(String(10), ForeignKey('osoba.rc', ondelete='CASCADE'))

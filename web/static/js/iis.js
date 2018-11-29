@@ -52,25 +52,23 @@ var Web = {
     },
 
     confirmOrder: function (type,action,item) {
-            $.ajax({
-                url: '/cart',
-                type: "POST",
-                dataType: 'json',
-                contentType: 'application/json',
-                data: JSON.stringify({type: type, value: item, action: action}),
-                success: function (res) {
-                    window.location.reload();
-                }
-            });
-        }
-
+        $.ajax({
+            url: '/cart',
+            type: "POST",
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({type: type, value: item, action: action}),
+            success: function (res) {
+                window.location.reload();
+            }
+        });
+    }
 };
 
 var Admin = {
     usersDatatable: function () {
         $('#users-table').DataTable({
             processing: true,
-            serverSide: true,
             autoWidth: false,
             ajax: {
                 url: "/users_data",
@@ -104,6 +102,35 @@ var Admin = {
                 {targets: 8, orderable: false},
                 {targets: 9, className: 'hidden'}
             ],
+            order: [[0, 'desc']]
+        });
+    },
+
+    allOrdersDatatable: function(){
+        $('#all-orders').DataTable({
+            processing: true,
+            autoWidth: false,
+            ajax: {
+                url: "/orders-admin",
+                type: "POST"
+            },
+            sPaginationType: "full_numbers",
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            columns: [
+                {data: "name"},
+                {data: "date_from"},
+                {data: "date_to"},
+                {data: "orderer"},
+                {data: 'costumes'},
+                {data: 'accessories'},
+                {data: 'price'},
+                {data: 'returned'},
+            ],
+            language: {
+                processing: 'Načítání...',
+                infoFiltered: "" // remove text "filtered from XY entried"
+            },
+            pagingType: "full_numbers",
             order: [[0, 'desc']]
         });
     },
