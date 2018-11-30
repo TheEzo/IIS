@@ -121,11 +121,19 @@ var Admin = {
                 {data: "date_from"},
                 {data: "date_to"},
                 {data: "orderer"},
-                {data: 'costumes'},
-                {data: 'accessories'},
                 {data: 'price'},
                 {data: 'returned'},
             ],
+            columnDefs: [{
+                targets: [5],
+                render: function (data) {
+                    if (data == 0){
+                        return "Nevráceno <i style='color: red' class=\"fas fa-times-circle\"></i>"
+                    }
+                    else
+                        return "Vráceno <i style='color: green' class=\"fas fa-check-circle\"></i>"
+                }
+            }],
             language: {
                 processing: 'Načítání...',
                 infoFiltered: "" // remove text "filtered from XY entried"
@@ -182,10 +190,10 @@ var Admin = {
                 targets: [2],
                 render: function (data) {
                     if (data == 0){
-                        return "<i style='color: red' class=\"fas fa-times-circle\"></i>"
+                        return "Nevráceno <i style='color: red' class=\"fas fa-times-circle\"></i>"
                     }
                     else
-                        return "<i style='color: green' class=\"fas fa-check-circle\"></i>"
+                        return "Vráceno <i style='color: green' class=\"fas fa-check-circle\"></i>"
                 }
             }],
             language: {

@@ -9,6 +9,8 @@ from flask_login import current_user
 from datetime import datetime
 
 
+
+
 def get_user(email):
     return Osoba.query.filter_by(email=email).first()
 
@@ -35,12 +37,13 @@ def get_employee_data(rc):
 
 
 def add_costume(*args, **kwargs):
+    cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
     stmt = Kostym(nazev=kwargs['nazev'],
                   vyrobce=kwargs['vyrobce'],
                   material=kwargs['material'],
                   popis=kwargs['popis'],
                   velikost=kwargs['velikost'],
-                  datum_vyroby=kwargs['datum_vyroby'],
+                  datum_vyroby=cz_datetime.strftime("%Y-%m-%d"),
                   opotrebeni=kwargs['opotrebeni'],
                   pocet=kwargs['pocet'],
                   cena=kwargs['cena'])
@@ -60,10 +63,11 @@ def add_costume(*args, **kwargs):
 
 
 def add_accessory(*args, **kwargs):
+    cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
     stmt = Doplnek(nazev=kwargs['nazev'],
                    vyrobce=kwargs['vyrobce'],
                    popis_vyuziti=kwargs['popis_vyuziti'],
-                   datum_vyroby=kwargs['datum_vyroby'],
+                   datum_vyroby=cz_datetime.strftime("%Y-%m-%d"),
                    velikost=kwargs['velikost'],
                    opotrebeni=kwargs['opotrebeni'],
                    pocet=kwargs['pocet'],
@@ -83,9 +87,11 @@ def add_accessory(*args, **kwargs):
 
 
 def create_order(*args, **kwargs):
+    cz_datetime = datetime.strptime(kwargs['datum_vraceni'], '%d.%m.%Y')
     stmt = Vypujcka(nazev_akce=kwargs['nazev_akce'],
                     vracen=0,
-                    datum_vypujceni=time.strftime("%d.%m.%Y"),
+                    datum_vypujceni=time.strftime("%Y-%m-%d"),
+                    datum_vraceni=cz_datetime.strftime("%Y-%m-%d"),
                     klient=current_user.get_id(),
                     zamestnanec=current_user.get_id(),
                     )
@@ -218,6 +224,7 @@ def get_user_profile(email):
         .first()
 
 
+
 def get_all_orders():
     orders = session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).all()
     orders_costumes = session.query(VypujckaKostym.vypujcka_id, Kostym)\
@@ -236,7 +243,7 @@ def get_all_orders():
             name=order.Vypujcka.nazev_akce,
             date_from=(order.Vypujcka.datum_vypujceni).strftime('%d-%m-%Y'),
             date_to=(order.Vypujcka.datum_vraceni).strftime('%d-%m-%Y'),
-            returned='Vráceno' if order.Vypujcka.vracen else 'Nevráceno',
+            returned=order.Vypujcka.vracen,
             orderer=str(order.Osoba.jmeno) + ' ' + str(order.Osoba.prijmeni),
             costumes=', '.join(costumes),
             accessories=', '.join(accessories),
