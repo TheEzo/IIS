@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template, request,jsonify
+from flask import render_template, request, jsonify
 from web.core import db
 from flask_login import current_user
 
@@ -8,8 +8,8 @@ class Accessories(MethodView):
     def get(self):
         return render_template('accessories_admin.html')
 
-class AccessoriesAdmin(MethodView):
 
+class AccessoriesAdmin(MethodView):
     def process_accessory(self,data):
         accessory = data[0]
         color = data[1]
