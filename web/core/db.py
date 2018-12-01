@@ -37,7 +37,7 @@ def get_employee_data(rc):
     return Zamestnanec.query.filter_by(osoba_rc=rc).first()
 
 
-def add_costume(*args, **kwargs):
+def add_costume(image, *args, **kwargs):
     cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
     stmt = Kostym(nazev=kwargs['nazev'],
                   vyrobce=kwargs['vyrobce'],
@@ -47,16 +47,17 @@ def add_costume(*args, **kwargs):
                   datum_vyroby=cz_datetime.strftime("%Y-%m-%d"),
                   opotrebeni=kwargs['opotrebeni'],
                   pocet=kwargs['pocet'],
-                  cena=kwargs['cena'])
+                  cena=kwargs['cena'],
+                  obrazek=image)
     session.add(stmt)
 
     new_costume = session.query(Kostym).order_by(Kostym.id.desc()).first()
 
-    stmt = KostymVyuziti(vyuziti_id=kwargs['vyuziti'],
+    stmt = KostymVyuziti(vyuziti_id=kwargs['vyuziti'].id,
                          kostym_id=new_costume.id)
     session.add(stmt)
 
-    stmt = BarvaKostym(barva=kwargs['barva'],
+    stmt = BarvaKostym(barva=kwargs['barva'].barva,
                        kostym_id=new_costume.id)
     session.add(stmt)
 

@@ -2,7 +2,7 @@
      <div class="border" style="padding: 10px;min-height: 800px;">
         <div class="row thumbnail">
             <div class="col-sm " >
-                <img src="data:;base64,{{ image }}">
+                <img class="col-sm" src="{{ url_for('static', filename=data[0].obrazek) }}">
             </div>
         </div>
 

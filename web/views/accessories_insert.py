@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+import os
 from flask import render_template, request, redirect, url_for, flash
 from flask.views import MethodView
 from web.core import db
@@ -8,6 +8,8 @@ from wtforms import StringField, Form, SelectField, validators, TextAreaField,In
 from wtforms.validators import data_required
 from web.roles import employee
 from datetime import datetime
+from utils import workdir
+
 
 class AddAccessory(Form):
     nazev = StringField("Název",[validators.Length(min=5, max=128,message="Pole musí obsahovat nejméně 5 znaků"),data_required('Pole musí být vyplněno')])
@@ -25,7 +27,6 @@ class AddAccessory(Form):
     barva = SelectField("Barva",choices=[('červená','červená')])
 
 
-
 class AccessoriesInsert(MethodView):
     @employee
     def get(self):
@@ -34,31 +35,33 @@ class AccessoriesInsert(MethodView):
 
     @employee
     def post(self):
-
         form = AddAccessory(request.form)
         if not form.validate():
             flash('Zadali jste špatné údaje', 'alert-danger')
             return render_template('accessories_insert_form.html', form=form)
-        if datetime.strptime(form.data.get("datum_vyroby"),'%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
+        if datetime.strptime(form.data.get("datum_vyroby"), '%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
             flash('Zadejte platné datum', 'alert-danger')
-            return render_template('new_order_form.html', form=form)
-        db.add_accessory(**form.data)
+            return render_template('accessories_insert_form.html', form=form)
+        image = request.files['obrazek']
+        with open(os.path.join(workdir, 'web', 'static', image.filename), 'wb') as f:
+            f.write(image.stream.read())
+        db.add_accessory(image.filename, **form.data)
         flash('Doplněk byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
 
-        #@employee
-        #def post(self):
-        #form = AddAccessory(request.form)
-        #if not form.validate():
+        # @employee
+        # def post(self):
+        # form = AddAccessory(request.form)
+        # if not form.validate():
         #    flash('Zadali jste špatné údaje', 'alert-danger')
         #    return render_template('accessories_admin.html', form=form)
-            # if datetime.strptime(form.data.get("datum_vyroby"),'%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
-            #     flash('Zadejte platné datum', 'alert-danger')
-            #     return render_template('new_order_form.html', form=form)
-        #image = request.files['obrazek'].stream.read()
-        #db.add_accessory(image, **form.data)
-        #flash('Doplněk byl úspěšně přidán', 'alert-success')
-        #return render_template('home.html')
+        #     if datetime.strptime(form.data.get("datum_vyroby"),'%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
+        #         flash('Zadejte platné datum', 'alert-danger')
+        #         return render_template('new_order_form.html', form=form)
+        # image = request.files['obrazek'].stream.read()
+        # db.add_accessory(image, **form.data)
+        # flash('Doplněk byl úspěšně přidán', 'alert-success')
+        # return render_template('home.html')
 
 def configure(app):
     app.add_url_rule('/accessories-insert',

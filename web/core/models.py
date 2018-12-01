@@ -19,7 +19,7 @@ class Doplnek(Base):
     material = Column(String(45), nullable=False)
     pocet = Column(Integer)
     opotrebeni = Column(Enum(u'nove', u'stare', u'zanovni'))
-    obrazek = Column(LargeBinary, nullable=True)
+    obrazek = Column(String(100), nullable=False)
     cena = Column(Integer, nullable=False)
     vyrobce = Column(String(45), nullable=False)
 
@@ -42,7 +42,7 @@ class Kostym(Base):
     datum_vyroby = Column(Date, nullable=False)
     opotrebeni = Column(Enum(u'nove', u'stare', u'zanovni'))
     pocet = Column(Integer)
-    obrazek = Column(LargeBinary, nullable=True)
+    obrazek = Column(String(100), nullable=False)
     cena = Column(Integer, nullable=False)
 
 

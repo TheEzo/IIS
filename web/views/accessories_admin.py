@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template, request,jsonify
+from flask import render_template, request, jsonify
 from web.core import db
 from web.roles import employee
 from flask_login import current_user
@@ -8,6 +8,7 @@ from flask_login import current_user
 class Accessories(MethodView):
     def get(self):
         return render_template('accessories_admin.html')
+
 
 class AccessoriesAdmin(MethodView):
     @employee

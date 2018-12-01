@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import os
 from flask import render_template, request, redirect, url_for, flash
 from flask.views import MethodView
 from web.core import db
@@ -10,6 +11,7 @@ from web.roles import employee
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from datetime import datetime
 
+from utils import workdir
 
 class Barva(db.Barva):
     def __repr__(self):
@@ -36,6 +38,7 @@ class AddCostume(Form):
     barva = QuerySelectField("Barva", query_factory=lambda: Barva.query, allow_blank=False)
     vyuziti = QuerySelectField("Využití", query_factory=lambda: Vyuziti.query, allow_blank=False)
 
+
 class CostumesInsert(MethodView):
     @employee
     def get(self):
@@ -49,10 +52,14 @@ class CostumesInsert(MethodView):
             return render_template('costumes_insert_form.html', form=form)
         if datetime.strptime(form.data.get("datum_vyroby"),'%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
             flash('Zadejte platné datum', 'alert-danger')
-            return render_template('new_order_form.html', form=form)
-        db.add_costume(**form.data)
+            return render_template('costumes_insert_form.html', form=form)
+        image = request.files['obrazek']
+        with open(os.path.join(workdir, 'web', 'static', image.filename), 'wb') as f:
+            f.write(image.stream.read())
+        db.add_costume(image.filename, **form.data)
         flash('Kostým byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
+
 
 def configure(app):
     app.add_url_rule('/costumes-insert',
