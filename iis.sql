@@ -13,6 +13,7 @@
 
 
 -- Exportování struktury databáze pro
+DROP DATABASE IF EXISTS `iis`;
 CREATE DATABASE IF NOT EXISTS `iis` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_czech_ci */;
 USE `iis`;
 
