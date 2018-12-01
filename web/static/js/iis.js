@@ -183,9 +183,20 @@ var Admin = {
                 {data: 'actions'},
                 {data: 'id'}
             ],
+
+
             columnDefs: [
-                {targets: 7, className: 'hidden'}
-            ],
+                {targets: 5,
+                render: function (data) {
+                    if (data == 0)
+                        return "Nevráceno <i style='color: red' class=\"fas fa-times-circle\"></i>"
+
+                    else
+                        return "Vráceno <i style='color: green' class=\"fas fa-check-circle\"></i>"
+                    },
+            },
+            {targets: 7, className: 'hidden'}],
+
             pagingType: "full_numbers",
             order: [[0, 'desc']]
         });
