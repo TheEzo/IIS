@@ -9,6 +9,10 @@
                 {{ form.nazev_akce(**{'class': 'form-control' + (' is-invalid'  if form.nazev_akce.errors else '') }) }}
                 <div class="invalid-feedback">{{ form.nazev_akce.errors[0] }}</div>
             </div>
+            <div class="col">
+                <label>{{ form.datum_vraceni.label }}</label>
+                {{ form.datum_vraceni(id="datum_vraceni") }}
+            </div>
         </div>
         <div class="form-group row">
             <div class="col">
@@ -21,4 +25,16 @@
         </div>
     </form>
 
+{% endblock %}
+
+{% block footer %}
+    <script>
+    $(document).ready(function(){
+        $('#datum_vraceni').datepicker({
+            uiLibrary: 'bootstrap4',
+            format: 'dd.mm.yyyy'
+        });
+
+    })
+    </script>
 {% endblock %}

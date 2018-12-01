@@ -2,12 +2,15 @@ from flask import render_template, jsonify
 from flask.views import MethodView
 
 from web.core import db
+from web.roles import employee
 
 
 class ManageOrders(MethodView):
+    @employee
     def get(self):
         return render_template('orders_admin.html')
 
+    @employee
     def post(self):
         orders, orders_costumes, orders_accessories = db.get_all_orders()
         res = []

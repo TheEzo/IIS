@@ -12,6 +12,7 @@ from web.views import costumes_admin
 from web.views import accessories_admin
 from web.views import new_order
 from web.views import orders
+from web.views import property_admin
 
 
 def configure_views(app):
@@ -29,4 +30,5 @@ def configure_views(app):
     accessories_admin.configure(app)
     new_order.configure(app)
     orders.configure(app)
+    property_admin.configure(app)
 

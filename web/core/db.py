@@ -9,6 +9,8 @@ from flask_login import current_user
 from datetime import datetime
 
 
+
+
 def get_user(email):
     return Osoba.query.filter_by(email=email).first()
 
@@ -35,12 +37,13 @@ def get_employee_data(rc):
 
 
 def add_costume(*args, **kwargs):
+    cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
     stmt = Kostym(nazev=kwargs['nazev'],
                   vyrobce=kwargs['vyrobce'],
                   material=kwargs['material'],
                   popis=kwargs['popis'],
                   velikost=kwargs['velikost'],
-                  datum_vyroby=kwargs['datum_vyroby'],
+                  datum_vyroby=cz_datetime.strftime("%Y-%m-%d"),
                   opotrebeni=kwargs['opotrebeni'],
                   pocet=kwargs['pocet'],
                   cena=kwargs['cena'])
@@ -60,10 +63,11 @@ def add_costume(*args, **kwargs):
 
 
 def add_accessory(*args, **kwargs):
+    cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
     stmt = Doplnek(nazev=kwargs['nazev'],
                    vyrobce=kwargs['vyrobce'],
                    popis_vyuziti=kwargs['popis_vyuziti'],
-                   datum_vyroby=kwargs['datum_vyroby'],
+                   datum_vyroby=cz_datetime.strftime("%Y-%m-%d"),
                    velikost=kwargs['velikost'],
                    opotrebeni=kwargs['opotrebeni'],
                    pocet=kwargs['pocet'],
@@ -83,9 +87,11 @@ def add_accessory(*args, **kwargs):
 
 
 def create_order(*args, **kwargs):
+    cz_datetime = datetime.strptime(kwargs['datum_vraceni'], '%d.%m.%Y')
     stmt = Vypujcka(nazev_akce=kwargs['nazev_akce'],
                     vracen=0,
-                    datum_vypujceni=time.strftime("%d.%m.%Y"),
+                    datum_vypujceni=time.strftime("%Y-%m-%d"),
+                    datum_vraceni=cz_datetime.strftime("%Y-%m-%d"),
                     klient=current_user.get_id(),
                     zamestnanec=current_user.get_id(),
                     )
@@ -197,9 +203,26 @@ def get_product(id,type):
 def get_colors():
     return session.query(Barva).all()
 
+def get_color(color):
+    return session.query(Barva).filter_by(barva=color).first()
+
+def insert_color(*args,**kwargs):
+    stmt = Barva(barva=kwargs['barva'].lower())
+    session.add(stmt)
+    session.commit()
+
+
 
 def get_uses():
     return session.query(Vyuziti).all()
+
+def get_use(use):
+    return session.query(Vyuziti).filter_by(druh_akce=use).first()
+
+def insert_use(*args,**kwargs):
+    stmt = Vyuziti(druh_akce=kwargs['vyuziti'])
+    session.add(stmt)
+    session.commit()
 
 
 def get_prize(pruduct,id):
@@ -216,6 +239,7 @@ def get_user_profile(email):
         .outerjoin(Klient, Osoba.rc == Klient.osoba_rc) \
         .filter(Osoba.email == email)\
         .first()
+
 
 
 def get_all_orders():

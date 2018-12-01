@@ -8,6 +8,7 @@ from wtforms import StringField, Form, SelectField, validators, TextAreaField,In
 from wtforms.validators import data_required
 from web.roles import employee
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
+from datetime import datetime
 
 
 class Barva(db.Barva):
@@ -44,8 +45,11 @@ class CostumesAdmin(MethodView):
     def post(self):
         form = AddCostume(request.form)
         if not form.validate():
+            flash('Zadali jste špatné údaje', 'alert-danger')
             return render_template('costumes_admin.html', form=form)
-
+        if datetime.strptime(form.data.get("datum_vyroby"),'%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
+            flash('Zadejte platné datum', 'alert-danger')
+            return render_template('new_order_form.html', form=form)
         db.add_costume(**form.data)
         flash('Kostým byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
