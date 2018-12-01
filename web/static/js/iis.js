@@ -89,8 +89,7 @@ var Admin = {
                 {data: 'rc'}
             ],
             language: {
-                processing: 'Načítání...',
-                infoFiltered: "" // remove text "filtered from XY entried"
+                url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"
             },
             pagingType: "full_numbers",
             columnDefs: [
@@ -164,6 +163,9 @@ var Admin = {
         $('#all-orders').DataTable({
             processing: true,
             autoWidth: false,
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"
+            },
             ajax: {
                 url: "/orders-admin",
                 type: "POST"
@@ -177,6 +179,7 @@ var Admin = {
                 {data: "orderer"},
                 {data: 'price'},
                 {data: 'returned'},
+                {data: 'actions'}
             ],
             columnDefs: [{
                 targets: [5],
@@ -188,10 +191,6 @@ var Admin = {
                         return "Vráceno <i style='color: green' class=\"fas fa-check-circle\"></i>"
                 }
             }],
-            language: {
-                processing: 'Načítání...',
-                infoFiltered: "" // remove text "filtered from XY entried"
-            },
             pagingType: "full_numbers",
             order: [[0, 'desc']]
         });
@@ -229,6 +228,9 @@ var Admin = {
             processing: true,
             serverSide: true,
             autoWidth: false,
+            language: {
+                url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"
+            },
             ajax: {
                 url: "/orders_data",
                 type: "POST"
@@ -250,10 +252,6 @@ var Admin = {
                         return "Vráceno <i style='color: green' class=\"fas fa-check-circle\"></i>"
                 }
             }],
-            language: {
-                processing: 'Načítání...',
-                infoFiltered: "" // remove text "filtered from XY entried"
-            },
             pagingType: "full_numbers",
         });
     }
