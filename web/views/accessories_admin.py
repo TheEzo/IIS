@@ -8,22 +8,6 @@ class Accessories(MethodView):
     def get(self):
         return render_template('accessories_admin.html')
 
-
-<<<<<<< HEAD
-    @employee
-    def post(self):
-        form = AddAccessory(request.form)
-        if not form.validate():
-            flash('Zadali jste špatné údaje', 'alert-danger')
-            return render_template('accessories_admin.html', form=form)
-            # if datetime.strptime(form.data.get("datum_vyroby"),'%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
-            #     flash('Zadejte platné datum', 'alert-danger')
-            #     return render_template('new_order_form.html', form=form)
-        image = request.files['obrazek'].stream.read()
-        db.add_accessory(image, **form.data)
-        flash('Doplněk byl úspěšně přidán', 'alert-success')
-        return render_template('home.html')
-=======
 class AccessoriesAdmin(MethodView):
 
     def process_accessory(self,data):
@@ -56,7 +40,6 @@ class AccessoriesAdmin(MethodView):
                 'iTotalDisplayRecords': str(len(accessories)),
                 'data': accessories_data
         })
->>>>>>> 49ac71e7a8fa394e3246f704c22937397178952f
 
 
 def configure(app):
