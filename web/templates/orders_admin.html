@@ -37,8 +37,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" id="edit_confirm">Save</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success " id="edit_confirm" disabled>Uložit</button>
+                    <button type="button" class="btn btn-danger" id="edit_dismiss" data-dismiss="modal">Zrušit</button>
                 </div>
 
             </div>
@@ -51,7 +51,21 @@
     <script>
         $(document).ready(function(){
            Admin.allOrdersDatatable();
+
+            $( '#returned-checkbox' ).change(function() {
+              if ($('#returned-checkbox').is(':checked')) {
+                  $('#edit_confirm').prop("disabled", false);
+              }
+               else {
+                   $('#edit_confirm').prop("disabled", true);
+                  }
+            });
+           $('#edit_dismiss').on('click', function () {
+               $('#returned-checkbox').prop('checked', false);
+               $('#edit_confirm').prop("disabled", true);
+           });
+
            $('#edit_confirm').on('click', Admin.sendOrderEdit);
-        });
+        })
     </script>
 {% endblock %}

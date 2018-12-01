@@ -218,7 +218,10 @@ var Admin = {
         })
     },
 
-
+    ordersModal: function (el) {
+        var row = el.closest('tr').children();
+        $('#edit-id').val(row[7].innerHTML);
+    },
 
     sendOrderEdit: function () {
         $.ajax({
