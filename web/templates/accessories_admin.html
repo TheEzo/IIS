@@ -3,7 +3,7 @@
 
 {% block body %}
     <h1>Přidat doplněk</h1>
-    <form action="{{ url_for('accessories-admin') }}" method="post">
+    <form action="{{ url_for('accessories-admin') }}" method="post" enctype="multipart/form-data">
         <div class="form-group row">
             <div class="col">
                 <label>{{ form.nazev.label }}*</label>

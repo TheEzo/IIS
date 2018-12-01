@@ -3,6 +3,7 @@
 
 from flask import render_template, request, redirect, url_for, jsonify
 from flask.views import MethodView
+from base64 import b64encode
 
 from web.core import db
 
@@ -23,5 +24,6 @@ def configure(app):
         accessories = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
         templates_list = []
         for accessory in accessories:
-            templates_list.append(render_template('accessory_template.html', data=accessory))
+            img = b64encode(accessory.Doplnek.obrazek)
+            templates_list.append(render_template('accessory_template.html', data=accessory, image=img))
         return jsonify(templates_list)

@@ -62,7 +62,7 @@ def add_costume(*args, **kwargs):
     session.commit()
 
 
-def add_accessory(*args, **kwargs):
+def add_accessory(image, *args, **kwargs):
     cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
     stmt = Doplnek(nazev=kwargs['nazev'],
                    vyrobce=kwargs['vyrobce'],
@@ -73,7 +73,8 @@ def add_accessory(*args, **kwargs):
                    pocet=kwargs['pocet'],
                    typ=kwargs['typ'],
                    material=kwargs['material'],
-                   cena=kwargs['cena']
+                   cena=kwargs['cena'],
+                   obrazek=image
                    )
     session.add(stmt)
 
