@@ -19,6 +19,15 @@ class Cart(MethodView):
             if (session['cart']['prize'] < 0):
                 session['cart']['prize'] = 0
 
+    def actualizeAmount(self,action,type,id):
+        amount = 0
+        if (action == "add"):
+            amount = db.get_product_amount(type, id)[0]
+            db.set_product_amount(type,id,amount-1)
+        elif (action == "remove"):
+            amount = db.get_product_amount(type, id)[0]
+            db.set_product_amount(type, id, amount + 1)
+
 
     @login_required
     def get(self):
@@ -36,6 +45,10 @@ class Cart(MethodView):
     def post(self):
         data = request.json
         if(data['action'] == 'add'):
+            if db.get_product_amount(data['type'], data['value'])[0] == 0:
+                flash('Toto zboží je momentálně nedostupné', 'alert-danger')
+                return jsonify({})
+
             if data['type'] == 'costumes':
                 session['cart']['costumes'].append(data['value'])
             elif data['type'] == 'accessories':
@@ -45,7 +58,9 @@ class Cart(MethodView):
                 return jsonify({})
 
             self.actualizePrize(data['action'],data['type'],data['value'])
+            self.actualizeAmount(data['action'],data['type'],data['value'])
             flash("Položky byly přidány do košíku", 'alert-success')
+
         elif (data['action'] == 'remove'):
             if data['type'] == 'costumes':
                     session['cart']['costumes'].remove(data['value'])
@@ -54,8 +69,10 @@ class Cart(MethodView):
             else:
                 flash('Něco se pokazilo', 'alert-danger')
                 return jsonify({})
-            flash("Položky byly odebrány z košíku", 'alert-success')
             self.actualizePrize(data['action'], data['type'], data['value'])
+            self.actualizeAmount(data['action'], data['type'], data['value'])
+            flash("Položky byly odebrány z košíku", 'alert-success')
+
         return jsonify({})
 
 

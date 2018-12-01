@@ -19,7 +19,7 @@ class AddUseForm(Form):
 class PropertyAdmin(MethodView):
     @employee
     def get(self):
-        return render_template('property_admin.html', form_color=AddColorForm(), form_use=AddUseForm())
+        return render_template('property_insert.html', form_color=AddColorForm(), form_use=AddUseForm())
 
 
 
@@ -30,13 +30,13 @@ class AddUse(MethodView):
         form = AddUseForm(request.form)
         if not form.validate():
             flash('Zadali jste špatné údaje', 'alert-danger')
-            return render_template('property_admin.html', form_use=form,form_color = AddColorForm())
+            return render_template('property_insert.html', form_use=form, form_color = AddColorForm())
         if db.get_use(form.data.get("vyuziti")):
             flash('Zadaný typ využití již v databázi existuje', 'alert-danger')
-            return render_template('property_admin.html', form_use=form,form_color = AddColorForm())
+            return render_template('property_insert.html', form_use=form, form_color = AddColorForm())
         db.insert_use(**form.data)
         flash('Typ využití byl úspěšně přidán', 'alert-success')
-        return render_template('property_admin.html', form_use = AddUseForm(),form_color = AddColorForm())
+        return render_template('property_insert.html', form_use = AddUseForm(), form_color = AddColorForm())
 
 class AddColor(MethodView):
 
@@ -46,17 +46,17 @@ class AddColor(MethodView):
         form = AddColorForm(request.form)
         if not form.validate():
             flash('Zadali jste špatné údaje', 'alert-danger')
-            return render_template('property_admin.html', form_color=form,form_use = AddUseForm())
+            return render_template('property_insert.html', form_color=form, form_use = AddUseForm())
         if db.get_color(form.data.get("barva").lower()):
             flash('Zadaná barva již v databázi existuje', 'alert-danger')
-            return render_template('property_admin.html', form_color=form, form_use=AddUseForm())
+            return render_template('property_insert.html', form_color=form, form_use=AddUseForm())
         db.insert_color(**form.data)
         flash('Barva byla úspěšně přidána', 'alert-success')
-        return render_template('property_admin.html', form_color = AddColorForm(), form_use = AddUseForm())
+        return render_template('property_insert.html', form_color = AddColorForm(), form_use = AddUseForm())
 
 def configure(app):
     app.add_url_rule('/property-admin',
-                     view_func=PropertyAdmin.as_view('add-property'))
+                     view_func=PropertyAdmin.as_view('property-insert'))
 
     app.add_url_rule('/add-color',
                  view_func=AddColor.as_view('add-color'))

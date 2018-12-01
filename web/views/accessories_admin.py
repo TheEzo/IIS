@@ -1,36 +1,15 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from flask import render_template, request, redirect, url_for, flash
 from flask.views import MethodView
+from flask import render_template, request,jsonify
 from web.core import db
-from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField, ValidationError
-from wtforms.validators import data_required
-from web.roles import employee
-from datetime import datetime
-
-class AddAccessory(Form):
-    nazev = StringField("Název",[validators.Length(min=5, max=128,message="Pole musí obsahovat nejméně 5 znaků"),data_required('Pole musí být vyplněno')])
-    vyrobce = StringField("Výrobce", [validators.Length(min=1, max=45, message="Pole musí obsahovat nejméně 1 znak"), data_required('Pole musí být vyplněno')])
-    popis_vyuziti = TextAreaField("Popis využití", [validators.Length(min=10, max=512,message="Popis musí obsahovat nejméně 10 znaků"),data_required('Pole musí být vyplněno')])
-    velikost = SelectField("Velikost",choices=[('S','S'),('M','M'),('L','L'),('XL','XL'),('XXL','XXL'),('XXXL','XXXL')])
-    opotrebeni = SelectField("Opotřebení",
-                           choices=[('nove', 'Nové'), ('stare', 'Staré'), ('zanovni', 'Zánovní')])
-    pocet = IntegerField("Počet",[data_required('Pole musí být vyplněno')])
-    material = StringField("Materiál", [validators.Length(min=2, max=45, message="Pole musí obsahovat nejméně 2 znaky"),data_required('Pole musí být vyplněno')])
-    typ = StringField("Typ", [validators.Length(min=2, max=45, message="Pole musí obsahovat nejméně 2 znaky"),data_required('Pole musí být vyplněno')])
-    datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
-    cena = IntegerField("Cena za kus",[data_required('Pole musí být vyplněno')])
-    obrazek = FileField("Náhled")
-    barva = SelectField("Barva",choices=[('červená','červená')])
+from flask_login import current_user
 
 
-class AccessoriesAdmin(MethodView):
-    @employee
+class Accessories(MethodView):
     def get(self):
+        return render_template('accessories_admin.html')
 
-        return render_template('accessories_admin.html', form = AddAccessory())
 
+<<<<<<< HEAD
     @employee
     def post(self):
         form = AddAccessory(request.form)
@@ -44,8 +23,45 @@ class AccessoriesAdmin(MethodView):
         db.add_accessory(image, **form.data)
         flash('Doplněk byl úspěšně přidán', 'alert-success')
         return render_template('home.html')
+=======
+class AccessoriesAdmin(MethodView):
+
+    def process_accessory(self,data):
+        accessory = data[0]
+        color = data[1]
+
+        return dict(
+            name=accessory.nazev,
+            producer=accessory.vyrobce,
+            material=accessory.material,
+            description=accessory.popis_vyuziti,
+            type=accessory.typ,
+            size=accessory.velikost,
+            date_of_manufacture=accessory.datum_vyroby,
+            detrition=accessory.opotrebeni,
+            amount=accessory.pocet,
+            prize=accessory.cena,
+            color=color.barva,
+            )
+
+    def post(self):
+        accessories = db.get_accessories()
+        accessories_data = []
+        for accessory in accessories:
+            accessories_data.append(self.process_accessory(accessory))
+        args = request.form
+        return jsonify({
+                'sEcho': '1',
+                'iDisplayLength': args.get('length', '10'),
+                'iTotalDisplayRecords': str(len(accessories)),
+                'data': accessories_data
+        })
+>>>>>>> 49ac71e7a8fa394e3246f704c22937397178952f
 
 
 def configure(app):
     app.add_url_rule('/accessories-admin',
-                 view_func=AccessoriesAdmin.as_view('accessories-admin'))
+                     view_func=Accessories.as_view('accessories-admin'))
+
+    app.add_url_rule('/accessories-data',
+                     view_func=AccessoriesAdmin.as_view('accessories-data'))
