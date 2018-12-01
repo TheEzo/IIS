@@ -286,3 +286,9 @@ def get_all_orders():
         session.query(DoplnekVypujcka.vypujcka_id, Doplnek)\
             .outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all()
     )
+
+def update_order(**kwargs):
+    order = session.query(Vypujcka) \
+        .filter(Vypujcka.id == kwargs['id']).first()
+    order.vracen = kwargs['returned'][0]
+    session.commit()

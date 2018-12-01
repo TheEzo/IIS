@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask import render_template, request,jsonify
 from web.core import db
 from flask_login import current_user
-
+from web.roles import employee
 
 class Costumes(MethodView):
     def get(self):
@@ -10,7 +10,7 @@ class Costumes(MethodView):
 
 
 class CostumesAdmin(MethodView):
-
+    @employee
     def process_costume(self,data):
         costume = data[0]
         color = data[1]
@@ -30,6 +30,7 @@ class CostumesAdmin(MethodView):
             use=use.druh_akce
             )
 
+    @employee
     def post(self):
         costumes = db.get_costumes()
         costumes_data = []

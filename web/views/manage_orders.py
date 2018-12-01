@@ -1,5 +1,6 @@
-from flask import render_template, jsonify
+from flask import render_template, jsonify, request, flash
 from flask.views import MethodView
+from flask_login import current_user
 
 from web.core import db
 from web.roles import employee
@@ -31,7 +32,8 @@ class ManageOrders(MethodView):
                 costumes=', '.join(costumes),
                 accessories=', '.join(accessories),
                 price=price,
-                actions=''
+                actions=render_template('orders_actions.html', id=order.Vypujcka.id),
+                id=order.Vypujcka.id
             ))
         return jsonify({
                 'sEcho': '1',
@@ -43,3 +45,11 @@ class ManageOrders(MethodView):
 def configure(app):
     app.add_url_rule('/orders-admin',
                      view_func=ManageOrders.as_view('orders-admin'))
+
+    @app.route('/orders_edit', methods=['POST'])
+    @employee
+    def orders_edit():
+        data = request.form
+        db.update_order(**data)
+        flash('Objednávka aktualizovaná', 'alert-success')
+        return jsonify({})

@@ -42,6 +42,7 @@ class Cart(MethodView):
 
         return render_template('cart.html', items=list(set(items)), cos_count=Counter(session['cart']['costumes']), acc_count=Counter(session['cart']['accessories']))
 
+    @login_required
     def post(self):
         data = request.json
         if(data['action'] == 'add'):

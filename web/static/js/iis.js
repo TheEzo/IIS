@@ -150,6 +150,7 @@ var Admin = {
                 {data: 'amount'},
                 {data: 'prize'},
             ],
+
             language: {
                 processing: 'Načítání...',
                 infoFiltered: "" // remove text "filtered from XY entried"
@@ -179,7 +180,11 @@ var Admin = {
                 {data: "orderer"},
                 {data: 'price'},
                 {data: 'returned'},
-                {data: 'actions'}
+                {data: 'actions'},
+                {data: 'id'}
+            ],
+            columnDefs: [
+                {targets: 7, className: 'hidden'}
             ],
             pagingType: "full_numbers",
             order: [[0, 'desc']]
@@ -207,6 +212,19 @@ var Admin = {
             type: 'POST',
             url: '/users_edit',
             data: $('#users-update-form').serialize(),
+            success: function () {
+                window.location.reload();
+            }
+        })
+    },
+
+
+
+    sendOrderEdit: function () {
+        $.ajax({
+            type: 'POST',
+            url: '/orders_edit',
+            data: $('#orders-update-form').serialize(),
             success: function () {
                 window.location.reload();
             }

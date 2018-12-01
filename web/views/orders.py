@@ -2,15 +2,17 @@ from flask.views import MethodView
 from flask import render_template, request,jsonify
 from web.core import db
 from flask_login import current_user
+from web.roles import login_required
 
 
 class Orders(MethodView):
+    @login_required
     def get(self):
         return render_template('orders.html')
 
 
 class OrdersView(MethodView):
-
+    @login_required
     def post(self):
         orders = db.get_user_orders(current_user.get_id())
         order_data = []

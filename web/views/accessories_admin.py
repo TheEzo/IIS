@@ -1,6 +1,7 @@
 from flask.views import MethodView
 from flask import render_template, request,jsonify
 from web.core import db
+from web.roles import employee
 from flask_login import current_user
 
 
@@ -9,7 +10,7 @@ class Accessories(MethodView):
         return render_template('accessories_admin.html')
 
 class AccessoriesAdmin(MethodView):
-
+    @employee
     def process_accessory(self,data):
         accessory = data[0]
         color = data[1]
@@ -28,6 +29,7 @@ class AccessoriesAdmin(MethodView):
             color=color.barva,
             )
 
+    @employee
     def post(self):
         accessories = db.get_accessories()
         accessories_data = []
