@@ -1,59 +1,52 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from flask import render_template, request, redirect, url_for, flash
 from flask.views import MethodView
+from flask import render_template, request,jsonify
 from web.core import db
-from wtforms import StringField, Form, SelectField, validators, TextAreaField,IntegerField, FileField
-from wtforms.validators import data_required
-from web.roles import employee
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from datetime import datetime
+from flask_login import current_user
 
 
-class Barva(db.Barva):
-    def __repr__(self):
-        return "%s" % (self.barva)
+class Costumes(MethodView):
+    def get(self):
+        return render_template('costumes_admin.html')
 
-class Vyuziti(db.Vyuziti):
-    def __repr__(self):
-        return "%s" % (self.druh_akce)
-
-
-
-class AddCostume(Form):
-    nazev = StringField("Název", [validators.Length(min=5, max=128), data_required('Pole musí být vyplněno')])
-    vyrobce = StringField("Výrobce",[validators.Length(min=1, max=45),data_required('Pole musí být vyplněno')])
-    material = StringField("Materiál", [validators.Length(min=2, max=45),data_required('Pole musí být vyplněno')])
-    popis = TextAreaField("Popis", [validators.Length(min=10, max=512),data_required('Pole musí být vyplněno')])
-    velikost = SelectField("Velikost",choices=[('S','S'),('M','M'),('L','L'),('XL','XL'),('XXL','XXL'),('XXXL','XXXL')])
-    opotrebeni = SelectField("Opotřebení",
-                           choices=[('nove', 'Nové'), ('stare', 'Staré'), ('zanovni', 'Zánovní')])
-    pocet = IntegerField("Počet", [data_required('Pole musí být vyplněno')])
-    datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
-    cena = IntegerField("Cena za kus", [data_required('Pole musí být vyplněno')])
-    obrazek = FileField("Náhled")
-    barva = QuerySelectField("Barva", query_factory=lambda: Barva.query, allow_blank=False)
-    vyuziti = QuerySelectField("Využití", query_factory=lambda: Vyuziti.query, allow_blank=False)
 
 class CostumesAdmin(MethodView):
-    @employee
-    def get(self):
-        return render_template('costumes_admin.html', form = AddCostume())
 
-    @employee
+    def process_costume(self,data):
+        costume = data[0]
+        color = data[1]
+        use = data[2]
+
+        return dict(
+            name=costume.nazev,
+            producer=costume.vyrobce,
+            material=costume.material,
+            description=costume.popis,
+            size=costume.velikost,
+            date_of_manufacture=costume.datum_vyroby,
+            detrition=costume.opotrebeni,
+            amount=costume.pocet,
+            prize=costume.cena,
+            color=color.barva,
+            use=use.druh_akce
+            )
+
     def post(self):
-        form = AddCostume(request.form)
-        if not form.validate():
-            flash('Zadali jste špatné údaje', 'alert-danger')
-            return render_template('costumes_admin.html', form=form)
-        if datetime.strptime(form.data.get("datum_vyroby"),'%d.%m.%Y') > datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
-            flash('Zadejte platné datum', 'alert-danger')
-            return render_template('new_order_form.html', form=form)
-        db.add_costume(**form.data)
-        flash('Kostým byl úspěšně přidán', 'alert-success')
-        return render_template('home.html')
+        costumes = db.get_costumes()
+        costumes_data = []
+        for costume in costumes:
+            costumes_data.append(self.process_costume(costume))
+        args = request.form
+        return jsonify({
+                'sEcho': '1',
+                'iDisplayLength': args.get('length', '10'),
+                'iTotalDisplayRecords': str(len(costumes)),
+                'data': costumes_data
+        })
+
 
 def configure(app):
     app.add_url_rule('/costumes-admin',
-        view_func=CostumesAdmin.as_view('costumes-admin'))
+                     view_func=Costumes.as_view('costumes-admin'))
+
+    app.add_url_rule('/costumes-data',
+                     view_func=CostumesAdmin.as_view('costumes-data'))

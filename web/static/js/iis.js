@@ -106,6 +106,60 @@ var Admin = {
         });
     },
 
+    costumesDatatable: function () {
+        $('#costumes-table').DataTable({
+            processing: true,
+            autoWidth: false,
+            ajax: {
+                url: "/costumes-data",
+                type: "POST"
+            },
+            sPaginationType: "full_numbers",
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            columns: [
+                {data: "name"},
+                {data: "producer"},
+                {data: "material"},
+                {data: "size"},
+                {data: 'amount'},
+                {data: 'prize'},
+            ],
+            language: {
+                processing: 'Načítání...',
+                infoFiltered: "" // remove text "filtered from XY entried"
+            },
+            pagingType: "full_numbers",
+            order: [[0, 'desc']]
+        });
+    },
+
+    accessoriesDatatable: function () {
+        $('#accessories-table').DataTable({
+            processing: true,
+            autoWidth: false,
+            ajax: {
+                url: "/accessories-data",
+                type: "POST"
+            },
+            sPaginationType: "full_numbers",
+            lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
+            columns: [
+                {data: "name"},
+                {data: "producer"},
+                {data: "material"},
+                {data: "type"},
+                {data: 'amount'},
+                {data: 'prize'},
+            ],
+            language: {
+                processing: 'Načítání...',
+                infoFiltered: "" // remove text "filtered from XY entried"
+            },
+            pagingType: "full_numbers",
+            order: [[0, 'desc']]
+        });
+    },
+
     allOrdersDatatable: function(){
         $('#all-orders').DataTable({
             processing: true,

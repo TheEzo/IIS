@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash
 import time
 from flask_login import current_user
 from datetime import datetime
+from sqlalchemy import update
 
 
 
@@ -199,6 +200,41 @@ def get_product(id,type):
             .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
             .filter(Doplnek.id == id)
 
+def get_costumes():
+    return session.query(Kostym,Barva, Vyuziti)\
+            .outerjoin(BarvaKostym, Kostym.id == BarvaKostym.kostym_id)\
+            .outerjoin(Barva,BarvaKostym.barva == Barva.barva) \
+            .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
+            .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id) \
+            .order_by(Kostym.id.asc()) \
+            .all()
+
+def get_accessories():
+    return session.query(Doplnek, Barva) \
+        .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
+        .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
+        .order_by(Doplnek.id.asc()) \
+        .all()
+
+def get_product_amount(type,id):
+    if (type == "costumes"):
+        return session.query(Kostym.pocet) \
+            .filter(Kostym.id == id).first()
+    elif (type == "accessories"):
+        return session.query(Doplnek.pocet) \
+            .filter(Doplnek.id == id).first()
+
+def set_product_amount(type,id,amount):
+    if (type == "costumes"):
+        update_costume = session.query(Kostym)\
+            .filter(Kostym.id == id).first()
+        update_costume.pocet = amount
+        session.commit()
+    elif (type == "accessories"):
+        update_costume = session.query(Doplnek) \
+            .filter(Doplnek.id == id).first()
+        update_costume.pocet = amount
+        session.commit()
 
 def get_colors():
     return session.query(Barva).all()

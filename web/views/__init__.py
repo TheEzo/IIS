@@ -8,11 +8,13 @@ from web.views import accessories
 from web.views import cart
 from web.views import manage_orders
 from web.views import users
-from web.views import costumes_admin
-from web.views import accessories_admin
+from web.views import costumes_insert
+from web.views import accessories_insert
 from web.views import new_order
 from web.views import orders
-from web.views import property_admin
+from web.views import property_insert
+from web.views import costumes_admin
+from web.views import accessories_admin
 
 
 def configure_views(app):
@@ -26,9 +28,10 @@ def configure_views(app):
     cart.configure(app)
     manage_orders.configure(app)
     users.configure(app)
-    costumes_admin.configure(app)
-    accessories_admin.configure(app)
+    costumes_insert.configure(app)
+    accessories_insert.configure(app)
     new_order.configure(app)
     orders.configure(app)
-    property_admin.configure(app)
-
+    property_insert.configure(app)
+    costumes_admin.configure(app)
+    accessories_admin.configure(app)
