@@ -9,6 +9,7 @@ from datetime import datetime
 
 class Costumes(MethodView):
     def get(self):
+
         return render_template('costumes.html')
 
 

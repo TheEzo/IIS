@@ -83,7 +83,7 @@ class CostumesInsert(MethodView):
             image = None
         db.add_or_update_costume(image, **form.data)
         flash('Kostým byl úspěšně přidán', 'alert-success')
-        return render_template('home.html')
+        return render_template("costumes_admin.html")
 
 
 def configure(app):
