@@ -47,7 +47,7 @@ class CostumesInsert(MethodView):
                 velikost=costume.velikost,
                 opotrebeni=costume.opotrebeni,
                 pocet=costume.pocet,
-                datum_vyroby=costume.datum_vyroby,
+                datum_vyroby=costume.datum_vyroby.strftime('%d.%m.%Y'),
                 cena=costume.cena,
                 obrazek=costume.obrazek
             )

@@ -46,8 +46,7 @@ class AccessoriesInsert(MethodView):
                 material=accessory.material,
                 typ=accessory.typ,
                 datum_vyroby=accessory.datum_vyroby.strftime('%d.%m.%Y'),
-                cena=accessory.cena,
-                obrazek=accessory.obrazek
+                cena=accessory.cena
             )
             colors = db.get_accessory_colors(id)
             if colors:

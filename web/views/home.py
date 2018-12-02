@@ -1,9 +1,10 @@
-from flask import render_template
+from flask import render_template, redirect, url_for
 from flask.views import MethodView
 
 
 class Home(MethodView):
     def get(self):
+        return redirect(url_for('costumes'))
         return render_template('home.html')
 
 

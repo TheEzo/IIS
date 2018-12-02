@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template, request, jsonify
+from flask import render_template, request, jsonify, flash, redirect, url_for
 from web.core import db
 from web.roles import employee
 from flask_login import current_user
@@ -43,7 +43,9 @@ class AccessoriesAdmin(MethodView):
 
 class AccesoryDel(MethodView):
     def get(self):
-        pass
+        db.delete_accessory(request.args.get('id'))
+        flash('Doplněk úspěšně smazán', 'alert-success')
+        return redirect(url_for('accessories-admin'))
 
 
 def configure(app):
