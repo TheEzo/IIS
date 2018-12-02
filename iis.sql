@@ -5,7 +5,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 CREATE DATABASE IF NOT EXISTS `iis` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_czech_ci */;
-USE `iis`;
+USE `IIS`;
 
 CREATE TABLE IF NOT EXISTS `alembic_version` (
   `version_num` varchar(32) COLLATE utf8_czech_ci NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `alembic_version` (
 
 /*!40000 ALTER TABLE `alembic_version` DISABLE KEYS */;
 REPLACE INTO `alembic_version` (`version_num`) VALUES
-	('2e3e21eadeaa');
+	('015f0dc67c12');
 /*!40000 ALTER TABLE `alembic_version` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `barva` (
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `barva_kostym` (
 
 /*!40000 ALTER TABLE `barva_kostym` DISABLE KEYS */;
 REPLACE INTO `barva_kostym` (`kostym_id`, `barva`) VALUES
-	(42, 'zelená');
+	(43, 'černá');
 /*!40000 ALTER TABLE `barva_kostym` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `doplnek` (
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `doplnek` (
   `opotrebeni` enum('nove','stare','zanovni') COLLATE utf8_czech_ci DEFAULT NULL,
   `cena` int(11) NOT NULL,
   `vyrobce` varchar(45) COLLATE utf8_czech_ci NOT NULL,
-  `obrazek` blob,
+  `obrazek` varchar(100) COLLATE utf8_czech_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
@@ -81,6 +81,7 @@ REPLACE INTO `doplnek_barva` (`doplnek_id`, `barva`) VALUES
 CREATE TABLE IF NOT EXISTS `doplnek_vypujcka` (
   `doplnek_id` int(11) NOT NULL,
   `vypujcka_id` int(11) NOT NULL,
+  `pocet` int(11) DEFAULT NULL,
   PRIMARY KEY (`doplnek_id`,`vypujcka_id`),
   KEY `vypujcka_id` (`vypujcka_id`),
   CONSTRAINT `doplnek_vypujcka_ibfk_1` FOREIGN KEY (`doplnek_id`) REFERENCES `doplnek` (`id`) ON DELETE CASCADE,
@@ -113,13 +114,13 @@ CREATE TABLE IF NOT EXISTS `kostym` (
   `datum_vyroby` date NOT NULL,
   `cena` int(11) NOT NULL,
   `nazev` varchar(128) COLLATE utf8_czech_ci NOT NULL,
-  `obrazek` blob,
+  `obrazek` varchar(100) COLLATE utf8_czech_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 /*!40000 ALTER TABLE `kostym` DISABLE KEYS */;
 REPLACE INTO `kostym` (`id`, `vyrobce`, `material`, `popis`, `velikost`, `opotrebeni`, `pocet`, `datum_vyroby`, `cena`, `nazev`, `obrazek`) VALUES
-	(42, 'Uniformy s.r.o.', 'Bavlna', 'prostě uniforma', 'XL', 'zanovni', 2, '2018-07-09', 300, 'Uniforma', 'uniforma.jpg');
+	(43, 'Uniformy s.r.o.', 'Bavlna', 'prostě uniformaa', 'XL', 'zanovni', 2, '2018-07-02', 300, 'Uniforma', NULL);
 /*!40000 ALTER TABLE `kostym` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `kostym_vyuziti` (
@@ -133,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `kostym_vyuziti` (
 
 /*!40000 ALTER TABLE `kostym_vyuziti` DISABLE KEYS */;
 REPLACE INTO `kostym_vyuziti` (`kostym_id`, `vyuziti_id`) VALUES
-	(42, 5);
+	(43, 5);
 /*!40000 ALTER TABLE `kostym_vyuziti` ENABLE KEYS */;
 
 CREATE TABLE IF NOT EXISTS `osoba` (
@@ -176,6 +177,7 @@ CREATE TABLE IF NOT EXISTS `vypujcka` (
 CREATE TABLE IF NOT EXISTS `vypujcka_kostym` (
   `vypujcka_id` int(11) NOT NULL,
   `kostym_id` int(11) NOT NULL,
+  `pocet` int(11) DEFAULT NULL,
   PRIMARY KEY (`vypujcka_id`,`kostym_id`),
   KEY `kostym_id` (`kostym_id`),
   CONSTRAINT `vypujcka_kostym_ibfk_1` FOREIGN KEY (`kostym_id`) REFERENCES `kostym` (`id`) ON DELETE CASCADE,
@@ -189,7 +191,7 @@ CREATE TABLE IF NOT EXISTS `vyuziti` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `druh_akce` varchar(128) COLLATE utf8_czech_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 /*!40000 ALTER TABLE `vyuziti` DISABLE KEYS */;
 REPLACE INTO `vyuziti` (`id`, `druh_akce`) VALUES
