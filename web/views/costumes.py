@@ -4,6 +4,7 @@
 from flask import render_template, request, redirect, url_for, jsonify
 from flask.views import MethodView
 from web.core import db
+from datetime import datetime
 
 class Costumes(MethodView):
     def get(self):
@@ -21,5 +22,7 @@ def configure(app):
         costumes = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
         templates_list = []
         for costume in costumes:
-            templates_list.append(render_template('costume_template.html', data=costume))
+            date = costume[0].datum_vyroby
+            color = costume[1].barva
+            templates_list.append(render_template('costume_template.html', data=costume,date=date.strftime("%d.%m.%Y"),color=color))
         return jsonify(templates_list)

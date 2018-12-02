@@ -51,13 +51,13 @@ var Web = {
         }
     },
 
-    confirmOrder: function (type,action,item) {
+    confirmOrder: function (type,action,item,color) {
         $.ajax({
             url: '/cart',
             type: "POST",
             dataType: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({type: type, value: item, action: action}),
+            data: JSON.stringify({type: type, value: item, action: action, color: color}),
             success: function (res) {
                 window.location.reload();
             }
@@ -164,6 +164,7 @@ var Admin = {
         });
     },
 
+
     allOrdersDatatable: function(){
         $('#all-orders').DataTable({
             processing: true,
@@ -249,6 +250,7 @@ var Admin = {
         })
     },
 
+
     ordersDatatable: function () {
         $('#orders-table').DataTable({
             processing: true,
@@ -272,7 +274,7 @@ var Admin = {
                 {data: "returned"}
             ],
             columnDefs: [{
-                targets: [2],
+                targets: [6],
                 render: function (data) {
                     if (data == 0){
                         return "Nevráceno <i style='color: red' class=\"fas fa-times-circle\"></i>"
@@ -283,7 +285,7 @@ var Admin = {
             }],
             pagingType: "full_numbers",
         });
-    }
+}
 };
 
 

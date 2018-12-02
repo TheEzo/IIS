@@ -32,8 +32,10 @@ class AddAccessory(Form):
 class AccessoriesInsert(MethodView):
     @employee
     def get(self):
+        title = "Přidat doplněk"
         id = request.args.get('id', None)
         if id:
+            title = "Upravit doplněk"
             accessory = db.get_accessory_by_id(id)
             form = AddAccessory(
                 id=accessory.id,
@@ -52,8 +54,8 @@ class AccessoriesInsert(MethodView):
             if colors:
                 for color in colors:
                     form.barva.default.append(color.barva)
-            return render_template('accessories_insert_form.html', form=form)
-        return render_template('accessories_insert_form.html', form=AddAccessory())
+            return render_template('accessories_insert_form.html', form=form,title=title)
+        return render_template('accessories_insert_form.html', form=AddAccessory(),title=title)
 
     @employee
     def post(self):

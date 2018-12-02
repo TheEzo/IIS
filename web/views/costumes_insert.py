@@ -35,8 +35,10 @@ class AddCostume(Form):
 class CostumesInsert(MethodView):
     @employee
     def get(self):
+        title = "Přidat kostým"
         id = request.args.get('id', None)
         if id:
+            title = "Upravit kostým"
             costume = db.get_costume_by_id(id)
             form = AddCostume(
                 id=costume.id,
@@ -59,8 +61,8 @@ class CostumesInsert(MethodView):
             if usages:
                 for usage in usages:
                     form.vyuziti.default.append(usage.vyuziti_id)
-            return render_template('costumes_insert_form.html', form=form)
-        return render_template('costumes_insert_form.html', form=AddCostume())
+            return render_template('costumes_insert_form.html', form=form,title=title)
+        return render_template('costumes_insert_form.html', form=AddCostume(),title=title)
 
     @employee
     def post(self):

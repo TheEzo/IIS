@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
-{% block title %}Doplněk {% endblock %}
+{% block title %}Přidat Doplněk {% endblock %}
 
 {% block body %}
-    <h1>Přidat doplněk</h1>
+    <h1>{{ title }}</h1>
     <form action="{{ url_for('accessories-insert') }}" method="post" enctype="multipart/form-data">
         <div class="hidden">
             {{ form.id() }}
@@ -73,7 +73,7 @@
         </div>
         <div class="row">
             <div class="col">
-                <input type="submit" value="Přidat" class="btn btn-primary">
+                <input type="submit" value="Potvrdit" class="btn btn-primary">
                 <span class="">Pole označená * jsou povinná</span>
             </div>
         </div>

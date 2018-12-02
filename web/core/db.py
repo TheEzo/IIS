@@ -396,6 +396,7 @@ def get_order_products(id):
             session.query(DoplnekVypujcka).filter(DoplnekVypujcka.vypujcka_id == id).all()
             )
 
+
 def delete_order(id):
     session.query(Vypujcka).filter(Vypujcka.id == id).delete()
     session.commit()

@@ -51,7 +51,8 @@ class Cart(MethodView):
                 return jsonify({})
 
             if data['type'] == 'costumes':
-                session['cart']['costumes'].append(data['value'])
+                session['cart']['costumes'][data['value']] = [data['color']]
+                #session['cart']['costumes'].append(data['value'])
             elif data['type'] == 'accessories':
                 session['cart']['accessories'].append(data['value'])
             else:
