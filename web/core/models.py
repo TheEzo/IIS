@@ -120,6 +120,7 @@ class DoplnekVypujcka(Base):
 
     doplnek_id = Column(Integer, ForeignKey('doplnek.id', ondelete='CASCADE'))
     vypujcka_id = Column(Integer, ForeignKey('vypujcka.id', ondelete='CASCADE'))
+    pocet = Column(Integer, default=1)
 
 
 class VypujckaKostym(Base):
@@ -128,6 +129,7 @@ class VypujckaKostym(Base):
 
     vypujcka_id = Column(Integer, ForeignKey('vypujcka.id', ondelete='CASCADE'))
     kostym_id = Column(Integer, ForeignKey('kostym.id', ondelete='CASCADE'))
+    pocet = Column(Integer, default=1)
 
 
 class KostymVyuziti(Base):
