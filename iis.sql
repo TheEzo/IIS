@@ -5,7 +5,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
 CREATE DATABASE IF NOT EXISTS `iis` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_czech_ci */;
-USE `IIS`;
+USE `iis`;
 
 CREATE TABLE IF NOT EXISTS `alembic_version` (
   `version_num` varchar(32) COLLATE utf8_czech_ci NOT NULL,

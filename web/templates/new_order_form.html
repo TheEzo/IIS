@@ -20,7 +20,7 @@
                 <span class="">Pole označená * jsou povinná</span>
             </div>
             <div class="col">
-                <h2>Celkem: {{ session['cart']['prize'] }}</h2>
+                <h2>Celkem: <span id="order_prize">{{ session['cart']['prize'] }}</span></h2>
             </div>
         </div>
     </form>
@@ -30,11 +30,14 @@
 {% block footer %}
     <script>
     $(document).ready(function(){
+
         $('#datum_vraceni').datepicker({
             uiLibrary: 'bootstrap4',
             format: 'dd.mm.yyyy'
         });
+        
+    });
 
-    })
+
     </script>
 {% endblock %}

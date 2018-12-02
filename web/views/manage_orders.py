@@ -53,6 +53,14 @@ def configure(app):
     @employee
     def orders_edit():
         data = request.form
+        products = db.get_order_products(data['id'])
+
+        for product in products[0]:
+            db.update_product_amount(product.kostym_id,product.pocet,"costume")
+
+        for product in products[1]:
+            db.update_product_amount(product.doplnek_id, product.pocet, "accessory")
+
         db.update_order(**data)
         flash('Objednávka aktualizovaná', 'alert-success')
         return jsonify({})

@@ -1,9 +1,9 @@
 <div class="container-fluid list_item col-sm-4">
     <div class="border" style="padding: 10px;min-height: 800px;">
     <div class="row thumbnail">
-        <div class="col-sm ">
-            <img class="col-sm" src="{{ url_for('static', filename=data[0].obrazek) }}">
-        </div>
+        <div class="col-sm " >
+                <img class="col-sm" src="{{ url_for('static', filename=data[0].obrazek) }}">
+            </div>
     </div>
 
     <div class="row item-title">
@@ -58,11 +58,11 @@
     </div>
     <hr>
     <div class="row item-footer">
-        <div class="col-sm-8">
+        <div class="col-sm-6">
              <button class="add btn btn-success" value="{{ data[0].id }}">Do košíku</button>
         </div>
-        <div class="col-sm-4">
-               <span class="text-decorator">{{ data[0].cena }},-</span>
+        <div class="col-sm-6">
+               <span class="text-decorator">{{ data[0].cena }},- za den</span>
         </div>
     </div>
     </div>

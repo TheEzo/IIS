@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash
 import time
 from flask_login import current_user
 from datetime import datetime
-from sqlalchemy import update
+from collections import Counter
 
 
 
@@ -143,16 +143,21 @@ def create_order(*args, **kwargs):
 
     new_order_id = session.query(Vypujcka).order_by(Vypujcka.id.desc()).first()
 
+    costumes_occurences = Counter(args[0]['costumes'])
 
-    for item in args[0]['costumes']:
+    for item,occurence in costumes_occurences.items():
 
         stmt = VypujckaKostym(kostym_id=item,
-                                  vypujcka_id=new_order_id.id)
+                                  vypujcka_id=new_order_id.id,
+                              pocet=occurence)
         session.add(stmt)
 
-    for item in args[0]['accessories']:
+    accessories_occurences = Counter(args[0]['accessories'])
+
+    for item,occurence in accessories_occurences.items():
         stmt = DoplnekVypujcka(doplnek_id=item,
-                                  vypujcka_id=new_order_id.id)
+                               vypujcka_id=new_order_id.id,
+                               pocet=occurence)
         session.add(stmt)
 
     session.commit()
@@ -189,6 +194,26 @@ def insert_base_users():
     stmt = Zamestnanec(osoba_rc='9609255832',
                        pozice='vedouci')
     session.add(stmt)
+
+    stmt = Osoba(rc='9610086548',
+                 email='domino.ruta@gmail.com',
+                 # Heslo123
+                 heslo='pbkdf2:sha256:50000$R1EGLREp$17c8154b3817009d26f14456dc54ae89f041e500c43ca011ecd5133c0763febf',
+                 jmeno='Dominik',
+                 prijmeni='Ruta',
+                 ulice='',
+                 obec='',
+                 cislo_popisne='',
+                 tel_cislo='')
+    session.add(stmt)
+    session.commit()
+    stmt = Klient(clenstvi='bronzove',
+                  osoba_rc='9610086548')
+    session.add(stmt)
+    stmt = Zamestnanec(osoba_rc='9610086548',
+                       pozice='vedouci')
+    session.add(stmt)
+
     session.commit()
 
 
@@ -242,6 +267,18 @@ def get_product(id,type):
             .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
             .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
             .filter(Doplnek.id == id)
+
+def update_product_amount(id,amount,type):
+    if type == "costume":
+        costume = session.query(Kostym) \
+            .filter(Kostym.id == id).first()
+        costume.pocet = amount
+        session.commit()
+    elif type == "accessory":
+        accessory = session.query(Doplnek) \
+            .filter(Doplnek.id == id).first()
+        accessory.pocet = amount
+        session.commit()
 
 def get_costumes_data():
     return (session.query(Kostym).all(),
@@ -335,13 +372,9 @@ def update_order(**kwargs):
     session.commit()
 
 def get_order_products(id):
-    return session.query(Vypujcka, Kostym, Doplnek)\
-            .filter(Vypujcka.id == id) \
-            .outerjoin(VypujckaKostym, VypujckaKostym.vypujcka_id == Vypujcka.id)\
-            .outerjoin(VypujckaKostym,VypujckaKostym.kostym_id == Kostym.id)\
-            .outerjoin(DoplnekVypujcka, DoplnekVypujcka.vypujcka_id == Doplnek.id) \
-            .outerjoin(DoplnekVypujcka, DoplnekVypujcka.doplnek_id == Doplnek.id)\
-            .all()
+    return (session.query(VypujckaKostym).filter(VypujckaKostym.vypujcka_id == id).all(),
+            session.query(DoplnekVypujcka).filter(DoplnekVypujcka.vypujcka_id == id).all()
+            )
 
 def delete_order(id):
     session.query(Vypujcka).filter(Vypujcka.id == id).delete()
