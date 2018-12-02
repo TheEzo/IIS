@@ -17,14 +17,20 @@ class OrdersView(MethodView):
         orders, costumes, accessories = db.get_user_orders(current_user.get_id())
         order_data = []
         for order in orders:
+            price = sum([c.Kostym.cena * c.VypujckaKostym.pocet for c in costumes
+                         if c.VypujckaKostym.vypujcka_id == order.id])
+            price += sum([a.Doplnek.cena * a.DoplnekVypujcka.pocet for a in accessories
+                          if a.DoplnekVypujcka.vypujcka_id == order.id])
             order_data.append(dict(
                 action_name=order.nazev_akce,
                 date_from=order.datum_vypujceni.strftime("%d.%m.%Y"),
                 date_to=order.datum_vraceni.strftime("%d.%m.%Y"),
-                costumes=', '.join([c.Kostym.nazev for c in costumes if c.VypujckaKostym.vypujcka_id == order.id]),
-                accessories=', '.join([c.Doplnek.nazev for c in accessories if c.DoplnekVypujcka.vypujcka_id == order.id]),
-                price='TBD', # TODO
-                returned='Vráceno' if order.vracen else 'Nevráceno'
+                costumes=', '.join(['%s (%sx)' % (c.Kostym.nazev, c.VypujckaKostym.pocet) for c in costumes
+                                    if c.VypujckaKostym.vypujcka_id == order.id]),
+                accessories=', '.join(['%s (%sx)' % (c.Doplnek.nazev, c.DoplnekVypujcka.pocet) for c in accessories
+                                       if c.DoplnekVypujcka.vypujcka_id == order.id]),
+                price=str(price),
+                returned=order.vracen
             ))
         args = request.form
         return jsonify({

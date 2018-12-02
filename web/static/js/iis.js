@@ -51,17 +51,18 @@ var Web = {
         }
     },
 
-    confirmOrder: function (type,action,item,color) {
+    confirmOrder: function (type,action,item) {
         $.ajax({
             url: '/cart',
             type: "POST",
             dataType: 'json',
             contentType: 'application/json',
-            data: JSON.stringify({type: type, value: item, action: action, color: color}),
+            data: JSON.stringify({type: type, value: item, action: action}),
             success: function (res) {
                 window.location.reload();
             }
         });
+        return false;
     }
 };
 
@@ -182,14 +183,14 @@ var Admin = {
                 {data: "name"},
                 {data: "date_from"},
                 {data: "date_to"},
+                {data: 'costumes'},
+                {data: 'accessories'},
                 {data: "orderer"},
                 {data: 'price'},
                 {data: 'returned'},
                 {data: 'actions'},
-                {data: 'id'}
+                {data: 'id'},
             ],
-
-
             columnDefs: [
                 {targets: 5,
                 render: function (data) {
@@ -200,7 +201,7 @@ var Admin = {
                         return "Vráceno <i style='color: green' class=\"fas fa-check-circle\"></i>"
                     },
             },
-            {targets: 7, className: 'hidden'}],
+            {targets: 9, className: 'hidden'}],
 
             pagingType: "full_numbers",
             order: [[0, 'desc']]

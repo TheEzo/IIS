@@ -7,57 +7,56 @@
 <div class="border" style="padding: 10px; min-height:450px;">
     <div class="row thumbnail" >
         <div class="col-sm">
-            Thumbnail
+            {% if data.obrazek %}
+                <img class="col-sm" src="{{ url_for('static', filename=data.obrazek) }}">
+            {% endif %}
         </div>
     </div>
     <div class="row cart-item-title">
         <div class="col-sm">
-            <span class="text-decorator">{{data[0].nazev }}</span>
+            <span class="text-decorator">{{ data.nazev }}</span>
         </div>
     </div>
     <div class="row cart-item-producer">
         <div class="col-sm">
-                {{ data[0].vyrobce }}
+                {{ data.vyrobce }}
         </div>
     </div>
     <hr>
     <div class="row cart-item-datas">
         <div class="col-sm-3">
-            <span class="text-decorator">Velikost:</span>  {{data[0].velikost }}
+            <span class="text-decorator">Velikost:</span>  {{data.velikost }}
         </div>
         <div class="col-sm-5">
-            <span class="text-decorator">Cena za kus:</span>  {{data[0].cena }}
+            <span class="text-decorator">Cena za kus:</span>  {{data.cena }}
         </div>
         <div class="col-sm-4">
             <span class="text-decorator">Počet kusů:</span>
-                {% if data._fields[0] == "Kostym" %}
-                    {{ cos_count[ data[0].id|string] }}
+                {% if data.id|string in session['cart']['costumes'] %}
+                    {{ cos_count[data.id|string] }}
                 {% else %}
-                    {{ acc_count[data[0].id|string]  }}
+                    {{ acc_count[data.id|string] }}
                 {% endif %}
         </div>
     </div>
     <div class="row">
         <div class="col-sm-12">
-                <button class="remove btn btn-danger" name="{{ data._fields[0]  }}" value="{{ data[0].id }}">Odebrat z košíku</button>
+                <button class="remove btn btn-danger" value="{{ data.id }}">Odebrat z košíku</button>
         </div>
     </div>
 </div>
 </div>
 
-
-
-
 <script>
-        $('.remove').click(function (e){
-            e.preventDefault();
-            e.stopImmediatePropagation();
+    $('.remove').click(function (e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
 
-            var type;
-            if ($(this).attr("name") == "Kostym")
-                type = "costumes";
-            else
-                type = "accessories";
-            Web.confirmOrder(type,'remove',$(this).attr("value"),"");
-        });
+        var type;
+        if ($(this).attr("name") == "Kostym")
+            type = "costumes";
+        else
+            type = "accessories";
+        Web.confirmOrder(type,'remove',$(this).attr("value"));
+    });
 </script>

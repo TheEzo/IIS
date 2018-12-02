@@ -257,33 +257,20 @@ def update_user(**kwargs):
 
 def get_products_data(limit,offset,url):
     if(url == '/costumes_list'):
-        return session.query(Kostym,Barva, Vyuziti)\
-            .outerjoin(BarvaKostym, Kostym.id == BarvaKostym.kostym_id)\
-            .outerjoin(Barva,BarvaKostym.barva == Barva.barva) \
-            .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
-            .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id)\
-            .order_by(Kostym.id.asc())\
-            .limit(limit).offset(offset)
+        return (session.query(Kostym).order_by(Kostym.id.asc()).limit(limit).offset(offset).all(),
+                session.query(BarvaKostym).all(),
+                session.query(Vyuziti, KostymVyuziti).outerjoin(KostymVyuziti, KostymVyuziti.vyuziti_id == Vyuziti.id).all())
     else:
-        return session.query(Doplnek, Barva)\
-            .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
-            .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
-            .order_by(Doplnek.id.asc())\
-            .limit(limit).offset(offset)
+        return (session.query(Doplnek).order_by(Doplnek.id.asc()).limit(limit).offset(offset).all(),
+                session.query(DoplnekBarva).all())
 
-def get_product(id,type):
+def get_product(id, type):
     if(type == "costumes"):
-        return session.query(Kostym,Barva, Vyuziti)\
-            .outerjoin(BarvaKostym, Kostym.id == BarvaKostym.kostym_id)\
-            .outerjoin(Barva,BarvaKostym.barva == Barva.barva) \
-            .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
-            .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id)\
-            .filter(Kostym.id == id)
+        return session.query(Kostym)\
+            .filter(Kostym.id == id).first()
     elif(type == "accessories"):
-        return session.query(Doplnek, Barva)\
-            .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
-            .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
-            .filter(Doplnek.id == id)
+        return session.query(Doplnek)\
+            .filter(Doplnek.id == id).first()
 
 def update_product_amount(id,amount,type):
     if type == "costume":
@@ -380,8 +367,8 @@ def get_user_profile(email):
 def get_all_orders():
     return (
         session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).all(),
-        session.query(VypujckaKostym.vypujcka_id, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
-        session.query(DoplnekVypujcka.vypujcka_id, Doplnek)\
+        session.query(VypujckaKostym, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
+        session.query(DoplnekVypujcka, Doplnek)\
             .outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all()
     )
 
