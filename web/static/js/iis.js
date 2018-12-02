@@ -264,7 +264,11 @@ var Admin = {
             lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
             columns: [
                 {data: "action_name"},
-                {data: "date"},
+                {data: "date_from"},
+                {data: "date_to"},
+                {data: "costumes"},
+                {data: 'accessories'},
+                {data: 'price'},
                 {data: "returned"}
             ],
             columnDefs: [{

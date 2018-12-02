@@ -175,8 +175,9 @@ def create_order(*args, **kwargs):
 
 
 def get_user_orders(rc):
-    return session.query(Vypujcka).filter(Vypujcka.klient == rc)\
-            .all()
+    return (session.query(Vypujcka).filter(Vypujcka.klient == rc),
+            session.query(Kostym, VypujckaKostym).outerjoin(VypujckaKostym, VypujckaKostym.kostym_id == Kostym.id).all(),
+            session.query(Doplnek, DoplnekVypujcka).outerjoin(DoplnekVypujcka, DoplnekVypujcka.doplnek_id == Doplnek.id).all())
 
 
 def get_users_data():
