@@ -148,9 +148,13 @@ var Admin = {
                 {data: "name"},
                 {data: "producer"},
                 {data: "material"},
+                {data: 'size'},
                 {data: "type"},
                 {data: 'amount'},
                 {data: 'prize'},
+                {data: 'color'},
+                {data: 'detrition'},
+                {data: 'action'}
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"

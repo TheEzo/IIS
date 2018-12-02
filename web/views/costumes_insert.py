@@ -47,7 +47,7 @@ class CostumesInsert(MethodView):
                 velikost=costume.velikost,
                 opotrebeni=costume.opotrebeni,
                 pocet=costume.pocet,
-                datum_vyroby=costume.datum_vyroby.strftime('%d.%m.%Y'),
+                datum_vyroby=costume.datum_vyroby,
                 cena=costume.cena,
                 obrazek=costume.obrazek
             )
@@ -86,4 +86,4 @@ class CostumesInsert(MethodView):
 
 def configure(app):
     app.add_url_rule('/costumes-insert',
-        view_func=CostumesInsert.as_view('costumes-insert'))
+                     view_func=CostumesInsert.as_view('costumes-insert'))
