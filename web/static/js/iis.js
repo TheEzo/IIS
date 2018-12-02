@@ -122,10 +122,12 @@ var Admin = {
                 {data: "size"},
                 {data: 'amount'},
                 {data: 'prize'},
+                {data: 'color'},
+                {data: 'detrition'},
+                {data: 'action'}
             ],
             language: {
-                processing: 'Načítání...',
-                infoFiltered: "" // remove text "filtered from XY entried"
+                url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"
             },
             pagingType: "full_numbers",
             order: [[0, 'desc']]
@@ -150,10 +152,8 @@ var Admin = {
                 {data: 'amount'},
                 {data: 'prize'},
             ],
-
             language: {
-                processing: 'Načítání...',
-                infoFiltered: "" // remove text "filtered from XY entried"
+                url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"
             },
             pagingType: "full_numbers",
             order: [[0, 'desc']]
@@ -234,7 +234,6 @@ var Admin = {
     ordersDatatable: function () {
         $('#orders-table').DataTable({
             processing: true,
-            serverSide: true,
             autoWidth: false,
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"

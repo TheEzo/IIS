@@ -1,5 +1,5 @@
 from flask.views import MethodView
-from flask import render_template, request,jsonify
+from flask import render_template, request, jsonify, redirect, url_for, flash
 from web.core import db
 from flask_login import current_user
 from web.roles import employee
@@ -11,31 +11,24 @@ class Costumes(MethodView):
 
 class CostumesAdmin(MethodView):
     @employee
-    def process_costume(self,data):
-        costume = data[0]
-        color = data[1]
-        use = data[2]
-
-        return dict(
-            name=costume.nazev,
-            producer=costume.vyrobce,
-            material=costume.material,
-            description=costume.popis,
-            size=costume.velikost,
-            date_of_manufacture=costume.datum_vyroby,
-            detrition=costume.opotrebeni,
-            amount=costume.pocet,
-            prize=costume.cena,
-            color=color.barva,
-            use=use.druh_akce
-            )
-
-    @employee
     def post(self):
-        costumes = db.get_costumes()
+        costumes, colors = db.get_costumes_data()
         costumes_data = []
         for costume in costumes:
-            costumes_data.append(self.process_costume(costume))
+            costumes_data.append(dict(
+                name=costume.nazev,
+                producer=costume.vyrobce,
+                material=costume.material,
+                description=costume.popis,
+                size=costume.velikost,
+                date_of_manufacture=costume.datum_vyroby,
+                detrition=costume.opotrebeni,
+                amount=costume.pocet,
+                prize=costume.cena,
+                color=', '.join([color.barva for color in colors if color.kostym_id == costume.id]),
+                action=render_template('update_actions.html', update_url='costumes-insert', id_=costume.id,
+                                       delete_url='costume-delete')
+            ))
         args = request.form
         return jsonify({
                 'sEcho': '1',
@@ -45,9 +38,19 @@ class CostumesAdmin(MethodView):
         })
 
 
+class CostumeDel(MethodView):
+    def get(self):
+        db.delete_costume(request.args.get('id'))
+        flash('Kostým byl úspěšně smazán', 'alert-success')
+        return redirect(url_for('costumes-admin'))
+
+
 def configure(app):
     app.add_url_rule('/costumes-admin',
                      view_func=Costumes.as_view('costumes-admin'))
 
     app.add_url_rule('/costumes-data',
                      view_func=CostumesAdmin.as_view('costumes-data'))
+
+    app.add_url_rule('/costume-delete',
+                     view_func=CostumeDel.as_view('costume-delete'))
