@@ -333,3 +333,7 @@ def update_order(**kwargs):
         .filter(Vypujcka.id == kwargs['id']).first()
     order.vracen = kwargs['returned'][0]
     session.commit()
+
+def delete_order(id):
+    session.query(Vypujcka).filter(Vypujcka.id == id).delete()
+    session.commit()
