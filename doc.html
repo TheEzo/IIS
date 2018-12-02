@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-2">
+    <title>Projekt IIS</title>
+    <style type="text/css">
+    	table { border-collapse: collapse; }
+    	td, th { border: 1px solid black; padding: 0.3em 0.5em; text-align: left; }
+    	dt { font-weight: bold; margin-top: 0.5em; }
+    </style>
+</head>
+<body>
+
+<!-- Zkontrolujte prosím nastavení kódování v hlavičce dokumentu 
+     podle použitého editoru -->
+
+<h1>Půjčovna kostýmů</h1> <!-- Nahradte názvem svého zadání -->
+
+<dl>
+	<dt>Autoři</dt>
+	<dd>První jméno <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xrutad00@stud.fit.vutbr.cz">xrutad00@stud.fit.vutbr.cz</a> -
+        Výpis produktů, formuláře pro vkládání produktů, správa objednávek, správa košíku
+	</dd>
+	<dd>Druhé jméno <!-- Nahraďte skutečným jménem a e-mailem autora a popisem činnosti -->
+	    <a href="mailto:xwilla00@stud.fit.vutbr.cz">xwilla00@stud.fit.vutbr.cz</a> -
+		Editace uživatelů a produktů, databázový systém a připojení, tvorba rolí
+	</dd>
+	<dt>URL aplikace</dt>
+	<dd><a href="http://www.stud.fit.vutbr.cz/~xautor01/IIS">http://www.stud.fit.vutbr.cz/~xautor01/IIS</a></dd>
+	<dd>(pokud má aplikace více vstupních stránek, napište obdobně další URL)</dd>
+</dl>
+
+<h2>Uživatelé systému pro testování</h2>
+<p>Uveďte prosím existující zástupce <strong>všech rolí uživatelů</strong>.</p>
+<table>
+<tbody>
+<tr><th>Login</th><th>Heslo</th><th>Role</th></tr>
+<tr><td>admin@seznam.cz</td><td>Admin123456</td><td>Vedoucí</td></tr>
+<tr><td>jana@seznam.cz</td><td>Jana123456</td><td>Zaměstnanec</td></tr>
+<tr><td>jan@seznam.cz</td><td>Jan123456</td><td>Zákazník</td></tr>
+</tbody>
+</table>
+
+<h2>Implementace</h2>
+<table>
+<tbody>
+<tr>
+    <td><b>costumes.py</b>, <b>costumes.html</b>, <b>costumes_template.html</b></td>
+    <td>Výpis všech dopňků v databázi. Dynamické načítání pomocí AJAX</td>
+</tr>
+<tr>
+    <td><b>accessories.py</b>, <b>accessories.html</b>, <b>accessories_template.html</b></td>
+    <td>Výpis všech dopňků v databázi. Dynamické načítání pomocí AJAX</td>
+</tr>
+<tr>
+    <td><b>costumes_insert.py</b>, <b>costumes_insert_form.html</b></td>
+    <td>Formulář pro vkládání kostýmů.</td>
+</tr>
+<tr>
+    <td><b>accessories_insert.py</b>, <b>accessories_insert_form.html</b></td>
+    <td>Formulář pro vkládání doplňků.</td>
+</tr>
+<tr>
+    <td><b>costumes_admin.py</b>, <b>costumes_admin.html</b> </td>
+    <td>Výpis všech kostýmů pomocí datatable. Kostýmy je možno editovat a mazat</td>
+</tr>
+<tr>
+    <td><b>accessories_admin.py</b>, <b>accessories_admin.html</b></td>
+    <td>Výpis všech doplňků pomocí datatable. <Doplňky></Doplňky> je možno editovat a mazat.</td>
+</tr>
+<tr>
+    <td><b>cart.py</b>, <b>cart.html</b>, <b>cart_item.html</b></td>
+    <td>Vykreslení košíku. Je možno z něj odstraňovat položky.</td>
+</tr>
+<tr>
+    <td><b>users.py</b>, <b>users.html</b></td>
+    <td>Správa a výpis uživatelů pomocí datatable. Je možno uživatele mazat a upravovat jim pozici a typ členství</td>
+</tr>
+<tr>
+    <td><b>profile.py</b>, <b>profile.html</b></td>
+    <td>Zobrazení informací o profilu.</td>
+</tr>
+<tr>
+    <td><b>register.py</b>, <b>register.html</b></td>
+    <td>Registrace uživatele.</td>
+</tr>
+<tr>
+    <td><b>login.py</b>, <b>login.html</b></td>
+    <td>Přihlášení uživatele.</td>
+</tr>
+<tr>
+    <td><b>manage_orders.py</b>, <b>orders_admin.html</b></td>
+    <td>Správa a výpis všech objednávek. Objednávky je možno smazat nebo označit jako vrácené</td>
+</tr>
+<tr>
+    <td><b>orders.py</b>, <b>orders.html</b></td>
+    <td>Zobrazení objednávek pro přihlášeného uživatele.</td>
+</tr>
+<tr>
+    <td><b>new_order.py</b>, <b>new_order_form.html</b></td>
+    <td>Formulář pro vytvoření nové objednávky</td>
+</tr>
+<tr>
+    <td><b>property_insert.py</b>, <b>property_insert.html</b></td>
+    <td>Formulář pro vkládání barvy a typu využití</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Instalace</h2>
+<ul>
+<li>Stručně popište postup instalace na server</li>
+<li>Softwarové požadavky (verze PHP apod.)</li>
+<li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+</ul>
+
+<h2>Známé problémy</h2>
+<p></p>
+
+
+
+</body></html>

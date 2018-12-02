@@ -75,7 +75,7 @@ class AccessoriesInsert(MethodView):
             image = None
         db.add_accessory(image, **form.data)
         flash('Doplněk byl úspěšně přidán', 'alert-success')
-        return render_template('home.html')
+        return render_template("accessories_admin.html")
 
 
 def configure(app):

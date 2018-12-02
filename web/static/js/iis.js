@@ -324,8 +324,8 @@ function loadData(url) {
             start = start + limit;
             setTimeout(function () {
                 load_data(limit, start);
-            }, 1000);
-            load_data(limit, start);
+            }, 500);
+
         }
 
     })

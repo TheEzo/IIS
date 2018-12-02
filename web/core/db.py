@@ -250,7 +250,7 @@ def update_user(**kwargs):
                 update({'pozice': kwargs['role'][0]})
         else:
             stmt = Zamestnanec(osoba_rc=kwargs['rc'][0],
-                               pozice=kwargs['membership'][0])
+                               pozice=kwargs['role'][0])
             session.add(stmt)
     session.commit()
 

@@ -23,6 +23,5 @@ def configure(app):
         templates_list = []
         for costume in costumes:
             date = costume[0].datum_vyroby
-            color = costume[1].barva
-            templates_list.append(render_template('costume_template.html', data=costume,date=date.strftime("%d.%m.%Y"),color=color))
+            templates_list.append(render_template('costume_template.html', data=costume,date=date.strftime("%d.%m.%Y")))
         return jsonify(templates_list)
