@@ -294,6 +294,15 @@ def update_order(**kwargs):
     order.vracen = kwargs['returned'][0]
     session.commit()
 
+def get_order_products(id):
+    return session.query(Vypujcka, Kostym, Doplnek)\
+            .filter(Vypujcka.id == id) \
+            .outerjoin(VypujckaKostym, VypujckaKostym.vypujcka_id == Vypujcka.id)\
+            .outerjoin(VypujckaKostym,VypujckaKostym.kostym_id == Kostym.id)\
+            .outerjoin(DoplnekVypujcka, DoplnekVypujcka.vypujcka_id == Doplnek.id) \
+            .outerjoin(DoplnekVypujcka, DoplnekVypujcka.doplnek_id == Doplnek.id)\
+            .all()
+
 def delete_order(id):
     session.query(Vypujcka).filter(Vypujcka.id == id).delete()
     session.commit()

@@ -28,8 +28,8 @@ class ManageOrders(MethodView):
 
             res.append(dict(
                 name=order.Vypujcka.nazev_akce,
-                date_from=order.Vypujcka.datum_vypujceni.strftime('%d-%m-%Y'),
-                date_to=order.Vypujcka.datum_vraceni.strftime('%d-%m-%Y'),
+                date_from=order.Vypujcka.datum_vypujceni.strftime('%d.%m.%Y'),
+                date_to=order.Vypujcka.datum_vraceni.strftime('%d.%m.%Y'),
                 returned=order.Vypujcka.vracen,
                 orderer=str(order.Osoba.jmeno) + ' ' + str(order.Osoba.prijmeni),
                 costumes=', '.join(costumes),
