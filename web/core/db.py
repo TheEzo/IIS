@@ -41,6 +41,10 @@ def get_costume_by_id(id):
     return Kostym.query.filter_by(id=id).first()
 
 
+def get_accessory_by_id(id):
+    return Doplnek.query.filter_by(id=id).first()
+
+
 def get_costume_color(id):
     return BarvaKostym.query.filter_by(kostym_id=id).all()
 
@@ -48,12 +52,13 @@ def get_costume_color(id):
 def get_costume_usage(id):
     return KostymVyuziti.query.filter_by(kostym_id=id).all()
 
+def get_accessory_colors(id):
+    return DoplnekBarva.query.filter_by(doplnek_id=id).all()
 
 def add_or_update_costume(image, *args, **kwargs):
     id = kwargs.get('id', None)
     cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
-    if id:
-        costume = Kostym.query.filter_by(id=id).first()
+    costume = Kostym.query.filter_by(id=id).first()
     if not costume:
         costume = Kostym(nazev=kwargs['nazev'],
                          vyrobce=kwargs['vyrobce'],
@@ -66,14 +71,8 @@ def add_or_update_costume(image, *args, **kwargs):
                          cena=kwargs['cena'],
                          obrazek=image)
         session.add(costume)
-        new_costume = session.query(Kostym).order_by(Kostym.id.desc()).first()
-        stmt = KostymVyuziti(vyuziti_id=kwargs['vyuziti'].id,
-                             kostym_id=new_costume.id)
-        session.add(stmt)
+        costume = session.query(Kostym).order_by(Kostym.id.desc()).first()
 
-        stmt = BarvaKostym(barva=kwargs['barva'].barva,
-                           kostym_id=new_costume.id)
-        session.add(stmt)
     else:
         costume.nazev = kwargs['nazev']
         costume.vyrobce = kwargs['vyrobce']
@@ -85,15 +84,16 @@ def add_or_update_costume(image, *args, **kwargs):
         costume.pocet = kwargs['pocet']
         costume.cena = kwargs['cena']
         if image:
-            costume.image = image
+            costume.obrazek = image
+        session.add(costume)
 
         session.query(BarvaKostym).filter_by(kostym_id=costume.id).delete()
         session.query(KostymVyuziti).filter_by(kostym_id=costume.id).delete()
 
-        for color in kwargs['barva']:
-            session.add(BarvaKostym(barva=color, kostym_id=costume.id))
-        for usage in kwargs['vyuziti']:
-            session.add(KostymVyuziti(vyuziti_id=usage, kostym_id=costume.id))
+    for color in kwargs['barva']:
+        session.add(BarvaKostym(barva=color, kostym_id=costume.id))
+    for usage in kwargs['vyuziti']:
+        session.add(KostymVyuziti(vyuziti_id=usage, kostym_id=costume.id))
     session.commit()
 
 
@@ -106,27 +106,43 @@ def get_usages():
 
 
 def add_accessory(image, *args, **kwargs):
+    id = kwargs.get('id', None)
     cz_datetime = datetime.strptime(kwargs['datum_vyroby'], '%d.%m.%Y')
-    stmt = Doplnek(nazev=kwargs['nazev'],
-                   vyrobce=kwargs['vyrobce'],
-                   popis_vyuziti=kwargs['popis_vyuziti'],
-                   datum_vyroby=cz_datetime.strftime("%Y-%m-%d"),
-                   velikost=kwargs['velikost'],
-                   opotrebeni=kwargs['opotrebeni'],
-                   pocet=kwargs['pocet'],
-                   typ=kwargs['typ'],
-                   material=kwargs['material'],
-                   cena=kwargs['cena'],
-                   obrazek=image
-                   )
-    session.add(stmt)
+    accessory = Doplnek.query.filter_by(id=id).first()
+    if not accessory:
+        stmt = Doplnek(nazev=kwargs['nazev'],
+                       vyrobce=kwargs['vyrobce'],
+                       popis_vyuziti=kwargs['popis_vyuziti'],
+                       datum_vyroby=cz_datetime.strftime("%Y-%m-%d"),
+                       velikost=kwargs['velikost'],
+                       opotrebeni=kwargs['opotrebeni'],
+                       pocet=kwargs['pocet'],
+                       typ=kwargs['typ'],
+                       material=kwargs['material'],
+                       cena=kwargs['cena'],
+                       obrazek=image
+                       )
+        session.add(stmt)
+        accessory = session.query(Doplnek).order_by(Doplnek.id.desc()).first()
 
-    new_accessory = session.query(Doplnek).order_by(Doplnek.id.desc()).first()
+    else:
+        accessory.nazev = kwargs['nazev']
+        accessory.vyrobce = kwargs['vyrobce']
+        accessory.popis_vyuziti = kwargs['popis_vyuziti']
+        accessory.datum_vyroby = cz_datetime.strftime("%Y-%m-%d")
+        accessory.velikost = kwargs['velikost']
+        accessory.opotrebeni = kwargs['opotrebeni']
+        accessory.pocet = kwargs['pocet']
+        accessory.typ = kwargs['typ']
+        accessory.material = kwargs['material']
+        accessory.cena = kwargs['cena']
+        if image:
+            accessory.obrazek = image
 
-    stmt = DoplnekBarva(barva=kwargs['barva'],
-                        doplnek_id=new_accessory.id)
-    session.add(stmt)
+        session.query(DoplnekBarva).filter_by(doplnek_id=accessory.id).delete()
 
+    for color in kwargs['barva']:
+        session.add(DoplnekBarva(barva=color, doplnek_id=accessory.id))
     session.commit()
 
 
@@ -164,8 +180,9 @@ def create_order(*args, **kwargs):
 
 
 def get_user_orders(rc):
-    return session.query(Vypujcka).filter(Vypujcka.klient == rc)\
-            .all()
+    return (session.query(Vypujcka).filter(Vypujcka.klient == rc),
+            session.query(Kostym, VypujckaKostym).outerjoin(VypujckaKostym, VypujckaKostym.kostym_id == Kostym.id).all(),
+            session.query(Doplnek, DoplnekVypujcka).outerjoin(DoplnekVypujcka, DoplnekVypujcka.doplnek_id == Doplnek.id).all())
 
 
 def get_users_data():
@@ -284,15 +301,18 @@ def get_costumes_data():
     return (session.query(Kostym).all(),
             session.query(BarvaKostym).all())
 
-def get_accessories():
-    return session.query(Doplnek, Barva) \
-        .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
-        .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
-        .order_by(Doplnek.id.asc()) \
-        .all()
+def get_accessories_data():
+    return (session.query(Doplnek).all(),
+            session.query(DoplnekBarva).all())
 
 def delete_costume(id):
-    session.query(Kostym).filter_by(id=id).delete()
+    if id:
+        session.query(Kostym).filter_by(id=id).delete()
+    session.commit()
+
+def delete_accessory(id):
+    if id:
+        session.query(Doplnek).filter_by(id=id).delete()
     session.commit()
 
 def get_product_amount(type,id):

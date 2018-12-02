@@ -148,9 +148,13 @@ var Admin = {
                 {data: "name"},
                 {data: "producer"},
                 {data: "material"},
+                {data: 'size'},
                 {data: "type"},
                 {data: 'amount'},
                 {data: 'prize'},
+                {data: 'color'},
+                {data: 'detrition'},
+                {data: 'action'}
             ],
             language: {
                 url: "//cdn.datatables.net/plug-ins/1.10.19/i18n/Czech.json"
@@ -260,7 +264,11 @@ var Admin = {
             lengthMenu: [[10, 25, 50, 100], [10, 25, 50, 100]],
             columns: [
                 {data: "action_name"},
-                {data: "date"},
+                {data: "date_from"},
+                {data: "date_to"},
+                {data: "costumes"},
+                {data: 'accessories'},
+                {data: 'price'},
                 {data: "returned"}
             ],
             columnDefs: [{

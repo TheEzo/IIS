@@ -86,4 +86,4 @@ class CostumesInsert(MethodView):
 
 def configure(app):
     app.add_url_rule('/costumes-insert',
-        view_func=CostumesInsert.as_view('costumes-insert'))
+                     view_func=CostumesInsert.as_view('costumes-insert'))
