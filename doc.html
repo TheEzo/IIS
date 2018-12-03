@@ -40,8 +40,9 @@
 </table>
 
 <h2>Implementace</h2>
-<p>Pøi implementaci informaèního systému byl pou¾it jazyk Python s pou¾itím mikroframeworku Flask s konkrétními nástroj. Pro práci s databází byl
-pou¾it nástroj SQLAlchemy. K vytváøení a validaci formuláøù jsme pou¾ili knihovnu WTForms a pro vytváøení ¹ablon jazyk Jinja2.</p>
+<p>Pøi implementaci informaèního systému byl pou¾it jazyk Python v kombinaci s mikroframeworkem Flask s konkrétními nástroj. Pro práci s databází byl
+pou¾it nástroj SQLAlchemy. K vytváøení formuláøù a jejich validaci jsme pou¾ili knihovnu WTForms a pro vytváøení ¹ablon jazyk Jinja2.
+   Témeø v¹echny základní po¾adavky na zadání z pøedmìtu IUS, tj. základních úkonù z Use-Case diagramu pro jednotlivé role a záznam po¾adovaných informací, byly splìny.</p>
 <table>
 <tbody>
 <tr>
@@ -66,11 +67,11 @@ pou¾it nástroj SQLAlchemy. K vytváøení a validaci formuláøù jsme pou¾ili knihovn
 </tr>
 <tr>
     <td><b>accessories_admin.py</b>, <b>accessories_admin.html</b></td>
-    <td>Výpis v¹ech doplòkù pomocí datatable. <Doplòky></Doplòky> je mo¾no editovat a mazat.</td>
+    <td>Výpis v¹ech doplòkù pomocí datatable. Doplòky je mo¾no editovat a mazat.</td>
 </tr>
 <tr>
     <td><b>cart.py</b>, <b>cart.html</b>, <b>cart_item.html</b></td>
-    <td>Vykreslení ko¹íku. Je mo¾no z nìj odstraòovat polo¾ky.</td>
+    <td>Vykreslení obsahu ko¹íku. Je mo¾no z nìj odstraòovat polo¾ky.</td>
 </tr>
 <tr>
     <td><b>users.py</b>, <b>users.html</b></td>
@@ -108,14 +109,17 @@ pou¾it nástroj SQLAlchemy. K vytváøení a validaci formuláøù jsme pou¾ili knihovn
 </table>
 
 <h2>Instalace</h2>
+<p>Systém je potøeba nahrát na server podporující Python v3.6. Dále musí podporovat mikroframework Flask spolu s konkrétními po¾adavky - "requirements", které byly pou¾ity pøi vývoji.
+Vybrán byl neplacený hosting pythonanywhere.com.</p>
 <ul>
-<li>Struènì popi¹te postup instalace na server</li>
-<li>Softwarové po¾adavky (verze PHP apod.)</li>
-<li>Jak rozbalit, konfigurovat, inicializovat databází, ...</li>
+<li>Nejdøíve je potøeba nahrát repozitáø se soubory na server, do pøíslu¹né slo¾ky</li>
+<li>Následnì se musí upravit pøístupové údaje k databázi v pøíslu¹ném skriptu</li>
+<li>Poté je potøeba vytvoøit a naplnit databázi. To je zaji¹tìno skriptem iis.sql</li>
+<li>Nakonec se vytvoøí se a spustí WSGI skript</li>
 </ul>
 
 <h2>Známé problémy</h2>
-<p>Z èasových dùvodù jsme nezahrnuli mo¾nost zarezervovat si kostým, který není na skladì, dopøednì, èi stornování celé rezervace u¾ivatelem. Dále
+<p>Z èasových dùvodù jsme neomplementovali mo¾nost zarezervovat si kostým, který není na skladì, dopøednì, èi stornování celé rezervace u¾ivatelem. Dále
 není umo¾nìno hromadné upravování u¾ivatelù administrátorem, ale pouze samotným u¾ivatelem</p>
 
 
