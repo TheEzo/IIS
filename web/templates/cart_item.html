@@ -32,7 +32,7 @@
         </div>
         <div class="col-sm-4">
             <span class="text-decorator">Počet kusů:</span>
-                {% if data.id|string in session['cart']['costumes'] %}
+                {% if data.__class__.__name__ == 'Kostym' %}
                     {{ cos_count[data.id|string] }}
                 {% else %}
                     {{ acc_count[data.id|string] }}
@@ -44,7 +44,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12">
-                <button class="remove btn btn-danger" value="{{ data.id }}">Odebrat z košíku</button>
+            <button class="remove btn btn-danger" name="{{ data.__class__.__name__ }}" value="{{ data.id }}">Odebrat z košíku</button>
         </div>
     </div>
 </div>
