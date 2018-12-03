@@ -96,6 +96,7 @@ def add_or_update_costume(image, *args, **kwargs):
         costume.opotrebeni = kwargs['opotrebeni']
         costume.pocet = kwargs['pocet']
         costume.cena = kwargs['cena']
+        costume.barva = kwargs['barva']
         if image:
             costume.obrazek = image
         session.add(costume)

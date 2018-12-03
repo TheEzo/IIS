@@ -20,7 +20,7 @@
 .list_item {
     padding: 3px;
     float: left;
-    min-height: 600px;
+    min-height: 800px;
     min-width: 300px;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .item-description {
-    min-height: 100px;
+    min-height: 200px;
 }
 
 .item-footer {
