@@ -329,19 +329,6 @@ def set_product_amount(type,id,amount):
         update_costume.pocet = amount
         session.commit()
 
-# def get_colors():
-#     return session.query(Barva).all()
-
-# def get_color(color):
-#     return session.query(Barva).filter_by(barva=color).first()
-
-# def insert_color(*args,**kwargs):
-#     stmt = Barva(barva=kwargs['barva'].lower())
-#     session.add(stmt)
-#     session.commit()
-
-
-
 def get_uses():
     return session.query(Vyuziti).all()
 
