@@ -20,9 +20,8 @@ def configure(app):
     @app.route('/accessories_list', methods=['POST'])
     def getAccessoriesData():
         request_json = request.get_json()
-        accessories, colors = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
+        accessories = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
         templates_list = []
         for accessory in accessories:
-            color = ', '.join([c.barva for c in colors if c.doplnek_id == accessory.id])
-            templates_list.append(render_template('accessory_template.html', data=accessory, color=color))
+            templates_list.append(render_template('accessory_template.html', data=accessory))
         return jsonify(templates_list)

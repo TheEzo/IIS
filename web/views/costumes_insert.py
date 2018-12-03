@@ -26,8 +26,9 @@ class AddCostume(Form):
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
     cena = IntegerField("Cena za kus", [data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
-    barva = SelectMultipleField("Barva", choices=[(record.barva, record.barva[0].upper() + record.barva[1:])
-                                                  for record in db.get_all_colors()], default=[])
+    # barva = SelectMultipleField("Barva", choices=[(record.barva, record.barva[0].upper() + record.barva[1:])
+    #                                               for record in db.get_all_colors()], default=[])
+    barva = SelectMultipleField("Barva", choices=[], default=[])
     vyuziti = SelectMultipleField("Využití", choices=[(record.id, record.druh_akce)
                                                       for record in db.get_usages()], default=[])
 
