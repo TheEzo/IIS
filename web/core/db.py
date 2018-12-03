@@ -186,7 +186,7 @@ def create_order(*args, **kwargs):
     session.commit()
 
 def get_costume_order(id):
-    return session.query(VypujckaKostym, Vypujcka).outerjoin(Vypujcka, Vypujcka.id == VypujckaKostym.vypujcka_id)\
+    return session.query(VypujckaKostym, Vypujcka).join(Vypujcka, Vypujcka.id == VypujckaKostym.vypujcka_id)\
         .filter(VypujckaKostym.kostym_id == id).first()
 
 
