@@ -8,7 +8,6 @@ from web.core.models import Osoba
 from flask_login import LoginManager
 import base64
 
-
 def create_app():
     app = Flask(__name__, static_url_path='/static', static_folder='./static')
     app.secret_key = '#$secret_key%&'

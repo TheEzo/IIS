@@ -62,7 +62,7 @@ class EditProfile(MethodView):
 
             db.update_users_data(form.data)
             flash('Profil uspěšně aktualizován', 'alert-success')
-            return render_template("costumes.html")
+            return redirect(url_for('profile'))
 
 
 def configure(app):

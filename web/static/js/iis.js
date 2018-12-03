@@ -192,7 +192,7 @@ var Admin = {
                 {data: 'id'},
             ],
             columnDefs: [
-                {targets: 5,
+                {targets: 7,
                 render: function (data) {
                     if (data == 0)
                         return "Nevráceno <i style='color: red' class=\"fas fa-times-circle\"></i>"
@@ -202,7 +202,6 @@ var Admin = {
                     },
             },
             {targets: 9, className: 'hidden'}],
-
             pagingType: "full_numbers",
             order: [[0, 'desc']]
         });
@@ -237,7 +236,7 @@ var Admin = {
 
     ordersModal: function (el) {
         var row = el.closest('tr').children();
-        $('#edit-id').val(row[7].innerHTML);
+        $('#edit-id').val(row[9].innerHTML);
     },
 
     sendOrderEdit: function () {

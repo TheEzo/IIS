@@ -26,8 +26,9 @@ class NewOrder(MethodView):
         if datetime.strptime(form.data.get("datum_vraceni"),'%d.%m.%Y') <= datetime.strptime(datetime.now().strftime("%d.%m.%Y"),"%d.%m.%Y"):
             flash('Zadejte platné datum', 'alert-danger')
             return render_template('new_order_form.html', form=form)
-        db.create_order(session['cart'],**form.data)
-        session['cart'] = {'costumes': [], 'accessories': [], 'prize': 0}
+        db.create_order(session['cart'], **form.data)
+
+        session['cart'] = {'costumes': [], 'accessories': []}
         flash('Objednávka byla úspěšně zpracována', 'alert-success')
         return render_template('home.html')
 

@@ -8,7 +8,7 @@
     <div class="row thumbnail" >
         <div class="col-sm">
             {% if data.obrazek %}
-                <img class="col-sm" src="{{ url_for('static', filename=data.obrazek) }}">
+                <img style="max-height: 270px; max-width: 250px;" class="col-sm" src="{{ url_for('static', filename=data.obrazek) }}">
             {% endif %}
         </div>
     </div>
@@ -38,6 +38,9 @@
                     {{ acc_count[data.id|string] }}
                 {% endif %}
         </div>
+    </div>
+    <div class="row cart-item-datas col-sm-6">
+        <span class="text-decorator">Barva:</span> {{ data.barva }}
     </div>
     <div class="row">
         <div class="col-sm-12">

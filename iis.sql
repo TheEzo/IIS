@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `doplnek` (
   `obrazek` varchar(100) COLLATE utf8_czech_ci DEFAULT NULL,
   `barva` varchar(45) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- Export dat nebyl vybrán.
 -- Exportování struktury pro tabulka iis.doplnek_vypujcka
@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `kostym` (
   `obrazek` varchar(100) COLLATE utf8_czech_ci DEFAULT NULL,
   `barva` varchar(45) COLLATE utf8_czech_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- Export dat nebyl vybrán.
 -- Exportování struktury pro tabulka iis.kostym_vyuziti
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `vypujcka` (
   KEY `zamestnanec` (`zamestnanec`),
   CONSTRAINT `vypujcka_ibfk_1` FOREIGN KEY (`klient`) REFERENCES `osoba` (`rc`) ON DELETE CASCADE,
   CONSTRAINT `vypujcka_ibfk_2` FOREIGN KEY (`zamestnanec`) REFERENCES `osoba` (`rc`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_czech_ci;
 
 -- Export dat nebyl vybrán.
 -- Exportování struktury pro tabulka iis.vypujcka_kostym

@@ -3,7 +3,7 @@
         <div class="row thumbnail">
             <div class="col-sm " >
                 {% if data.obrazek %}
-                    <img class="col-sm" src="{{ url_for('static', filename=data.obrazek) }}">
+                    <img style="max-height: 250px; max-width: 330px;" src="{{ url_for('static', filename=data.obrazek) }}">
                 {% endif %}
             </div>
         </div>

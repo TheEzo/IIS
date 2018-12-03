@@ -5,6 +5,7 @@ from flask import render_template, request, redirect, url_for, jsonify, flash, s
 from flask.views import MethodView
 from flask_login import current_user
 from collections import Counter
+from datetime import timedelta
 
 from web.roles import login_required
 from web.core import db
@@ -19,7 +20,6 @@ class Cart(MethodView):
                 session['cart']['prize'] = 0
 
     def actualizeAmount(self,action,type,id):
-        amount = 0
         if (action == "add"):
             amount = db.get_product_amount(type, id)[0]
             db.set_product_amount(type,id,amount-1)
@@ -46,13 +46,15 @@ class Cart(MethodView):
 
     def post(self):
         if not current_user.is_authenticated():
-            flash('Pro tuto akci je vyžadováno přihlášení <a href="' + url_for('login') + '">Přihlásit?</a>', "alert-warning")
+            flash('Pro tuto akci je vyžadováno přihlášení. <a href="' + url_for('login') + '">Přihlásit?</a>', "alert-warning")
             return jsonify({})
         data = request.json
         if data['action'] == 'add':
             db_data = db.get_product_amount(data['type'], data['value'])[0]
             if session['cart'][data['type']].count(data['value']) == db_data:
-                flash("Není možné vložit do košíku více než dostupný počet kusů", "alert-danger")
+                order = db.get_costume_order(data['value'])
+                flash("Položku není aktuálně možná vložit do košíku, dostupná bude od %s" %
+                      (order.Vypujcka.datum_vraceni + timedelta(days=1)).strftime('%d.%m.%Y'), "alert-danger")
                 return jsonify({})
             if db_data == 0:
                 flash('Toto zboží je momentálně nedostupné', 'alert-danger')

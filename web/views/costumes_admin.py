@@ -12,7 +12,7 @@ class Costumes(MethodView):
 class CostumesAdmin(MethodView):
     @employee
     def post(self):
-        costumes, colors = db.get_costumes_data()
+        costumes = db.get_costumes_data()
         costumes_data = []
         for costume in costumes:
             costumes_data.append(dict(
@@ -25,7 +25,7 @@ class CostumesAdmin(MethodView):
                 detrition=costume.opotrebeni,
                 amount=costume.pocet,
                 prize=costume.cena,
-                color=', '.join([color.barva for color in colors if color.kostym_id == costume.id]),
+                color=costume.barva,
                 action=render_template('update_actions.html', update_url='costumes-insert', id_=costume.id,
                                        delete_url='costume-delete')
             ))
