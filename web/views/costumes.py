@@ -24,6 +24,12 @@ def configure(app):
         templates_list = []
         for costume in costumes:
             usage = ', '.join([u.Vyuziti.druh_akce for u in usages if u.KostymVyuziti.kostym_id == costume.id])
-            templates_list.append(render_template('costume_template.html', data=costume,
+            if costume.opotrebeni == 'nove':
+                detrition = 'Nové'
+            elif costume.opotrebeni == 'zanovni':
+                detrition = 'Zánovní'
+            else:
+                detrition = 'Staré'
+            templates_list.append(render_template('costume_template.html', data=costume, detrition=detrition,
                                                   usage=usage))
         return jsonify(templates_list)
