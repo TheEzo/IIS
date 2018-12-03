@@ -40,6 +40,7 @@ class Cart(MethodView):
             data = db.get_product(id, "accessories")
             items.append(data)
             price += data.cena
+        session['cart']['prize'] = price
 
         return render_template('cart.html', items=list(set(items)), cos_count=Counter(session['cart']['costumes']),
                                acc_count=Counter(session['cart']['accessories']), price=price)
@@ -51,13 +52,16 @@ class Cart(MethodView):
         data = request.json
         if data['action'] == 'add':
             db_data = db.get_product_amount(data['type'], data['value'])[0]
-            if session['cart'][data['type']].count(data['value']) == db_data:
-                order = db.get_costume_order(data['value'])
-                flash("Položku není aktuálně možná vložit do košíku, dostupná bude od %s" %
-                      (order.Vypujcka.datum_vraceni + timedelta(days=1)).strftime('%d.%m.%Y'), "alert-danger")
-                return jsonify({})
             if db_data == 0:
                 flash('Toto zboží je momentálně nedostupné', 'alert-danger')
+                return jsonify({})
+            if session['cart'][data['type']].count(data['value']) == db_data:
+                order = db.get_costume_order(data['value'])
+                if order:
+                    flash("Položku není aktuálně možná vložit do košíku, dostupná bude od %s" %
+                          (order.Vypujcka.datum_vraceni + timedelta(days=1)).strftime('%d.%m.%Y'), "alert-danger")
+                else:
+                    flash('Nelze vložit více těchto položek', 'alert-danger')
                 return jsonify({})
 
             if data['type'] == 'costumes':
