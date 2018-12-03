@@ -269,7 +269,7 @@ def update_user(**kwargs):
 def get_products_data(limit,offset,url):
     if(url == '/costumes_list'):
         return (session.query(Kostym).order_by(Kostym.id.asc()).limit(limit).offset(offset).all(),
-                session.query(Vyuziti, KostymVyuziti).outerjoin(KostymVyuziti, KostymVyuziti.vyuziti_id == Vyuziti.id).all())
+                session.query(KostymVyuziti, Vyuziti).outerjoin(Vyuziti, KostymVyuziti.vyuziti_id == Vyuziti.id).all())
     else:
         return (session.query(Doplnek).order_by(Doplnek.id.asc()).limit(limit).offset(offset).all())
 
