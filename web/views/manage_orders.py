@@ -58,7 +58,7 @@ def configure(app):
         products = db.get_order_products(data['id'])
 
         for product in products[0]:
-            db.update_product_amount(product.kostym_id,product.pocet,"costume")
+            db.update_product_amount(product.kostym_id, product.pocet,"costume")
 
         for product in products[1]:
             db.update_product_amount(product.doplnek_id, product.pocet, "accessory")
