@@ -30,7 +30,7 @@ class NewOrder(MethodView):
 
         session['cart'] = {'costumes': [], 'accessories': []}
         flash('Objednávka byla úspěšně zpracována', 'alert-success')
-        return render_template('home.html')
+        return render_template('costumes.html')
 
 
 def configure(app):
