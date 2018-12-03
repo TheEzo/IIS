@@ -2,25 +2,10 @@
 {% block title %}Přidat vlastnost{% endblock %}
 {% block body %}
     <h1>Přidat vlastnosti</h1>
-    <form action="{{ url_for('add-color') }}" method="post">
-        <div class="form-group row">
-            <div class="col-4-sm">
-                <label>{{ form_color.barva.label }}</label>
-            </div>
-            <div class="col">
-
-                {{ form_color.barva(**{'class': 'form-control' + (' is-invalid'  if form_color.barva.errors else '') }) }}
-                <div class="invalid-feedback">{{ form_color.barva.errors[0] }}</div>
-            </div>
-            <div class="col">
-                <input type="submit" value="Přidat" class="btn btn-primary">
-            </div>
-        </div>
-    </form>
     <form action="{{ url_for('add-use') }}" method="post">
         <div class="form-group row">
             <div class="col-2-sm">
-                <label>{{ form_use.vyuziti.label }}</label>
+                <label>{{ form_use.vyuziti.label }}*</label>
             </div>
             <div class="col">
 
