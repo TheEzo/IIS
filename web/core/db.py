@@ -33,6 +33,21 @@ def create_user(*args, **kwargs):
     session.commit()
 
 
+
+def update_users_data(data):
+    user = session.query(Osoba).filter(Osoba.rc == data['rc']).first()
+
+    user.jmeno = data['jmeno']
+    user.prijmeni = data['prijmeni']
+    user.obec = data['obec']
+    user.ulice = data['ulice']
+    user.cislo_popisne = data['cislo_popisne']
+    user.tel_cislo = data['tel_cislo']
+    user.email = data['email']
+
+    session.commit()
+
+
 def get_employee_data(rc):
     return Zamestnanec.query.filter_by(osoba_rc=rc).first()
 

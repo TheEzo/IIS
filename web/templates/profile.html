@@ -2,25 +2,50 @@
 {% block title %}Profil{% endblock %}
 
 {% block body %}
-    <h1>Profil</h1>
+    <h1 style="margin-bottom: 50px">Profil: {{ data.jmeno }} {{ data.prijmeni }}</h1>
     <div class="container">
-        <dt>Jméno:</dt>
-        <dd>{{ data.jmeno }}</dd>
-        <dt>Přímení:</dt>
-        <dd>{{ data.prijmeni }}</dd>
-        <dt>Email:</dt>
-        <dd>{{ data.email }}</dd>
-        {% if data.ulice or data.cislo_popisne or data.obec %}
-            <dt>Adresa:</dt>
-            <dd>{{ data.ulice }} {{ data.cislo_popisne }}{% if data.obec %}, {{ data.obec }}{% endif %}</dd>
-        {% endif %}
-        <dt>Rodné číslo:</dt>
-        <dd>{{ data.rc }}</dd>
-        <dt>Členství:</dt>
-        <dd>{{ membership }}</dd>
-        {% if position %}
-            <dt>Pozice:</dt>
-            <dd>{{ position }}</dd>
-        {% endif %}
+        <div class="row">
+            <div class="col-sm-4 " >
+                <h4>Základní informace</h4>
+                <dt>Jméno:</dt>
+                <dd>{{ data.jmeno }}</dd>
+                <dt>Přímení:</dt>
+                <dd>{{ data.prijmeni }}</dd>
+                <dt>Email:</dt>
+                <dd>{{ data.email }}</dd>
+                {% if data.tel_cislo %}
+                    <dt>Telefon:</dt>
+                    <dd>{{ data.tel_cislo }}</dd>
+                {% endif %}
+
+                {% if data.ulice and data.cislo_popisne %}
+                    <dt>Ulice:</dt>
+                    <dd>{{ data.ulice }} {{ data.cislo_popisne }}</dd>
+                {% endif %}
+                {% if data.obec %}
+                    <dt>Obec:</dt>
+                    <dd> {{ data.obec }}</dd>
+                {% endif %}
+                <dt>Rodné číslo:</dt>
+                <dd>{{ data.rc }}</dd>
+                <form action="{{ url_for('edit-profile') }}" method="get" enctype="multipart/form-data">
+                    <div class="form-group row">
+
+                            <div class="col">
+                                <button class="add btn btn-primary" type="submit" name="edit-profile" value="{{ data.email }}">Upravit informace</button>
+                            </div>
+                    </div>
+                </form>
+            </div>
+        <div class="col-sm-2 ">
+            <h4>Role</h4>
+            <dt>Členství:</dt>
+            <dd>{{ membership }}</dd>
+            {% if position %}
+                <dt>Pozice:</dt>
+                <dd>{{ position }}</dd>
+            {% endif %}
+        </div>
+        </div>
     </div>
 {% endblock %}
