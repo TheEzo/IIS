@@ -51,10 +51,13 @@ CREATE TABLE IF NOT EXISTS `doplnek` (
 DELETE FROM `doplnek`;
 /*!40000 ALTER TABLE `doplnek` DISABLE KEYS */;
 INSERT INTO `doplnek` (`id`, `nazev`, `popis_vyuziti`, `datum_vyroby`, `velikost`, `typ`, `material`, `pocet`, `opotrebeni`, `cena`, `vyrobce`, `obrazek`, `barva`) VALUES
-	(8, 'Červený baret Armády ČR', 'Replika červeného baretu Armády ČR užíván jednotkami parašutistů', '2001-10-20', 'S', 'Vojenský', 'Bavlna', 8, 'nove', 100, 'Army Costumes', NULL, ''),
-	(9, 'Koruna', 'Doplněk imitující skutečnou korunu. Vhodné pro historické filmy či karnevaly.', '2003-07-20', 'L', 'Historický', 'Kov', 1, 'stare', 800, 'Jewels', NULL, ''),
-	(17, 'Klobouk', 'obyc klobouk..', '2018-12-12', 'S', 'Klobouk', 'Látka', 2, 'nove', 50, 'Klobouky s.r.o.', 'klobuk.jpg', 'Černá'),
-	(18, 'Kouzelnický klobouk', 'Kouzelnický klobouk k plášti', '2018-11-29', 'S', 'Klobouk', 'Látka', 3, 'nove', 50, 'kloboučníci', 'kol_klobouk.jpeg', 'černá');
+(8, 'Červený baret Armády ČR', 'Replika červeného baretu Armády ČR užíván jednotkami parašutistů', '2001-10-20', 'S', 'Vojenský', 'Bavlna', 8, 'nove', 100, 'Army Costumes', 'baret_červeny.jpg', 'Červená'),
+(9, 'Koruna', 'Doplněk imitující skutečnou korunu. Vhodné pro historické filmy či karnevaly.', '2003-07-20', 'L', 'Historický', 'Kov', 1, 'stare', 800, 'Jewels', 'koruna.jpg', ''),
+(17, 'Klobouk', 'obyc klobouk..', '2018-12-12', 'S', 'Klobouk', 'Látka', 2, 'nove', 50, 'Klobouky s.r.o.', 'klobuk.jpg', 'Černá'),
+(18, 'Kouzelnický klobouk', 'Kouzelnický klobouk k plášti', '2018-11-29', 'S', 'Klobouk', 'Látka', 3, 'nove', 50, 'kloboučníci', 'kol_klobouk.jpeg', 'černá'),
+(22, 'Pirátská šavle', 'Šavle vhodná jako doplněk k pirátskému kostýmu', '2009-02-03', 'S', 'Zbraň', 'Plast', 2, 'stare', 25, 'Costumes s.r.o', 'šavle.jpg', 'Stříbrná'),
+(23, 'Mikulášská hůl', 'Zlatá mikulášská hůl ke kostýmu MIkuláše', '2009-02-03', 'S', 'Hůl ke kostýmu', 'Plast', 1, 'stare', 25, 'TK', 'berla.jpg', 'Zlatá'),
+(24, 'Čertovské rohy', 'Čertovské rohy jako doplněk k čertovskému obleku', '2018-12-01', 'S', 'Pokrývka hlavy', 'Plast', 4, 'nove', 15, 'TK', 'rohy.jpg', 'Hnědá');
 /*!40000 ALTER TABLE `doplnek` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.doplnek_vypujcka
@@ -72,8 +75,10 @@ CREATE TABLE IF NOT EXISTS `doplnek_vypujcka` (
 DELETE FROM `doplnek_vypujcka`;
 /*!40000 ALTER TABLE `doplnek_vypujcka` DISABLE KEYS */;
 INSERT INTO `doplnek_vypujcka` (`doplnek_id`, `vypujcka_id`, `pocet`) VALUES
-	(17, 3, 3),
-	(17, 4, 1);
+(17, 3, 3),
+(17, 4, 1),
+(23, 9, 1),
+(24, 9, 1);
 /*!40000 ALTER TABLE `doplnek_vypujcka` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.klient
@@ -88,7 +93,11 @@ CREATE TABLE IF NOT EXISTS `klient` (
 DELETE FROM `klient`;
 /*!40000 ALTER TABLE `klient` DISABLE KEYS */;
 INSERT INTO `klient` (`clenstvi`, `osoba_rc`) VALUES
-	('bronzove', '9609255832');
+	('bronzove', '7551123656'),
+('stribrne', '9602155648'),
+('bronzove', '9609255832'),
+('bronzove', '9610086548'),
+('zlate', '9808123654');
 /*!40000 ALTER TABLE `klient` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.kostym
@@ -112,14 +121,15 @@ CREATE TABLE IF NOT EXISTS `kostym` (
 DELETE FROM `kostym`;
 /*!40000 ALTER TABLE `kostym` DISABLE KEYS */;
 INSERT INTO `kostym` (`id`, `vyrobce`, `material`, `popis`, `velikost`, `opotrebeni`, `pocet`, `datum_vyroby`, `cena`, `nazev`, `obrazek`, `barva`) VALUES
-	(31, 'Costumes s.r.o', 'polyester', 'Kostým klauna je vhodný pro děti či dospělé na karneval.', 'S', 'nove', 3, '2007-08-20', 350, 'Kostým Klaun', NULL, ''),
-	(32, 'Costumes s.r.o', 'polyester', 'Kostým klauna je vhodný pro děti či dospělé na karneval.', 'L', 'nove', 3, '2007-08-20', 350, 'Kostým Klaun', NULL, ''),
-	(33, 'Army Costumes', 'polyester', 'Uniforma vojáka rudé armády z období 2. světové války, Vhodné pro vojenské přehlídky', 'L', 'nove', 5, '2003-09-20', 700, 'Vojenská uniforma vojáka SSSR', NULL, ''),
-	(34, 'Army Costumes', 'polyester', 'Uniforma vojáka rudé armády z období 2. světové války, Vhodné pro vojenské přehlídky', 'M', 'nove', 3, '2003-09-20', 700, 'Vojenská uniforma vojáka SSSR', NULL, ''),
-	(43, 'Uniformy s.r.o.', 'Bavlna', 'Vojenská uniforma na slavnostní ceremoniály', 'XL', 'zanovni', 4, '2018-07-02', 300, 'Uniforma', 'uniforma.jpg', 'Zelená'),
-	(44, 'Hadry sro', 'Látka', 'nějaký ten plášť', 'S', 'nove', 2, '2018-12-02', 200, 'Kouzelnický plášť', 'plast.jpg', 'černá'),
-	(46, 'Obleky sro', 'Bavlna', 'Oblek pro slavnostní příležitosti', 'XL', 'nove', 2, '2018-12-03', 2000, 'Oblek', NULL, 'Modrá');
-/*!40000 ALTER TABLE `kostym` ENABLE KEYS */;
+(31, 'Costumes s.r.o', 'polyester', 'Kostým klauna je vhodný pro děti či dospělé na karneval.', 'S', 'nove', 3, '2007-08-20', 350, 'Kostým Klaun', 'klaun.jpg', ''),
+(33, 'Army Costumes', 'polyester', 'Uniforma vojáka rudé armády z období 2. světové války, Vhodné pro vojenské přehlídky', 'L', 'nove', 5, '2003-09-20', 700, 'Vojenská uniforma vojáka SSSR', NULL, ''),
+(43, 'Uniformy s.r.o.', 'Bavlna', 'Vojenská uniforma na slavnostní ceremoniály', 'XL', 'zanovni', 3, '2018-07-02', 300, 'Uniforma', 'uniforma.jpg', 'Zelená'),
+(44, 'Hadry sro', 'Látka', 'nějaký ten plášť', 'S', 'nove', 2, '2018-12-02', 200, 'Kouzelnický plášť', 'plast.jpg', 'černá'),
+(46, 'Obleky sro', 'Bavlna', 'Oblek pro slavnostní příležitosti', 'XL', 'nove', 2, '2018-12-03', 2000, 'Oblek', 'oblek.jpg', 'Modrá'),
+(47, 'TK', 'Polyester', 'Kostým vhodný na den sv.Mikuláše či karneval', 'L', 'stare', 1, '2009-02-03', 450, 'Kostým Mikuláše', 'mikulas.jpg', 'Červená'),
+(48, 'Costumes s.r.o', 'Polyester', 'Kostým Piráta vhodný na karneval', 'M', 'zanovni', 3, '2018-01-01', 300, 'Kostým Piráta', 'pirat.jpg', 'Černo-Bílá'),
+(49, 'TK', 'Polyester', 'Kostým Čerta vhodný na den sv. Mikuláše nebo Halloween', 'L', 'nove', 0, '2018-11-09', 550, 'Kostým Čert', 'čert.jpg', 'Červená');
+
 
 -- Exportování struktury pro tabulka iis.kostym_vyuziti
 CREATE TABLE IF NOT EXISTS `kostym_vyuziti` (
@@ -135,11 +145,13 @@ CREATE TABLE IF NOT EXISTS `kostym_vyuziti` (
 DELETE FROM `kostym_vyuziti`;
 /*!40000 ALTER TABLE `kostym_vyuziti` DISABLE KEYS */;
 INSERT INTO `kostym_vyuziti` (`kostym_id`, `vyuziti_id`) VALUES
-	(31, 3),
-	(32, 3),
-	(33, 5),
-	(34, 4),
-	(43, 5);
+(31, 3),
+(33, 5),
+(43, 5),
+(47, 6),
+(49, 6),
+(49, 7),
+(46, 8);
 /*!40000 ALTER TABLE `kostym_vyuziti` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.osoba
@@ -161,8 +173,11 @@ CREATE TABLE IF NOT EXISTS `osoba` (
 DELETE FROM `osoba`;
 /*!40000 ALTER TABLE `osoba` DISABLE KEYS */;
 INSERT INTO `osoba` (`rc`, `email`, `heslo`, `jmeno`, `prijmeni`, `ulice`, `cislo_popisne`, `tel_cislo`, `obec`) VALUES
-	('9609255832', 'willaschek.t@gmail.com', 'pbkdf2:sha256:50000$DkkDX79s$bc274096fc04ae040dde864198190ff014357c95399a25504f257afc88989baa', 'Tomáš', 'Willaschek', 'Opavská 94a', '74721', '601395550', 'Kravaře'),
-	('9610086548', 'domino.ruta@gmail.com', 'pbkdf2:sha256:50000$Gat2IuGy$eeb6fe35c089167977bf448266580f237948c7d0680935a4235d6a8954ea3cb4', 'Dominik', 'Ruta', 'Přemyslovců', '11', '123456789', 'Opava');
+('7551123656', 'jana@seznam.cz', 'pbkdf2:sha256:50000$Q4Z3JwL8$d96595ca850c1713a0d42c19a4daa1c6020bb4b2f73a79afde90e0d32ee707e0', 'Jana', 'Modrá', '', '', '', NULL),
+('9602155648', 'jan@seznam.cz', 'pbkdf2:sha256:50000$Wb2xPpOK$b21b4b2685035773e636d5fb35e0cb26655c85e025826392eaf5e82cf85cdcef', 'Jan', 'Novák', 'Česká', '22', '', NULL),
+('9609255832', 'willaschek.t@gmail.com', 'pbkdf2:sha256:50000$DkkDX79s$bc274096fc04ae040dde864198190ff014357c95399a25504f257afc88989baa', 'Tomáš', 'Willaschek', 'Opavská 94a', '74721', '601395550', 'Kravaře'),
+('9610086548', 'domino.ruta@gmail.com', 'pbkdf2:sha256:50000$Gat2IuGy$eeb6fe35c089167977bf448266580f237948c7d0680935a4235d6a8954ea3cb4', 'Dominik', 'Ruta', 'Přemyslovců', '11', '123456789', 'Opava'),
+('9808123654', 'admin@seznam.cz', 'pbkdf2:sha256:50000$nlRUeE16$640ba550c9fb3532980f59a3d160b3065d9451bae0135c83d2477e00aec974eb', 'Adam', 'Admin', '', '', '', NULL);
 /*!40000 ALTER TABLE `osoba` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.vypujcka
@@ -185,11 +200,12 @@ CREATE TABLE IF NOT EXISTS `vypujcka` (
 DELETE FROM `vypujcka`;
 /*!40000 ALTER TABLE `vypujcka` DISABLE KEYS */;
 INSERT INTO `vypujcka` (`id`, `nazev_akce`, `datum_vypujceni`, `vracen`, `klient`, `zamestnanec`, `datum_vraceni`) VALUES
-	(3, 'Nějaká akce', '2018-12-02', 1, '9609255832', '9609255832', '2018-12-13'),
-	(4, 'test akce', '2018-12-02', 1, '9609255832', '9609255832', '2018-12-13'),
-	(6, 'test akce', '2018-12-03', 1, '9609255832', '9609255832', '2018-12-13'),
-	(7, 'akce', '2018-12-03', 1, '9609255832', '9609255832', '2018-12-13'),
-	(8, 'Nějaká akce', '2018-12-03', 1, '9609255832', '9609255832', '2018-12-13');
+(3, 'Nějaká akce', '2018-12-02', 1, '9609255832', '9609255832', '2018-12-13'),
+(4, 'Akce Roku', '2018-12-02', 1, '9609255832', '9609255832', '2018-12-13'),
+(6, 'Letní akce', '2018-12-03', 1, '9609255832', '9609255832', '2018-12-13'),
+(7, 'akce', '2018-12-03', 1, '9609255832', '9609255832', '2018-12-13'),
+(8, 'Nějaká akce', '2018-12-03', 1, '9609255832', '9609255832', '2018-12-13'),
+(9, 'Mikulášský den', '2018-12-03', 0, '9610086548', '9610086548', '2018-12-12');
 /*!40000 ALTER TABLE `vypujcka` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.vypujcka_kostym
@@ -207,11 +223,14 @@ CREATE TABLE IF NOT EXISTS `vypujcka_kostym` (
 DELETE FROM `vypujcka_kostym`;
 /*!40000 ALTER TABLE `vypujcka_kostym` DISABLE KEYS */;
 INSERT INTO `vypujcka_kostym` (`vypujcka_id`, `kostym_id`, `pocet`) VALUES
-	(3, 43, 1),
-	(6, 43, 1),
-	(6, 44, 1),
-	(7, 43, 2),
-	(8, 44, 2);
+(3, 43, 1),
+(6, 43, 1),
+(6, 44, 1),
+(7, 43, 2),
+(8, 44, 2),
+(9, 43, 1),
+(9, 47, 1),
+(9, 49, 1);
 /*!40000 ALTER TABLE `vypujcka_kostym` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.vyuziti
@@ -225,9 +244,11 @@ CREATE TABLE IF NOT EXISTS `vyuziti` (
 DELETE FROM `vyuziti`;
 /*!40000 ALTER TABLE `vyuziti` DISABLE KEYS */;
 INSERT INTO `vyuziti` (`id`, `druh_akce`) VALUES
-	(3, 'Karneval'),
-	(4, 'Vojenská přehlídka'),
-	(5, 'Armádní akce');
+(3, 'Karneval'),
+(5, 'Armádní akce'),
+(6, 'Mikulášský den'),
+(7, 'Halloween'),
+(8, 'Sváteční akce');
 /*!40000 ALTER TABLE `vyuziti` ENABLE KEYS */;
 
 -- Exportování struktury pro tabulka iis.zamestnanec
@@ -242,8 +263,10 @@ CREATE TABLE IF NOT EXISTS `zamestnanec` (
 DELETE FROM `zamestnanec`;
 /*!40000 ALTER TABLE `zamestnanec` DISABLE KEYS */;
 INSERT INTO `zamestnanec` (`pozice`, `osoba_rc`) VALUES
-	('vedouci', '9609255832'),
-	('vedouci', '9610086548');
+('zamestnanec', '7551123656'),
+('vedouci', '9609255832'),
+('vedouci', '9610086548'),
+('vedouci', '9808123654');
 /*!40000 ALTER TABLE `zamestnanec` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
