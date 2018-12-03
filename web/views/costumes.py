@@ -6,6 +6,7 @@ from flask.views import MethodView
 from web.core import db
 from datetime import datetime
 
+
 class Costumes(MethodView):
     def get(self):
 
@@ -19,9 +20,10 @@ def configure(app):
     @app.route('/costumes_list', methods=['POST'])
     def getCostumeData():
         request_json = request.get_json()
-        costumes = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
+        costumes, usages = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
         templates_list = []
         for costume in costumes:
-            date = costume[0].datum_vyroby
-            templates_list.append(render_template('costume_template.html', data=costume,date=date.strftime("%d.%m.%Y")))
+            usage = ', '.join([u.Vyuziti.druh_akce for u in usages if u.KostymVyuziti.kostym_id == costume.id])
+            templates_list.append(render_template('costume_template.html', data=costume,
+                                                  usage=usage))
         return jsonify(templates_list)

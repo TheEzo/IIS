@@ -26,8 +26,7 @@ class AddCostume(Form):
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
     cena = IntegerField("Cena za kus", [data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
-    barva = SelectMultipleField("Barva", choices=[(record.barva, record.barva[0].upper() + record.barva[1:])
-                                                  for record in db.get_all_colors()], default=[])
+    barva = StringField("Barva")
     vyuziti = SelectMultipleField("Využití", choices=[(record.id, record.druh_akce)
                                                       for record in db.get_usages()], default=[])
 
@@ -51,12 +50,9 @@ class CostumesInsert(MethodView):
                 pocet=costume.pocet,
                 datum_vyroby=costume.datum_vyroby.strftime('%d.%m.%Y'),
                 cena=costume.cena,
-                obrazek=costume.obrazek
+                obrazek=costume.obrazek,
+                barva=costume.barva
             )
-            colors = db.get_costume_color(id)
-            if colors:
-                for color in colors:
-                    form.barva.default.append(color.barva)
             usages = db.get_costume_usage(id)
             if usages:
                 for usage in usages:

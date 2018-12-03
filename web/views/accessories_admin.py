@@ -13,7 +13,7 @@ class Accessories(MethodView):
 class AccessoriesAdmin(MethodView):
     @employee
     def post(self):
-        accessories, colors = db.get_accessories_data()
+        accessories = db.get_accessories_data()
         accessories_data = []
         for accessory in accessories:
             accessories_data.append(dict(
@@ -27,8 +27,7 @@ class AccessoriesAdmin(MethodView):
                 detrition=accessory.opotrebeni,
                 amount=accessory.pocet,
                 prize=accessory.cena,
-                color=', '.join([color.barva[0].upper() + color.barva[1:] for color in colors
-                                 if color.doplnek_id == accessory.id]),
+                color=accessory.barva,
                 action=render_template('update_actions.html', update_url='accessories-insert', id_=accessory.id,
                                        delete_url='accessory-delete')
             ))

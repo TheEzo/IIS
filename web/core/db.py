@@ -60,15 +60,12 @@ def get_accessory_by_id(id):
     return Doplnek.query.filter_by(id=id).first()
 
 
-def get_costume_color(id):
-    return BarvaKostym.query.filter_by(kostym_id=id).all()
+# def get_costume_color(id):
+#     return BarvaKostym.query.filter_by(kostym_id=id).all()
 
 
 def get_costume_usage(id):
     return KostymVyuziti.query.filter_by(kostym_id=id).all()
-
-def get_accessory_colors(id):
-    return DoplnekBarva.query.filter_by(doplnek_id=id).all()
 
 def add_or_update_costume(image, *args, **kwargs):
     id = kwargs.get('id', None)
@@ -84,7 +81,8 @@ def add_or_update_costume(image, *args, **kwargs):
                          opotrebeni=kwargs['opotrebeni'],
                          pocet=kwargs['pocet'],
                          cena=kwargs['cena'],
-                         obrazek=image)
+                         obrazek=image,
+                         barva=kwargs['barva'])
         session.add(costume)
         costume = session.query(Kostym).order_by(Kostym.id.desc()).first()
 
@@ -102,19 +100,11 @@ def add_or_update_costume(image, *args, **kwargs):
             costume.obrazek = image
         session.add(costume)
 
-        session.query(BarvaKostym).filter_by(kostym_id=costume.id).delete()
         session.query(KostymVyuziti).filter_by(kostym_id=costume.id).delete()
 
-    for color in kwargs['barva']:
-        session.add(BarvaKostym(barva=color, kostym_id=costume.id))
     for usage in kwargs['vyuziti']:
         session.add(KostymVyuziti(vyuziti_id=usage, kostym_id=costume.id))
     session.commit()
-
-
-def get_all_colors():
-    return session.query(Barva).all()
-
 
 def get_usages():
     return session.query(Vyuziti).all()
@@ -135,10 +125,10 @@ def add_accessory(image, *args, **kwargs):
                        typ=kwargs['typ'],
                        material=kwargs['material'],
                        cena=kwargs['cena'],
-                       obrazek=image
+                       obrazek=image,
+                       barva=kwargs['barva']
                        )
         session.add(stmt)
-        accessory = session.query(Doplnek).order_by(Doplnek.id.desc()).first()
 
     else:
         accessory.nazev = kwargs['nazev']
@@ -151,13 +141,9 @@ def add_accessory(image, *args, **kwargs):
         accessory.typ = kwargs['typ']
         accessory.material = kwargs['material']
         accessory.cena = kwargs['cena']
+        accessory.barva = kwargs['barva']
         if image:
             accessory.obrazek = image
-
-        session.query(DoplnekBarva).filter_by(doplnek_id=accessory.id).delete()
-
-    for color in kwargs['barva']:
-        session.add(DoplnekBarva(barva=color, doplnek_id=accessory.id))
     session.commit()
 
 
@@ -176,11 +162,14 @@ def create_order(*args, **kwargs):
 
     costumes_occurences = Counter(args[0]['costumes'])
 
-    for item,occurence in costumes_occurences.items():
+    for item, occurence in costumes_occurences.items():
 
         stmt = VypujckaKostym(kostym_id=item,
-                                  vypujcka_id=new_order_id.id,
+                              vypujcka_id=new_order_id.id,
                               pocet=occurence)
+        costume = session.query(Kostym).filter_by(id=item).first()
+        costume.pocet -= occurence
+        session.add(costume)
         session.add(stmt)
 
     accessories_occurences = Counter(args[0]['accessories'])
@@ -190,14 +179,21 @@ def create_order(*args, **kwargs):
                                vypujcka_id=new_order_id.id,
                                pocet=occurence)
         session.add(stmt)
+        accessoory = session.query(Doplnek).filter_by(id=item).first()
+        accessoory.pocet -= occurence
+        session.add(accessoory)
 
     session.commit()
+
+def get_costume_order(id):
+    return session.query(VypujckaKostym, Vypujcka).outerjoin(Vypujcka, Vypujcka.id == VypujckaKostym.vypujcka_id)\
+        .filter(VypujckaKostym.kostym_id == id).first()
 
 
 def get_user_orders(rc):
     return (session.query(Vypujcka).filter(Vypujcka.klient == rc),
-            session.query(Kostym, VypujckaKostym).outerjoin(VypujckaKostym, VypujckaKostym.kostym_id == Kostym.id).all(),
-            session.query(Doplnek, DoplnekVypujcka).outerjoin(DoplnekVypujcka, DoplnekVypujcka.doplnek_id == Doplnek.id).all())
+            session.query(VypujckaKostym, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
+            session.query(DoplnekVypujcka, Doplnek).outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all())
 
 
 def get_users_data():
@@ -272,33 +268,18 @@ def update_user(**kwargs):
 
 def get_products_data(limit,offset,url):
     if(url == '/costumes_list'):
-        return session.query(Kostym,Barva, Vyuziti)\
-            .outerjoin(BarvaKostym, Kostym.id == BarvaKostym.kostym_id)\
-            .outerjoin(Barva,BarvaKostym.barva == Barva.barva) \
-            .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
-            .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id)\
-            .order_by(Kostym.id.asc())\
-            .limit(limit).offset(offset)
+        return (session.query(Kostym).order_by(Kostym.id.asc()).limit(limit).offset(offset).all(),
+                session.query(Vyuziti, KostymVyuziti).outerjoin(KostymVyuziti, KostymVyuziti.vyuziti_id == Vyuziti.id).all())
     else:
-        return session.query(Doplnek, Barva)\
-            .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
-            .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
-            .order_by(Doplnek.id.asc())\
-            .limit(limit).offset(offset)
+        return (session.query(Doplnek).order_by(Doplnek.id.asc()).limit(limit).offset(offset).all())
 
-def get_product(id,type):
+def get_product(id, type):
     if(type == "costumes"):
-        return session.query(Kostym,Barva, Vyuziti)\
-            .outerjoin(BarvaKostym, Kostym.id == BarvaKostym.kostym_id)\
-            .outerjoin(Barva,BarvaKostym.barva == Barva.barva) \
-            .outerjoin(KostymVyuziti, Kostym.id == KostymVyuziti.kostym_id) \
-            .outerjoin(Vyuziti, Vyuziti.id == KostymVyuziti.vyuziti_id)\
-            .filter(Kostym.id == id)
+        return session.query(Kostym)\
+            .filter(Kostym.id == id).first()
     elif(type == "accessories"):
-        return session.query(Doplnek, Barva)\
-            .outerjoin(DoplnekBarva, Doplnek.id == DoplnekBarva.doplnek_id) \
-            .outerjoin(Barva, DoplnekBarva.barva == Barva.barva) \
-            .filter(Doplnek.id == id)
+        return session.query(Doplnek)\
+            .filter(Doplnek.id == id).first()
 
 def update_product_amount(id,amount,type):
     if type == "costume":
@@ -313,12 +294,10 @@ def update_product_amount(id,amount,type):
         session.commit()
 
 def get_costumes_data():
-    return (session.query(Kostym).all(),
-            session.query(BarvaKostym).all())
+    return (session.query(Kostym).all())
 
 def get_accessories_data():
-    return (session.query(Doplnek).all(),
-            session.query(DoplnekBarva).all())
+    return (session.query(Doplnek).all())
 
 def delete_costume(id):
     if id:
@@ -350,16 +329,16 @@ def set_product_amount(type,id,amount):
         update_costume.pocet = amount
         session.commit()
 
-def get_colors():
-    return session.query(Barva).all()
+# def get_colors():
+#     return session.query(Barva).all()
 
-def get_color(color):
-    return session.query(Barva).filter_by(barva=color).first()
+# def get_color(color):
+#     return session.query(Barva).filter_by(barva=color).first()
 
-def insert_color(*args,**kwargs):
-    stmt = Barva(barva=kwargs['barva'].lower())
-    session.add(stmt)
-    session.commit()
+# def insert_color(*args,**kwargs):
+#     stmt = Barva(barva=kwargs['barva'].lower())
+#     session.add(stmt)
+#     session.commit()
 
 
 
@@ -395,14 +374,13 @@ def get_user_profile(email):
 def get_all_orders():
     return (
         session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).all(),
-        session.query(VypujckaKostym.vypujcka_id, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
-        session.query(DoplnekVypujcka.vypujcka_id, Doplnek)\
+        session.query(VypujckaKostym, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
+        session.query(DoplnekVypujcka, Doplnek)\
             .outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all()
     )
 
 def update_order(**kwargs):
-    order = session.query(Vypujcka) \
-        .filter(Vypujcka.id == kwargs['id']).first()
+    order = session.query(Vypujcka).filter_by(id=kwargs['id'][0]).first()
     order.vracen = kwargs['returned'][0]
     session.commit()
 

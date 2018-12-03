@@ -16,15 +16,17 @@ class ManageOrders(MethodView):
         orders, orders_costumes, orders_accessories = db.get_all_orders()
         res = []
         for order in orders:
-
-            price = sum([record.Kostym.cena for record in orders_costumes if record[0] == order.Vypujcka.id])
-            price += sum([record.Doplnek.cena for record in orders_accessories if record[0] == order.Vypujcka.id])
-            costumes = [record.Kostym.nazev + ' (' + record.Kostym.velikost + ')' for record in orders_costumes if
-                        record[0] == order.Vypujcka.id]
-            accessories = [record.Doplnek.nazev + ' (' + record.Doplnek.velikost + ')' for record in orders_accessories
-                           if record[0] == order.Vypujcka.id]
+            price = sum([record.Kostym.cena * record.VypujckaKostym.pocet for record in orders_costumes
+                         if record.VypujckaKostym.vypujcka_id == order.Vypujcka.id])
+            price += sum([record.Doplnek.cena * record.DoplnekVypujcka.pocet for record in orders_accessories
+                          if record.DoplnekVypujcka.vypujcka_id == order.Vypujcka.id])
+            costumes = ['%s (%s, %sx)' % (record.Kostym.nazev, record.Kostym.velikost, record.VypujckaKostym.pocet)
+                        for record in orders_costumes if
+                        record.VypujckaKostym.vypujcka_id == order.Vypujcka.id]
+            accessories = ['%s (%s, %sx)' % (record.Doplnek.nazev, record.Doplnek.velikost, record.DoplnekVypujcka.pocet)
+                           for record in orders_accessories
+                           if record.DoplnekVypujcka.vypujcka_id == order.Vypujcka.id]
             price *= (order.Vypujcka.datum_vraceni - order.Vypujcka.datum_vypujceni).days
-
 
             res.append(dict(
                 name=order.Vypujcka.nazev_akce,
@@ -35,7 +37,7 @@ class ManageOrders(MethodView):
                 costumes=', '.join(costumes),
                 accessories=', '.join(accessories),
                 price=price,
-                actions=render_template('orders_actions.html',returned=order.Vypujcka.vracen,id=order.Vypujcka.id),
+                actions=render_template('orders_actions.html', returned=order.Vypujcka.vracen, id=order.Vypujcka.id),
                 id=order.Vypujcka.id
             ))
         return jsonify({

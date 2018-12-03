@@ -23,6 +23,5 @@ def configure(app):
         accessories = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
         templates_list = []
         for accessory in accessories:
-            date = accessory[0].datum_vyroby
-            templates_list.append(render_template('accessory_template.html', data=accessory,date=date.strftime("%d.%m.%Y")))
+            templates_list.append(render_template('accessory_template.html', data=accessory))
         return jsonify(templates_list)

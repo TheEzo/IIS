@@ -2,70 +2,65 @@
     <div class="border" style="padding: 10px;min-height: 800px;">
     <div class="row thumbnail">
         <div class="col-sm ">
-            {% if data[0].obrazek %}
-                <img class="col-sm" src="{{ url_for('static', filename=data[0].obrazek) }}">
+            {% if data.obrazek %}
+                <img style="max-height: 250px; max-width: 330px;" src="{{ url_for('static', filename=data.obrazek) }}">
             {% endif %}
         </div>
     </div>
 
     <div class="row item-title">
         <div class="col-sm">
-            <span class="text-decorator">{{data[0].nazev }}</span>
+            <span class="text-decorator">{{data.nazev }}</span>
         </div>
     </div>
 
     <div class="row item-producer">
         <div class="col-sm">
-                {{ data[0].vyrobce }}
+                {{ data.vyrobce }}
         </div>
     </div>
     <hr>
     <div class="item-datas">
         <div class="row">
             <div class="col-sm-6">
-                    <span class="text-decorator">Velikost:</span> {{ data[0].velikost }}
+                    <span class="text-decorator">Velikost:</span> {{ data.velikost }}
             </div>
             <div class="col-sm-6">
-                    <span class="text-decorator">Počet kusů:</span>  {{ data[0].pocet }}
+                    <span class="text-decorator">Počet kusů:</span>  {{ data.pocet }}
             </div>
 
         </div>
         <div class="row">
             <div class="col-sm">
-                    <span class="text-decorator">Barva:</span> {{ data[1].barva }}
+                    <span class="text-decorator">Barva:</span> {{ data.barva }}
 
             </div>
         </div>
         <div class="row">
             <div class="col-sm">
-                    <span class="text-decorator">Využití:</span>  {{ data[2].druh_akce }}
+                    <span class="text-decorator">Využití:</span>  {{ usage }}
             </div>
         </div>
         <div class="row">
             <div class="col-sm">
-                    <span class="text-decorator">Opotřebení:</span>  {{ data[0].opotrebeni }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm">
-                    <span class="text-decorator">Vyrobeno:</span>  {{ date }}
+                    <span class="text-decorator">Opotřebení:</span>  {{ data.opotrebeni }}
             </div>
         </div>
     </div>
     <hr>
     <div class="row item-description">
         <div class="col-lg">
-                {{ data[0].popis }}
+                {{ data.popis }}
         </div>
 
     </div>
     <hr>
     <div class="row item-footer">
         <div class="col-sm-6">
-             <button class="add btn btn-success" value="{{ data[0].id }}">Do košíku</button>
+             <button class="add btn btn-success" value="{{ data.id }}">Do košíku</button>
         </div>
         <div class="col-sm-6">
-               <span class="text-decorator">{{ data[0].cena }},- / den</span>
+               <span class="text-decorator">{{ data.cena }},- / den</span>
         </div>
     </div>
     </div>
@@ -75,6 +70,6 @@
         $('.add').click(function (e){
             e.preventDefault();
             e.stopImmediatePropagation();
-            Web.confirmOrder('costumes','add',$(this).attr("value"),{{ data[1].barva }});
+            Web.confirmOrder('costumes','add', $(this).attr("value"));
         });
 </script>

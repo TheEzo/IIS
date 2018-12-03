@@ -22,12 +22,7 @@ class Doplnek(Base):
     obrazek = Column(String(100), nullable=False)
     cena = Column(Integer, nullable=False)
     vyrobce = Column(String(45), nullable=False)
-
-
-class Barva(Base):
-    __tablename__ = 'barva'
-
-    barva = Column(String(20), primary_key=True)
+    barva = Column(String(45), nullable=False)
 
 
 class Kostym(Base):
@@ -44,6 +39,7 @@ class Kostym(Base):
     pocet = Column(Integer)
     obrazek = Column(String(100), nullable=False)
     cena = Column(Integer, nullable=False)
+    barva = Column(String(45), nullable=False)
 
 
 class Osoba(Base):
@@ -96,22 +92,6 @@ class Vyuziti(Base):
 
     id = Column(Integer, primary_key=True)
     druh_akce = Column(String(128))
-
-
-class DoplnekBarva(Base):
-    __tablename__ = 'doplnek_barva'
-    __table_args__ = (PrimaryKeyConstraint('doplnek_id', 'barva'),)
-
-    doplnek_id = Column(Integer, ForeignKey('doplnek.id', ondelete='CASCADE'))
-    barva = Column(String(20), ForeignKey('barva.barva', ondelete='CASCADE'))
-
-
-class BarvaKostym(Base):
-    __tablename__ = 'barva_kostym'
-    __table_args__ = (PrimaryKeyConstraint('kostym_id', 'barva'),)
-
-    kostym_id = Column(Integer, ForeignKey('kostym.id', ondelete='CASCADE'))
-    barva = Column(String(20), ForeignKey('barva.barva', ondelete='CASCADE'))
 
 
 class DoplnekVypujcka(Base):

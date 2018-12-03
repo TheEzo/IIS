@@ -1,6 +1,6 @@
 from functools import wraps
 from flask_login import current_user
-from flask import abort, redirect, url_for, session, request
+from flask import abort, redirect, url_for, session, request,flash
 
 
 # role decorators
@@ -25,7 +25,6 @@ def employee(func):
 
 
 def login_required(func):
-    @wraps(func)
     def decorated_view(*args, **kwargs):
         if not current_user.is_authenticated():
             return redirect(url_for('login'))

@@ -25,8 +25,7 @@ class AddAccessory(Form):
     datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
     cena = IntegerField("Cena za kus",[data_required('Pole musí být vyplněno')])
     obrazek = FileField("Náhled")
-    barva = SelectMultipleField("Barva", choices=[(record.barva, record.barva[0].upper() + record.barva[1:])
-                                                  for record in db.get_all_colors()], default=[])
+    barva = StringField("Barva")
 
 
 class AccessoriesInsert(MethodView):
@@ -48,12 +47,9 @@ class AccessoriesInsert(MethodView):
                 material=accessory.material,
                 typ=accessory.typ,
                 datum_vyroby=accessory.datum_vyroby.strftime('%d.%m.%Y'),
-                cena=accessory.cena
+                cena=accessory.cena,
+                barva=accessory.barva
             )
-            colors = db.get_accessory_colors(id)
-            if colors:
-                for color in colors:
-                    form.barva.default.append(color.barva)
             return render_template('accessories_insert_form.html', form=form,title=title)
         return render_template('accessories_insert_form.html', form=AddAccessory(),title=title)
 
