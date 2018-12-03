@@ -40,7 +40,7 @@ class Register(MethodView):
         user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
         flash('Registrace proběhla úspěšně', 'alert-success')
-        return render_template(url_for('home'))
+        return redirect('costumes')
 
 
 def configure(app):
