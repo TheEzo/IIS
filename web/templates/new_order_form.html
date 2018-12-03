@@ -20,7 +20,7 @@
                 <span class="">Pole označená * jsou povinná</span>
             </div>
             <div class="col">
-                <h2>Celkem: <span id="order_prize">{{ session['cart']['prize'] }}</span></h2>
+                <h2>Celkem: <span id="prizeee">{{ session['cart']['prize'] }}</span><span  class="hidden" id="order_prize">{{ session['cart']['prize'] }}</span></h2>
             </div>
         </div>
     </form>
@@ -35,7 +35,9 @@
             uiLibrary: 'bootstrap4',
             format: 'dd.mm.yyyy'
         });
-
+        $( document ).mouseup(function() {
+            Web.updatePrice();
+        });
     });
 
 

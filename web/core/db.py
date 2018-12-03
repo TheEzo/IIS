@@ -286,13 +286,14 @@ def update_product_amount(id,amount,type):
     if type == "costume":
         costume = session.query(Kostym) \
             .filter(Kostym.id == id).first()
-        costume.pocet = amount
-        session.commit()
+        costume.pocet += amount
+        session.add(costume)
     elif type == "accessory":
         accessory = session.query(Doplnek) \
             .filter(Doplnek.id == id).first()
-        accessory.pocet = amount
-        session.commit()
+        accessory.pocet += amount
+        session.add(accessory)
+    session.commit()
 
 def get_costumes_data():
     return (session.query(Kostym).all())

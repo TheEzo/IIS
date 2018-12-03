@@ -26,6 +26,18 @@ var Web = {
             }
         });
         return false;
+    },
+
+    updatePrice: function(){
+        if ($("#datum_vraceni").val() == "")
+            return;
+        var d = $("#datum_vraceni").val().slice(0,2);
+        var m = $("#datum_vraceni").val().slice(3,5);
+        var y = $("#datum_vraceni").val().slice(6);
+        var date = new Date(y + '-' + m + '-' + d);
+        var now = new Date();
+        var res = date.getDate() - now.getDate();
+        $('#prizeee').text($('#order_prize').text()*res);
     }
 };
 
