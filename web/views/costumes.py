@@ -20,7 +20,7 @@ def configure(app):
     @app.route('/costumes_list', methods=['POST'])
     def getCostumeData():
         request_json = request.get_json()
-        costumes, usages = db.get_products_data(request_json.get('limit'), request_json.get('start'), request_json.get('url'))
+        costumes, usages = db.get_products_data(request_json.get('limit', 10), request_json.get('start', 0), request_json.get('url'))
         templates_list = []
         for costume in costumes:
             usage = ', '.join([u.Vyuziti.druh_akce for u in usages if u.KostymVyuziti.kostym_id == costume.id])
