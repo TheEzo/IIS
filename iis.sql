@@ -123,9 +123,9 @@ DELETE FROM `kostym`;
 /*!40000 ALTER TABLE `kostym` DISABLE KEYS */;
 INSERT INTO `kostym` (`id`, `vyrobce`, `material`, `popis`, `velikost`, `opotrebeni`, `pocet`, `datum_vyroby`, `cena`, `nazev`, `obrazek`, `barva`) VALUES
 (31, 'Costumes s.r.o', 'polyester', 'Kostým klauna je vhodný pro děti či dospělé na karneval.', 'S', 'nove', 3, '2007-08-20', 350, 'Kostým Klaun', 'klaun.jpg', 'Žlutá, Zelená'),
-(33, 'Army Costumes', 'polyester', 'Uniforma vojáka rudé armády z období 2. světové války, Vhodné pro vojenské přehlídky', 'L', 'nove', 5, '2003-09-20', 700, 'Vojenská uniforma vojáka SSSR', NULL, 'Hnědá'),
+(33, 'Army Costumes', 'polyester', 'Uniforma vojáka rudé armády z období 2. světové války, Vhodné pro vojenské přehlídky', 'L', 'nove', 5, '2003-09-20', 700, 'Vojenská uniforma vojáka SSSR', 'sssr_unifor.jpg', 'Hnědá'),
 (43, 'Uniformy s.r.o.', 'Bavlna', 'Vojenská uniforma na slavnostní ceremoniály', 'XL', 'zanovni', 3, '2018-07-02', 300, 'Uniforma', 'uniforma.jpg', 'Zelená'),
-(44, 'Hadry sro', 'Látka', 'nějaký ten plášť', 'S', 'nove', 2, '2018-12-02', 200, 'Kouzelnický plášť', 'plast.jpg', 'černá'),
+(44, 'Hadry sro', 'Látka', 'nějaký ten plášť', 'S', 'nove', 2, '2018-12-02', 200, 'Kouzelnický plášť', 'magic_cloak.jpeg', 'černá'),
 (46, 'Obleky sro', 'Bavlna', 'Oblek pro slavnostní příležitosti', 'XL', 'nove', 2, '2018-12-03', 2000, 'Oblek', 'oblek.jpg', 'Modrá'),
 (47, 'TK', 'Polyester', 'Kostým vhodný na den sv.Mikuláše či karneval', 'L', 'stare', 1, '2009-02-03', 450, 'Kostým Mikuláše', 'mikulas.jpg', 'Červená'),
 (48, 'Costumes s.r.o', 'Polyester', 'Kostým Piráta vhodný na karneval', 'M', 'zanovni', 3, '2018-01-01', 300, 'Kostým Piráta', 'pirat.jpg', 'Černo-Bílá'),

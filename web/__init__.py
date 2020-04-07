@@ -11,6 +11,7 @@ import base64
 def create_app():
     app = Flask(__name__, static_url_path='/static', static_folder='./static')
     app.secret_key = '#$secret_key%&'
+    app.config['JSON_AS_ASCII'] = False
 
     configure_views(app)
 

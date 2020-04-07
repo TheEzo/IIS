@@ -148,6 +148,10 @@ def add_accessory(image, *args, **kwargs):
     session.commit()
 
 
+def get_all_costumes():
+    return Kostym.query.all()
+
+
 def create_order(*args, **kwargs):
     cz_datetime = datetime.strptime(kwargs['datum_vraceni'], '%d.%m.%Y')
     stmt = Vypujcka(nazev_akce=kwargs['nazev_akce'],
