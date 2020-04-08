@@ -7,9 +7,9 @@ Flask-Login==0.4.1
 idna==2.7
 itsdangerous==0.24
 Jinja2==2.10
-MarkupSafe==1.0
-mysql-connector==2.1.6
-mysql-connector-python==8.0.12
+# MarkupSafe==1.0
+# mysql-connector==2.1.6
+# mysql-connector-python==8.0.12
 mysqlclient-deps==0.0.2
 protobuf==3.6.1
 pycparser==2.19
