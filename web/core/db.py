@@ -10,10 +10,15 @@ from datetime import datetime
 from collections import Counter
 
 
-
-
 def get_user(email):
     return Osoba.query.filter_by(email=email).first()
+
+
+def get_user_by_id(rc):
+    return session.query(Osoba, Zamestnanec.pozice, Klient.clenstvi).filter_by(rc=rc)\
+        .outerjoin(Zamestnanec, Osoba.rc == Zamestnanec.osoba_rc)\
+        .outerjoin(Klient, Osoba.rc == Klient.osoba_rc)\
+        .first()
 
 
 def create_user(*args, **kwargs):
