@@ -45,6 +45,7 @@ def configure_login(app):
         flash('Příhlášení proběhlo úspěšně', 'alert-success')
         return redirect(url_for('home'))
 
+
 class User:
     def __init__(self, rc, email='', name='', surname=''):
         self.id = rc

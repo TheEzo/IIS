@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import request, url_for, jsonify
+from flask import request, url_for, jsonify, session, make_response
 from flask.views import MethodView
 from web.core import db
+from web.roles import admin
 
 
 class Costumes(MethodView):
@@ -11,7 +12,9 @@ class Costumes(MethodView):
         data = [self.costume_json(item) for item in db.get_all_costumes()]
         return jsonify(data)
 
+    @admin
     def post(self):
+        # TODO save image from form to static
         data = request.json
         db.add_or_update_costume(**dict(
             nazev=data['name'],
@@ -43,6 +46,15 @@ class Costumes(MethodView):
             manufacturer=data.vyrobce
         )
 
+    @staticmethod
+    @admin
+    def delete(obj_id):
+        if db.get_costume_by_id(obj_id):
+            db.delete_costume(obj_id)
+            return '', 200
+        else:
+            return '', 400
+
 
 def configure(app):
     app.add_url_rule('/costumes', view_func=Costumes.as_view('costumes'))
@@ -55,10 +67,6 @@ def configure(app):
                 return '', 400
             return jsonify(Costumes.costume_json(costume))
         elif request.method == 'DELETE':
-            if db.get_costume_by_id(obj_id):
-                db.delete_costume(obj_id)
-                return '', 200
-            else:
-                return '', 400
+            Costumes.delete(obj_id)
         else:
             return '', 400
