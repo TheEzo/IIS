@@ -9,7 +9,7 @@ from web.roles import admin
 
 class Costumes(MethodView):
     def get(self):
-        data = [self.costume_json(item) for item in db.get_all_costumes()]
+        data = [self.data_json(item) for item in db.get_all_costumes()]
         return jsonify(data)
 
     @admin
@@ -31,7 +31,7 @@ class Costumes(MethodView):
         return '', 200
 
     @staticmethod
-    def costume_json(data):
+    def data_json(data):
         return dict(
             color=data.barva,
             price=data.cena,
@@ -53,7 +53,7 @@ class Costumes(MethodView):
             db.delete_costume(obj_id)
             return '', 200
         else:
-            return '', 400
+            return '', 404
 
 
 def configure(app):
@@ -65,8 +65,6 @@ def configure(app):
             costume = db.get_costume_by_id(obj_id)
             if not costume:
                 return '', 400
-            return jsonify(Costumes.costume_json(costume))
-        elif request.method == 'DELETE':
-            Costumes.delete(obj_id)
-        else:
-            return '', 400
+            return jsonify(Costumes.data_json(costume))
+        if request.method == 'DELETE':
+            return Costumes.delete(obj_id)
