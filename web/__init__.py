@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, session, request
+from flask import Flask, redirect, url_for, session, jsonify
 from datetime import timedelta
 
 from web.views import configure_views
@@ -7,6 +7,7 @@ from web.core.models import Osoba
 
 from flask_login import LoginManager
 import base64
+
 
 def create_app():
     app = Flask(__name__, static_url_path='/static', static_folder='./static')
@@ -58,5 +59,11 @@ def create_app():
     def make_session_permanent():
         session.permanent = True
         app.permanent_session_lifetime = timedelta(minutes=30)
-    return app
 
+    @app.after_request
+    def test(f):
+        for header in ['Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods']:
+            f.headers.add(header, '*')
+        return f
+
+    return app
