@@ -62,8 +62,12 @@ def create_app():
 
     @app.after_request
     def test(f):
-        for header in ['Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods']:
-            f.headers.add(header, '*')
+        #for header in ['Access-Control-Allow-Origin', 'Access-Control-Allow-Headers', 'Access-Control-Allow-Methods']:
+        #    f.headers.add(header, '*')
+        f.headers.add('Access-Control-Allow-Credentials', 'true')
+        f.headers.add('Access-Control-Allow-Headers', 'X-Requested-With, content-type, Authorization')
+        f.headers.add('Access-Control-Allow-Origin', 'http://localhost:3000')
+        f.headers.add('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
         return f
 
     return app
