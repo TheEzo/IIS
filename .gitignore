@@ -5,6 +5,8 @@ run.py
 web/alembic.ini
 web/core/db_connector.py
 *.pyc
+ClientApp/node_modules
+ClientApp/build
 .venv
 ClientApp/bin
 ClientApp/node_modules
