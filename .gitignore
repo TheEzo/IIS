@@ -6,4 +6,6 @@ web/alembic.ini
 web/core/db_connector.py
 *.pyc
 .venv
-
+ClientApp/bin
+ClientApp/node_modules
+ClientApp/.idea
