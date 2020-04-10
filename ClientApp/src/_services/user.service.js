@@ -12,32 +12,28 @@ export const userService = {
 };
 
 function login(email, password) {
+    const formData = new FormData();
+    formData.append('email', email.toString());
+    formData.append('password', password.toString());
+
+
     const requestOptions = {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
+            'Accept': '*/*',
         },
         credentials: 'include',
         mode: 'cors',
-        body: JSON.stringify({email, password}),
+        body: formData
     };
-
-
-    fetch(config.apiUrl + '/login', requestOptions)
-        .then(respond => {
-            console.log("Respond To login: ", respond);
-        })
 
     return fetch(config.apiUrl + '/login', requestOptions)
         .then(handleResponse, handleError)
-        .then(respond => {
+        .then(user => {
             // login successful if there's a jwt token in the response
-            const pwd = "password";
-            const user = {email, pwd};
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
-
+            console.log("UserRespond: ", user);
             return user;
         });
 }

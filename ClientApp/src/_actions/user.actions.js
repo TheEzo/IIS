@@ -17,15 +17,14 @@ function login(email, password) {
         dispatch(request({email}));
 
         userService.login(email, password)
-            .then(handleResponse, handleError)
             .then(
                 user => {
-                    console.log("Action data user: ", user);
+                    console.log("User", user);
                     dispatch(success(user));
-                    history.push('/');
+                    history.push('/profile');
                 },
                 error => {
-                    console.log("Action data error: ", error);
+                    console.log("UserError", error);
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
                 }

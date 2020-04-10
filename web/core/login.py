@@ -26,12 +26,11 @@ def configure_login(app):
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        if current_user.is_authenticated():
-            return redirect(url_for('home'))
         if not request.form:
             return 'Bad request', 400
         form = LoginForm(request.form)
         data = form.data
+        print(data)
         u = db.get_user(data.get('email'))
         if not u:
             return 'Email nebyl rozpoznán. <a href="' + url_for('register') + '">Registrovat?</a>', 400

@@ -10,7 +10,7 @@ function getAll() {
 
     return fetch(config.apiUrl + '/costumes', GETOptions)
         .then(handleResponse, handleError)
-        .then(d => {
-            return d
+        .then(costumes => {
+            return costumes
         });
 }
