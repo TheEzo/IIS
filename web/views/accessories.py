@@ -17,6 +17,7 @@ class Accessories(MethodView):
         # TODO save image from form to static
         data = request.json
         db.add_accessory(**dict(
+            id=data['id'],
             nazev=data['name'],
             vyrobce=data['manufacturer'],
             material=data['material'],

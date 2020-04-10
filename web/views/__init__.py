@@ -11,6 +11,7 @@ from web.views import users
 from web.views import costumes_insert
 from web.views import accessories_insert
 from web.views import new_order
+from web.views import orders_admin
 from web.views import orders
 from web.views import property_insert
 from web.views import costumes_admin
@@ -31,7 +32,8 @@ def configure_views(app):
     costumes_insert.configure(app)
     accessories_insert.configure(app)
     new_order.configure(app)
-    orders.configure(app)
+    orders_admin.configure(app)
     property_insert.configure(app)
     costumes_admin.configure(app)
     accessories_admin.configure(app)
+    orders.configure(app)

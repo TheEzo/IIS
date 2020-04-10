@@ -283,6 +283,7 @@ def get_products_data(limit,offset,url):
     else:
         return (session.query(Doplnek).order_by(Doplnek.id.asc()).limit(limit).offset(offset).all())
 
+
 def get_product(id, type):
     if(type == "costumes"):
         return session.query(Kostym)\
@@ -373,14 +374,15 @@ def get_all_orders():
     return (
         session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).all(),
         session.query(VypujckaKostym, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
-        session.query(DoplnekVypujcka, Doplnek)\
-            .outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all()
+        session.query(DoplnekVypujcka, Doplnek).outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all()
     )
+
 
 def update_order(**kwargs):
     order = session.query(Vypujcka).filter_by(id=kwargs['id'][0]).first()
     order.vracen = kwargs['returned'][0]
     session.commit()
+
 
 def get_order_products(id):
     return (session.query(VypujckaKostym).filter(VypujckaKostym.vypujcka_id == id).all(),
