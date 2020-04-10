@@ -6,7 +6,7 @@ from flask import redirect, request, abort, url_for, flash, request, render_temp
 from wtforms import StringField, Form, PasswordField
 from wtforms.validators import email, regexp, ValidationError, data_required
 from werkzeug.security import check_password_hash
-
+from json import dumps
 from web.core import db
 
 
@@ -22,29 +22,29 @@ def configure_login(app):
     @app.route("/logout")
     def logout():
         logout_user()
-        return redirect(url_for('home'))
+        return 'Úspěšně ohdlášeno', 200
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         if current_user.is_authenticated():
             return redirect(url_for('home'))
         if not request.form:
-            return '', 400
+            return 'Bad request', 400
         form = LoginForm(request.form)
         data = form.data
         u = db.get_user(data.get('email'))
         if not u:
-            res = jsonify('Email nebyl rozpoznán. <a href="' + url_for('register') + '">Registrovat?</a>')
-            res.status_code = 400
-            return res
+            return 'Email nebyl rozpoznán. <a href="' + url_for('register') + '">Registrovat?</a>', 400
         if not check_password_hash(u.heslo, data.get('password')):
-            flash('Nesprávný email nebo heslo', 'alert-danger')
-            return redirect(url_for('login'))
+            return 'Nesprávný email nebo heslo', 400
         user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)
         login_user(user)
         session['cart'] = {'costumes': [], 'accessories': []}
-        flash('Příhlášení proběhlo úspěšně', 'alert-success')
-        return redirect(url_for('home'))
+        user_data = dict(id=user.id,
+                         admin=user.admin,
+                         email=user.email,
+                         name=user.name)
+        return jsonify(user_data)
 
 
 class User:
