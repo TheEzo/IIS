@@ -1,8 +1,11 @@
 import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "reactstrap";
 import React from "react";
 import {NavLink} from "react-router-dom";
+import {connect} from "react-redux";
+import {userActions} from "../../_actions";
 
-const AccountDropdown = () => (
+
+const AccountDropdown = ({username, dispatch}) => (
     <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
             Účet
@@ -10,7 +13,7 @@ const AccountDropdown = () => (
 
         <DropdownMenu right>
             <DropdownItem disabled>
-                <span>TODO: Jméno uživatele</span>
+                <span>{username}</span>
             </DropdownItem>
             <DropdownItem divider/>
             <DropdownItem>
@@ -21,10 +24,17 @@ const AccountDropdown = () => (
             </DropdownItem>
             <DropdownItem divider/>
             <DropdownItem>
-                <NavLink className='black-text' to='/login'>Odhlásit</NavLink>
+                <NavLink onClick={() => dispatch(userActions.logout())} className='black-text' to='/login'>Odhlásit</NavLink>
             </DropdownItem>
         </DropdownMenu>
     </UncontrolledDropdown>
 )
 
-export default AccountDropdown;
+function mapStateToProps(state) {
+    const {user} = state.authentication;
+    return {
+        username: user.name,
+    };
+}
+
+export default connect(mapStateToProps)(AccountDropdown);

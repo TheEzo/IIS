@@ -30,10 +30,10 @@ def configure_login(app):
             return 'Bad request', 400
         form = LoginForm(request.form)
         data = form.data
-        print(data)
+        #print(data)
         u = db.get_user(data.get('email'))
         if not u:
-            return 'Email nebyl rozpoznán. <a href="' + url_for('register') + '">Registrovat?</a>', 400
+            return 'Email nebyl rozpoznán', 400
         if not check_password_hash(u.heslo, data.get('password')):
             return 'Nesprávný email nebo heslo', 400
         user = User(email=u.email, rc=u.rc, name=u.jmeno, surname=u.prijmeni)

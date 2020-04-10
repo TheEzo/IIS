@@ -3,22 +3,14 @@ import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {
-    Collapse,
     Navbar,
     NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem,
-    //NavLink,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    //NavbarText
     UncontrolledCollapse,
 
 } from 'reactstrap';
-import {AccountDropdown, AdministrationDropdown} from "./index";
+import {AccountDropdown, AdministrationDropdown, LoginBar} from "./index";
 
 class MyNavbar extends Component {
     constructor(props) {
@@ -31,6 +23,7 @@ class MyNavbar extends Component {
     }
 
     render() {
+        const {loggedIn, admin} = this.props;
         return (
             <div>
                 <Navbar color="dark" dark expand="md" fixed={"top"}>
@@ -47,8 +40,9 @@ class MyNavbar extends Component {
                             </NavItem>
                         </Nav>
                         <Nav navbar>
-                            <AdministrationDropdown />
-                            <AccountDropdown />
+                            {!loggedIn && <LoginBar />}
+                            {loggedIn && admin && <AdministrationDropdown/>}
+                            {loggedIn && <AccountDropdown/>}
                         </Nav>
 
                     </UncontrolledCollapse>
@@ -57,59 +51,14 @@ class MyNavbar extends Component {
         );
     }
 
-    // render() {
-    //     const loggedin = this.props.loggedIn;
-    //     console.log("LoggedIn: ", loggedin);
-    //     return (
-    //         <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
-    //             <NavLink className='navbar-brand' to='/home'>Home</NavLink>
-    //             <div className='collapse navbar-collapse' id='navbarNav'>
-    //                 <ul className='navbar-nav mr-auto'>
-    //                     <li className='nav-item'>
-    //                         <NavLink className='nav-link' to="/costumes">Kostýmy</NavLink>
-    //                     </li>
-    //                     <li className='nav-item'>
-    //                         <NavLink className='nav-link' to="/accessories">Doplňky</NavLink>
-    //                     </li>
-    //                 </ul>
-    //                 {loggedin ? (
-    //                     <ul className='navbar-nav'>
-    //                         <li className='nav-item'>
-    //                             <NavLink className='nav-link' to="/#">Košík</NavLink>
-    //                         </li>
-    //                         <li className="nav-item dropdown">
-    //                             <a className="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-    //                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    //                                 Dropdown link
-    //                             </a>
-    //                             <div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-    //                                 <a className="dropdown-item" href="#">Action</a>
-    //                                 <a className="dropdown-item" href="#">Another action</a>
-    //                                 <a className="dropdown-item" href="#">Something else here</a>
-    //                             </div>
-    //                         </li>
-    //                     </ul>
-    //                 ) : (
-    //                     <ul className='navbar-nav'>
-    //                         <li className='nav-item'>
-    //                             <NavLink className='nav-link' to="/login">Přihlášení</NavLink>
-    //                         </li>
-    //                         <li className='nav-item'>
-    //                             <NavLink className='nav-link' to="/register">Registrace</NavLink>
-    //                         </li>
-    //                     </ul>
-    //                 )}
-    //             </div>
-    //         </nav>
-    //     )
-    //
-    // }
+
 }
 
 function mapStateToProps(state) {
-    const {loggedIn} = state.authentication;
+    const {loggedIn, user} = state.authentication;
     return {
-        loggedIn
+        loggedIn: loggedIn,
+        admin: user && user.admin,
     };
 }
 
