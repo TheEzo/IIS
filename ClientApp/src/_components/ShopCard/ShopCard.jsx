@@ -1,20 +1,17 @@
 import React, {Component} from 'react';
 
-class Costume extends Component {
-    //constructor(props) {
-    //    super(props);
-    //}
+class ShopCard extends Component {
 
     render() {
-        console.log(this.props.costume);
-        const costume = this.props.costume;
+        //console.log(this.props.item);
+        const item = this.props.item;
 
         return (
             <div>
-                <p>{costume.name}</p>
+                <p>{item.name}</p>
             </div>
         )
     }
 }
 
-export {Costume};
+export {ShopCard};
