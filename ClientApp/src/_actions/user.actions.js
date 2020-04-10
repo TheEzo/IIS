@@ -80,6 +80,31 @@ function register(user) {
     }
 }
 
+function getProfile(id) {
+    return dispatch => {
+        dispatch(request());
+
+        userService.getById(id)
+            .then(
+                users => dispatch(success(users)),
+                error => dispatch(failure(error))
+            );
+    };
+
+    function request() {
+        return {type: userConstants.GETPROFILE_REQUEST}
+    }
+
+    function success(users) {
+        return {type: userConstants.GETPROFILE_SUCCESS, users}
+    }
+
+    function failure(error) {
+        return {type: userConstants.GETPROFILE_FAILURE, error}
+    }
+}
+
+
 function getAll() {
     return dispatch => {
         dispatch(request());
