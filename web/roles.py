@@ -27,6 +27,6 @@ def employee(func):
 def login_required(func):
     def decorated_view(*args, **kwargs):
         if not current_user.is_authenticated():
-            return redirect(url_for('login'))
+            return abort(401)
         return func(*args, **kwargs)
     return decorated_view

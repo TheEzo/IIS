@@ -148,6 +148,10 @@ def add_accessory(image, *args, **kwargs):
     session.commit()
 
 
+def get_all_costumes():
+    return Kostym.query.all()
+
+
 def create_order(*args, **kwargs):
     cz_datetime = datetime.strptime(kwargs['datum_vraceni'], '%d.%m.%Y')
     stmt = Vypujcka(nazev_akce=kwargs['nazev_akce'],
@@ -382,3 +386,7 @@ def get_order_products(id):
 def delete_order(id):
     session.query(Vypujcka).filter(Vypujcka.id == id).delete()
     session.commit()
+
+
+def get_all_accessories():
+    session.query(Doplnek).all()

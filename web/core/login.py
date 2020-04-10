@@ -29,13 +29,14 @@ def configure_login(app):
         if current_user.is_authenticated():
             return redirect(url_for('home'))
         if not request.form:
-            return render_template('login.html', form=LoginForm())
+            return '', 400
         form = LoginForm(request.form)
         data = form.data
         u = db.get_user(data.get('email'))
         if not u:
-            flash('Email nebyl rozpoznán. <a href="' + url_for('register') + '">Registrovat?</a>', 'alert-danger')
-            return redirect(url_for('login'))
+            res = jsonify('Email nebyl rozpoznán. <a href="' + url_for('register') + '">Registrovat?</a>')
+            res.status_code = 400
+            return res
         if not check_password_hash(u.heslo, data.get('password')):
             flash('Nesprávný email nebo heslo', 'alert-danger')
             return redirect(url_for('login'))
@@ -44,6 +45,7 @@ def configure_login(app):
         session['cart'] = {'costumes': [], 'accessories': []}
         flash('Příhlášení proběhlo úspěšně', 'alert-success')
         return redirect(url_for('home'))
+
 
 class User:
     def __init__(self, rc, email='', name='', surname=''):
