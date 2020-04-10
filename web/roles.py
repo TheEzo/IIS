@@ -30,3 +30,13 @@ def login_required(func):
             return abort(401)
         return func(*args, **kwargs)
     return decorated_view
+
+
+def admin_or_current(func):
+    @wraps(func)
+    @login_required
+    def _func(*args, **kwargs):
+        if current_user.id == kwargs.get('obj_id') or current_user.is_admin():
+            return func(*args, **kwargs)
+        return abort(403)
+    return _func

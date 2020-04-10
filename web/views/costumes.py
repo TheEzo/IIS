@@ -17,6 +17,7 @@ class Costumes(MethodView):
         # TODO save image from form to static
         data = request.json
         db.add_or_update_costume(**dict(
+            id=data['id'],
             nazev=data['name'],
             vyrobce=data['manufacturer'],
             material=data['material'],
