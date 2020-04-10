@@ -8,6 +8,4 @@ web/core/db_connector.py
 ClientApp/node_modules
 ClientApp/build
 .venv
-ClientApp/bin
-ClientApp/node_modules
 ClientApp/.idea
