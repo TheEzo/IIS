@@ -2,6 +2,7 @@ import {userConstants} from '../_constants';
 import {userService} from '../_services';
 import {alertActions} from './';
 import {history} from '../_helpers';
+import {handleError, handleResponse} from "../_services/responseHandlers";
 
 export const userActions = {
     login,
@@ -16,6 +17,7 @@ function login(email, password) {
         dispatch(request({email}));
 
         userService.login(email, password)
+            .then(handleResponse, handleError)
             .then(
                 user => {
                     console.log("Action data user: ", user);

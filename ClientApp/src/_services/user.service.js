@@ -17,10 +17,9 @@ function login(email, password) {
         headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Cache': 'no-cache'
         },
         credentials: 'include',
-        mode: 'no-cors',
+        mode: 'cors',
         body: JSON.stringify({email, password}),
     };
 
