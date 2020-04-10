@@ -9,7 +9,7 @@ from web.views.users import Users
 class UserOrders(MethodView):
     # @login_required
     def get(self):
-        user_id = 9609255832
+        user_id = current_user.id
         v, k, d = db.get_user_orders(user_id)
         data = [UserOrders.data_json(item, k, d) for item in v]
         return jsonify(data)
@@ -20,13 +20,13 @@ class UserOrders(MethodView):
     @staticmethod
     def data_json(v, k, d):
         return dict(
-            id=v.id,
+            id=v.Vypujcka.id,
             costumes=[f'{item.Kostym.nazev} ({item.Kostym.velikost})' for item in k
-                      if item.VypujckaKostym.vypujcka_id == v.id],
+                      if item.VypujckaKostym.vypujcka_id == v.Vypujcka.id],
             accessories=[f'{item.Doplnek.nazev} ({item.Doplnek.velikost})' for item in d
-                         if item.DoplnekVypujcka.vypujcka_id == v.id],
-            date_from=str(v.datum_vypujceni),
-            date_to=str(v.datum_vraceni),
+                         if item.DoplnekVypujcka.vypujcka_id == v.Vypujcka.id],
+            date_from=str(v.Vypujcka.datum_vypujceni),
+            date_to=str(v.Vypujcka.datum_vraceni),
             user=Users.data_json(v)
         )
 

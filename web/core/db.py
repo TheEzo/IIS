@@ -201,7 +201,8 @@ def get_costume_order(id):
 
 
 def get_user_orders(rc):
-    return (session.query(Vypujcka).filter(Vypujcka.klient == rc),
+    return (
+            session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).filter(Osoba.rc == rc).all(),
             session.query(VypujckaKostym, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
             session.query(DoplnekVypujcka, Doplnek).outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all())
 
