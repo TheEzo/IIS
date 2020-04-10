@@ -1,12 +1,11 @@
-import React, { Component } from 'react'
-import { NavLink,Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, {Component} from 'react'
+import {NavLink} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 
-class Navbar extends Component{
-    constructor(props){
+class Navbar extends Component {
+    constructor(props) {
         super(props);
-
         this.logout = this.logout.bind(this);
     }
 
@@ -14,24 +13,37 @@ class Navbar extends Component{
 
     }
 
-
-    render(){
-        return(
-            <ul>
-                <li>Home</li>
-                <li><NavLink to="costumes">Costumes</NavLink></li>
-                <li><NavLink to="/login">Login</NavLink></li>
-            </ul>
+    render() {
+        return (
+            <nav className="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+                <NavLink className='navbar-brand' to='/home'>Home</NavLink>
+                <div className='collapse navbar-collapse' id='navbarNav'>
+                    <ul className='navbar-nav mr-auto'>
+                        <li className='nav-item'>
+                            <NavLink className='nav-link' to="/costumes">Kostýmy</NavLink>
+                        </li>
+                        <li className='nav-item'>
+                            <NavLink className='nav-link' to="/accessories">Doplňky</NavLink>
+                        </li>
+                    </ul>
+                    <ul className='navbar-nav'>
+                        <li className='nav-item'>
+                            <NavLink className='nav-link' to="/login">Přihlášení</NavLink>
+                        </li>
+                        <li className='nav-item'>
+                            <NavLink className='nav-link' to="/register">Registrace</NavLink>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
         )
 
     }
 }
 
 function mapStateToProps(state) {
-
+    return state;
 }
 
-const connectedNavbar = connect(mapStateToProps)(Navbar);
-export { connectedNavbar as Navbar };
+export default connect(mapStateToProps)(Navbar);
 
-export default Navbar;

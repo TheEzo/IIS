@@ -1,7 +1,7 @@
 import {costumesConstants} from "../_constants/costumes.constants";
 
 const initialState = {
-    loading: false,
+    loading: true,
     items: [],
     error: null,
 }
@@ -15,7 +15,6 @@ export function costumes(state = initialState, action) {
                 loading: true,
             };
         case costumesConstants.GETALL_SUCCESS:
-            console.log("Action succ: ", action);
             return {
                 ...state,
                 loading: false,
@@ -23,7 +22,9 @@ export function costumes(state = initialState, action) {
             };
         case costumesConstants.GETALL_FAILURE:
             return {
-                error: action.error
+                ...state,
+                loading: false,
+                error: action.error,
             };
         default:
             return state;
