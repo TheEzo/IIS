@@ -21,6 +21,7 @@ class UserOrders(MethodView):
     def data_json(v, k, d):
         costumes = [c for c in k if c.VypujckaKostym.vypujcka_id == v.Vypujcka.id]
         accessories = [a for a in d if a.DoplnekVypujcka.vypujcka_id == v.Vypujcka.id]
+        days = (v.Vypujcka.datum_vraceni - v.Vypujcka.datum_vypujceni).days
         return dict(
             id=v.Vypujcka.id,
             costumes=[f'{item.Kostym.nazev} ({item.Kostym.velikost})' for item in costumes],
@@ -30,7 +31,7 @@ class UserOrders(MethodView):
             user=Users.data_json(v),
             returned=bool(v.Vypujcka.vracen),
             approved_by=v.Vypujcka.zamestnanec,
-            price=sum([c.Kostym.cena for c in costumes] + [a.Doplnek.cena for a in accessories])
+            price=sum([c.Kostym.cena for c in costumes] + [a.Doplnek.cena for a in accessories]) * days
         )
 
 def configure(app):
