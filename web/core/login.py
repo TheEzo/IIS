@@ -30,7 +30,6 @@ def configure_login(app):
             return 'Bad request', 400
         form = LoginForm(request.form)
         data = form.data
-        #print(data)
         u = db.get_user(data.get('email'))
         if not u:
             return 'Email nebyl rozpoznán', 400
