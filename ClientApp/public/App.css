@@ -2,7 +2,6 @@
 
 body {
     background-color: #ffffff;
-
 }
 
 h1 {
@@ -74,4 +73,65 @@ h2 {
 .chart-style:hover {
     color: rgba(255,255,255,.7);
 }
-  
+
+dl {
+    width: 100%;
+}
+
+dt {
+    width: 50%;
+    float: left;
+}
+
+dd {
+    width: 50%;
+    float: left;
+    padding-left: 8px;
+}
+
+.item {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid silver;
+    display: flex;
+    background-color: #ffffff;
+}
+
+.item-image {
+    width: 280px;
+    float: left;
+    display: block;
+}
+
+.item-image img {
+    max-width: 250px;
+    max-height: 330px;
+}
+
+.item-body {
+    width: 30%;
+    float: left;
+    display: flow-root;
+}
+
+.item-description {
+    width: 40%;
+    float: left;
+    display: block;
+}
+
+.item-header {
+    font-weight: bold;
+}
+
+.item-rent {
+    display: block;
+    position: sticky;
+    top: 100%;
+    float: right;
+    margin-bottom: 10px;
+}
+
+.item-rent button {
+    margin-left: 10px;
+}
