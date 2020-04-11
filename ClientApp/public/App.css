@@ -1,7 +1,7 @@
 @import url('https://cdn.syncfusion.com/ej2/material.css');
 
 body {
-    background-color: #ffffff;
+    background-color: #e9ecef;
 }
 
 h1 {
@@ -134,4 +134,14 @@ dd {
 
 .item-rent button {
     margin-left: 10px;
+}
+
+.profile-user {
+    float: left;
+    width: 50%;
+}
+
+.profile-info {
+    float: left;
+    width: 50%;
 }
