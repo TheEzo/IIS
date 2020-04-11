@@ -18,15 +18,19 @@ class Orders(MethodView):
 
     @staticmethod
     def data_json(v, k, d):
+        costumes = [c for c in k if c.VypujckaKostym.vypujcka_id == v.Vypujcka.id]
+        accessories = [a for a in d if a.DoplnekVypujcka.vypujcka_id == v.Vypujcka.id]
+        days = (v.Vypujcka.datum_vraceni - v.Vypujcka.datum_vypujceni).days
         return dict(
             id=v.Vypujcka.id,
-            costumes=[f'{item.Kostym.nazev} ({item.Kostym.velikost})' for item in k
-                      if item.VypujckaKostym.vypujcka_id == v.Vypujcka.id],
-            accessories=[f'{item.Doplnek.nazev} ({item.Doplnek.velikost})' for item in d
-                         if item.DoplnekVypujcka.vypujcka_id == v.Vypujcka.id],
+            costumes=[f'{item.Kostym.nazev} ({item.Kostym.velikost})' for item in costumes],
+            accessories=[f'{item.Doplnek.nazev} ({item.Doplnek.velikost})' for item in accessories],
             date_from=str(v.Vypujcka.datum_vypujceni),
             date_to=str(v.Vypujcka.datum_vraceni),
-            user=Users.data_json(v)
+            user=Users.data_json(v),
+            returned=bool(v.Vypujcka.vracen),
+            approved_by=v.Vypujcka.zamestnanec,
+            price=sum([c.Kostym.cena for c in costumes] + [a.Doplnek.cena for a in accessories]) * days
         )
 
 
