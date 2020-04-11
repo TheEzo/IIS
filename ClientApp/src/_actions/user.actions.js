@@ -19,13 +19,11 @@ function login(email, password) {
         userService.login(email, password)
             .then(
                 user => {
-                    console.log("User", user);
                     dispatch(success(user));
                     history.push('/profile');
                     dispatch(alertActions.success('Přihlášení bylo úspěšné!'));
                 },
                 error => {
-                    console.log("UserError", error);
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
                 }

@@ -3,6 +3,7 @@ import {userConstants} from '../_constants';
 const initialState = {
     profile: null,
     profileLoading: true,
+    items: [],
 };
 
 export function users(state = initialState, action) {

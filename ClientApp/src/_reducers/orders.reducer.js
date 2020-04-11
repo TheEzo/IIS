@@ -1,4 +1,5 @@
 import {ordersConstants} from "../_constants";
+import {act} from "react-dom/test-utils";
 
 const initialState = {
     loading: true,
@@ -20,6 +21,23 @@ export function orders(state = initialState, action) {
         case ordersConstants.GETMINE_FAILURE:
             return {
                 ...initialState,
+                error: action.error,
+            }
+        case ordersConstants.GETALL_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+        case ordersConstants.GETALL_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                allOrders: action.orders,
+            }
+        case ordersConstants.GETALL_FAILURE:
+            return {
+                ...state,
+                loading: false,
                 error: action.error,
             }
         default:
