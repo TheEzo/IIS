@@ -4,6 +4,7 @@ import {alertActions} from "./alert.actions";
 
 export const accessoriesActions = {
     getAll,
+    deleteAcc,
 };
 
 function getAll() {
@@ -31,5 +32,12 @@ function getAll() {
 
     function failure(error) {
         return {type: accessoriesConstants.GETALL_FAILURE, error}
+    }
+}
+
+function deleteAcc(id) {
+    return dispatch => {
+        console.log("Delete acc id: ", id);
+
     }
 }
