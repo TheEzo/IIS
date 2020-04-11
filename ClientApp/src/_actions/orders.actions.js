@@ -4,6 +4,7 @@ import {orderService} from "../_services";
 export const orderActions = {
     getMine,
     deleteOrder,
+    getAll,
 }
 
 function getMine() {
@@ -32,5 +33,10 @@ function getMine() {
 
 function deleteOrder(id){
     console.log("Odstranuji order id:", id);
+    //TODO: dělej!
+}
+
+function getAll(){
+    console.log("Nahravam vsechny objednavky.");
     //TODO: dělej!
 }

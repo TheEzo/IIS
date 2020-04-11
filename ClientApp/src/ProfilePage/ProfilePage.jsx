@@ -5,7 +5,7 @@ import {Loader} from "../_components";
 
 import {Link} from "react-router-dom";
 
-class LoginPage extends React.Component {
+class ProfilePage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -20,20 +20,21 @@ class LoginPage extends React.Component {
     render() {
         console.log("Aktuální propsy: ", this.props);
         const {profileLoading, profile} = this.props;
-        var pozice = (pos) => (<Fragment><dt>Pozice:</dt><dd>{positionMap[pos]}</dd></Fragment>);
-        var membershipMap = {
+        const pos = (pos) => (<Fragment><dt>Pozice:</dt><dd>{positionMap[pos]}</dd></Fragment>);
+        const membershipMap = {
             zlate: "Zlaté",
             stribrne: "Stříbrné",
             bronzove: "Bronzové"
         }
-        var positionMap = {
+        const positionMap = {
             vedouci: "Vedoucí",
         }
         return (profileLoading ? (
                 <Loader />
             ) : (
                 <Fragment>
-                    <h3>Profil</h3>
+                    <p>{profileLoading}</p>
+                    <h2>Profil</h2>
                     <div className="profile-user">
                         <h5>Informace o uživateli</h5>
                         <dl>
@@ -59,7 +60,7 @@ class LoginPage extends React.Component {
                         <dl>
                             <dt>Členství:</dt>
                             <dd>{membershipMap[profile.membership]}</dd>
-                            {pozice(profile.position)}
+                            {pos(profile.position)}
                         </dl>
                     </div>
 
@@ -77,4 +78,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(LoginPage);
+export default connect(mapStateToProps)(ProfilePage);

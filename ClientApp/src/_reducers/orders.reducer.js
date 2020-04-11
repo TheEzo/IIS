@@ -3,7 +3,8 @@ import {ordersConstants} from "../_constants";
 const initialState = {
     loading: true,
     myOrders: [],
-    error: null
+    error: null,
+    allOrders: [],
 }
 
 export function orders(state = initialState, action) {

@@ -179,7 +179,7 @@ DELETE FROM `osoba`;
 INSERT INTO `osoba` (`rc`, `email`, `heslo`, `jmeno`, `prijmeni`, `ulice`, `cislo_popisne`, `tel_cislo`, `obec`) VALUES
 ('7551123656', 'jana@seznam.cz', 'pbkdf2:sha256:50000$Q4Z3JwL8$d96595ca850c1713a0d42c19a4daa1c6020bb4b2f73a79afde90e0d32ee707e0', 'Jana', 'Modrá', '', '', '', NULL),
 ('9602155648', 'jan@seznam.cz', 'pbkdf2:sha256:50000$Wb2xPpOK$b21b4b2685035773e636d5fb35e0cb26655c85e025826392eaf5e82cf85cdcef', 'Jan', 'Novák', 'Česká', '22', '', NULL),
-('9609255832', 'willaschek.t@gmail.com', 'pbkdf2:sha256:50000$DkkDX79s$bc274096fc04ae040dde864198190ff014357c95399a25504f257afc88989baa', 'Tomáš', 'Willaschek', 'Opavská 94a', '74721', '601395550', 'Kravaře'),
+('9609255832', 'willaschek.t@gmail.com', 'pbkdf2:sha256:50000$DkkDX79s$bc274096fc04ae040dde864198190ff014357c95399a25504f257afc88989baa', 'Tomáš', 'Willaschek', 'Opavská', '94a', '601395550', 'Kravaře'),
 ('9610086548', 'domino.ruta@gmail.com', 'pbkdf2:sha256:50000$Gat2IuGy$eeb6fe35c089167977bf448266580f237948c7d0680935a4235d6a8954ea3cb4', 'Dominik', 'Ruta', 'Přemyslovců', '11', '123456789', 'Opava'),
 ('9808123654', 'admin@seznam.cz', 'pbkdf2:sha256:50000$nlRUeE16$640ba550c9fb3532980f59a3d160b3065d9451bae0135c83d2477e00aec974eb', 'Adam', 'Admin', '', '', '', NULL);
 
