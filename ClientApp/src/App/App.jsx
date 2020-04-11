@@ -10,11 +10,11 @@ import {LoginPage} from '../LoginPage';
 import {RegisterPage} from '../RegisterPage';
 
 import {Navbar} from "../_components";
-import {CostumesPage} from "../CostumesPage";
-import {AccessoriesPage} from "../AccessoriesPage";
+import {AddCostumePage, CostumesPage} from "../CostumesPage";
+import {AccessoriesPage, AddAccessoriePage} from "../AccessoriesPage";
 import {MyOrdersPage} from "../OrdersPage";
 import {EditProfilePage, ProfilePage} from "../ProfilePage";
-import {ManageAccessoriesPage, ManageOrdersPage, ManageCostumesPage} from "../ManagePage";
+import {ManageAccessoriesPage, ManageOrdersPage, ManageCostumesPage, ManageProfilesPage} from "../ManagePage";
 
 class App extends React.Component {
     constructor(props) {
@@ -53,6 +53,10 @@ class App extends React.Component {
                                 <Route path="/adminAccessories" component={ManageAccessoriesPage} />
                                 <Route path="/adminCostumes" component={ManageCostumesPage} />
                                 <Route path="/adminOrders" component={ManageOrdersPage} />
+                                <Route path="/adminUsers" component={ManageProfilesPage} />
+
+                                <Route path="/addCostume" component={AddCostumePage} />
+                                <Route path="/addAccessorie" component={AddAccessoriePage} />
 
                                 <Route path="/costumes" component={CostumesPage}/>
                                 <Route path="/accessories" component={AccessoriesPage}/>

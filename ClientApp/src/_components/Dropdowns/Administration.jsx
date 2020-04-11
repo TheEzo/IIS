@@ -17,7 +17,7 @@ const AccountDropdown = () => (
                 <NavLink className='black-text' to='/addCostume'>Přidat kostýmy</NavLink>
             </DropdownItem>
             <DropdownItem>
-                <NavLink className='black-text' to='/addAccessories'>Přidat doplňky</NavLink>
+                <NavLink className='black-text' to='/addAccessorie'>Přidat doplňky</NavLink>
             </DropdownItem>
             <DropdownItem divider/>
             <DropdownItem>

@@ -37,5 +37,4 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedAccessoriesPage = connect(mapStateToProps)(AccessoriesPage);
-export {connectedAccessoriesPage as AccessoriesPage};
+export default AccessoriesPage = connect(mapStateToProps)(AccessoriesPage);
