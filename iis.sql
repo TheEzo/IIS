@@ -205,6 +205,7 @@ CREATE TABLE IF NOT EXISTS `vypujcka` (
 DELETE FROM `vypujcka`;
 /*!40000 ALTER TABLE `vypujcka` DISABLE KEYS */;
 INSERT INTO `vypujcka` (`id`, `nazev_akce`, `datum_vypujceni`, `vracen`, `klient`, `zamestnanec`, `datum_vraceni`) VALUES
+(2, 'Mikulášský den', '2018-12-03', 0, '9609255832', '9610086548', '2018-12-12');
 (3, 'Nějaká akce', '2018-12-02', 1, '9609255832', '9609255832', '2018-12-13'),
 (4, 'test akce', '2018-12-02', 1, '9609255832', '9609255832', '2018-12-13'),
 (6, 'test akce', '2018-12-03', 1, '9609255832', '9609255832', '2018-12-13'),

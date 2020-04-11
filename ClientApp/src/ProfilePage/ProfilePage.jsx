@@ -35,7 +35,7 @@ class ProfilePage extends React.Component {
                 <Fragment>
                     <p>{profileLoading}</p>
                     <h2>Profil</h2>
-                    <div className="profile-user">
+                    <div className="col-sm-6">
                         <h5>Informace o uživateli</h5>
                         <dl>
                             <dt>Jméno:</dt>
@@ -54,8 +54,9 @@ class ProfilePage extends React.Component {
                             <dd>{profile.city}</dd>
                         </dl>
                         <Link to="/editProfile" className="btn btn-primary">Upravit profil</Link>
+                        <br/> <br/>
                     </div>
-                    <div className="profile-info">
+                    <div className="col-sm-6">
                         <h5>Další informace</h5>
                         <dl>
                             <dt>Členství:</dt>
