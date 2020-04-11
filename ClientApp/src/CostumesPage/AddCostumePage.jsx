@@ -15,7 +15,7 @@ class AddCostumePage extends React.Component {
     render() {
         return (
             <div className="col-md-12 col-md-offset-3">
-                <h1>Přidat nový kostým</h1>
+                <h2>Přidat nový kostým</h2>
             </div>
         );
     }
