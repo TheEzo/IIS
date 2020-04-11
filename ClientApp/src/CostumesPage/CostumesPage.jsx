@@ -10,7 +10,7 @@ class CostumesPage extends React.Component {
     }
 
     render() {
-        const {loading, costumes} = this.props;
+        const {loading, costumes, loggedIn} = this.props;
 
         return (loading ? (
                 <Loader/>
@@ -18,7 +18,7 @@ class CostumesPage extends React.Component {
                 <div className="col-md-12 col-md-offset-3">
                     <h1>Kostýmy</h1>
                     <h3>{loading ? "Načítám data" : "Dostupné kostýmy"}</h3>
-                    {loading ? "" : costumes.map((c) => (<ShopCard key={c.id} item={c}/>))}
+                    {loading ? "" : costumes.map((c) => (<ShopCard key={c.id} loggedIn={loggedIn} item={c}/>))}
                 </div>
             )
         );
@@ -27,10 +27,12 @@ class CostumesPage extends React.Component {
 
 function mapStateToProps(state) {
     const {items, loading, error} = state.costumes;
+    const {loggedIn} = state.authentication;
     return {
         costumes: items,
         loading,
         error,
+        loggedIn,
     };
 }
 

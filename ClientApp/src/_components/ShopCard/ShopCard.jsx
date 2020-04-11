@@ -3,8 +3,11 @@ import React, {Component} from 'react';
 class ShopCard extends Component {
 
     render() {
-        //console.log(this.props.item);
         const item = this.props.item;
+        const loggedIn = this.props.loggedIn;
+
+        console.log("Karta: ", item);
+        console.log("Prihlsen: ", loggedIn);
 
         return (
             <div>
