@@ -57,4 +57,21 @@ h2 {
     text-decoration: none;
 }
 
+.chart-parent {
+    margin-right: 6px;
+    border-right: 1px solid rgba(255,255,255,.3);
+    padding-right: 16px;
+
+    display: flex;
+    align-items: center;
+}
+
+.chart-style {
+    font-size: 18px;
+    color: rgba(255,255,255,.5);
+}
+
+.chart-style:hover {
+    color: rgba(255,255,255,.7);
+}
   

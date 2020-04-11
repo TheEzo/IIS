@@ -1,8 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {costumesActions} from "../_actions/costumes.actions";
-import {ShopCard} from "../_components/ShopCard/ShopCard";
+import {costumesActions} from "../_actions";
+import {Loader, ShopCard} from "../_components";
 
 class CostumesPage extends React.Component {
     componentDidMount() {
@@ -12,12 +12,15 @@ class CostumesPage extends React.Component {
     render() {
         const {loading, costumes} = this.props;
 
-        return (
-            <div className="col-md-12 col-md-offset-3">
-                <h1>Kostýmy</h1>
-                <h3>{loading ? "Načítám data" : "Dostupné kostýmy"}</h3>
-                {loading ? "" : costumes.map((c) => (<ShopCard key={c.id} item={c}/>))}
-            </div>
+        return (loading ? (
+                <Loader/>
+            ) : (
+                <div className="col-md-12 col-md-offset-3">
+                    <h1>Kostýmy</h1>
+                    <h3>{loading ? "Načítám data" : "Dostupné kostýmy"}</h3>
+                    {loading ? "" : costumes.map((c) => (<ShopCard key={c.id} item={c}/>))}
+                </div>
+            )
         );
     }
 }
@@ -31,5 +34,4 @@ function mapStateToProps(state) {
     };
 }
 
-const connectedCostumesPage = connect(mapStateToProps)(CostumesPage);
-export {connectedCostumesPage as CostumesPage};
+export default connect(mapStateToProps)(CostumesPage);

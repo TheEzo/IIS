@@ -4,7 +4,6 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import {userActions} from "../../_actions";
 
-
 const AccountDropdown = ({username, dispatch}) => (
     <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret>
@@ -17,14 +16,15 @@ const AccountDropdown = ({username, dispatch}) => (
             </DropdownItem>
             <DropdownItem divider/>
             <DropdownItem>
-                <NavLink className='black-text' to='/profile'>Profil</NavLink>
+                <NavLink className='black-text' to='/profile'>Uživatelský profil</NavLink>
             </DropdownItem>
             <DropdownItem>
                 <NavLink className='black-text' to='/orderHistory'>Moje objednávky</NavLink>
             </DropdownItem>
             <DropdownItem divider/>
-            <DropdownItem>
-                <NavLink onClick={() => dispatch(userActions.logout())} className='black-text' to='/login'>Odhlásit</NavLink>
+            <DropdownItem >
+                {/*<NavLink onClick={() => dispatch(userActions.logout())} className='black-text' to='/login'>Odhlásit se</NavLink>*/}
+                <NavLink className='black-text' to='/login'>Odhlásit se</NavLink>
             </DropdownItem>
         </DropdownMenu>
     </UncontrolledDropdown>

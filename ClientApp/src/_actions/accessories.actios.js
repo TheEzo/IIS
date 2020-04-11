@@ -1,5 +1,6 @@
 import {accessoriesConstants} from "../_constants/accessories.constants";
 import {accessoriesService} from "../_services/accessories.service";
+import {alertActions} from "./alert.actions";
 
 export const accessoriesActions = {
     getAll,
@@ -12,7 +13,10 @@ function getAll() {
         accessoriesService.getAll()
             .then(
                 accessories => dispatch(success(accessories)),
-                error => dispatch(failure(error))
+                error => {
+                    dispatch(failure(error))
+                    dispatch(alertActions.error(error));
+                }
             );
 
     };

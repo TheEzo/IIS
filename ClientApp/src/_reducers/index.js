@@ -6,6 +6,7 @@ import {users} from './users.reducer';
 import {alert} from './alert.reducer';
 import {costumes} from "./costumes.reducer";
 import {accessories} from "./accessories.reducer";
+import {orders} from "./orders.reducer"
 
 const rootReducer = combineReducers({
     authentication,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
     alert,
     costumes,
     accessories,
+    orders,
 });
 
 export default rootReducer;

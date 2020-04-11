@@ -9,6 +9,7 @@ export const userActions = {
     logout,
     register,
     getAll,
+    getProfile,
     delete: _delete
 };
 
@@ -22,6 +23,7 @@ function login(email, password) {
                     console.log("User", user);
                     dispatch(success(user));
                     history.push('/profile');
+                    dispatch(alertActions.success('Přihlášení bylo úspěšné!'));
                 },
                 error => {
                     console.log("UserError", error);
@@ -46,6 +48,8 @@ function login(email, password) {
 
 function logout() {
     userService.logout();
+    history.push('/login');
+    //dispatch(alertActions.success('Byl jste úspěšně odhlášen!'));
     return {type: userConstants.LOGOUT};
 }
 
@@ -86,8 +90,12 @@ function getProfile(id) {
 
         userService.getById(id)
             .then(
-                users => dispatch(success(users)),
-                error => dispatch(failure(error))
+                profile => dispatch(success(profile)),
+                error => {
+                    dispatch(failure(error));
+                    dispatch(logout());
+                    dispatch(alertActions.error(error));
+                }
             );
     };
 
@@ -95,8 +103,8 @@ function getProfile(id) {
         return {type: userConstants.GETPROFILE_REQUEST}
     }
 
-    function success(users) {
-        return {type: userConstants.GETPROFILE_SUCCESS, users}
+    function success(profile) {
+        return {type: userConstants.GETPROFILE_SUCCESS, profile}
     }
 
     function failure(error) {

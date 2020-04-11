@@ -1,4 +1,4 @@
-import {accessoriesConstants} from "../_constants/accessories.constants";
+import {accessoriesConstants} from "../_constants";
 
 const initialState = {
     loading: true,

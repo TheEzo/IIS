@@ -12,6 +12,8 @@ import {RegisterPage} from '../RegisterPage';
 import {Navbar} from "../_components";
 import {CostumesPage} from "../CostumesPage";
 import {AccessoriesPage} from "../AccessoriesPage";
+import ProfilePage from "../ProfilePage/ProfilePage";
+import {MyOrdersPage} from "../OrdersPage";
 
 class App extends React.Component {
     constructor(props) {
@@ -42,6 +44,9 @@ class App extends React.Component {
 
                                 <Route path="/login" component={LoginPage}/>
                                 <Route path="/register" component={RegisterPage}/>
+
+                                <Route path="/profile" component={ProfilePage} />
+                                <Route path="/orderHistory" component={MyOrdersPage} />
 
                                 <Route path="/costumes" component={CostumesPage}/>
                                 <Route path="/accessories" component={AccessoriesPage}/>

@@ -1,5 +1,6 @@
 import {authHeader, config} from '../_helpers';
 import {handleError, handleResponse} from "./responseHandlers";
+import {GETOptions} from "./requestOptions";
 
 export const userService = {
     login,
@@ -39,26 +40,17 @@ function login(email, password) {
 }
 
 function logout() {
+    fetch(config.apiUrl + '/logout', GETOptions);
     // remove user from local storage to log user out
     localStorage.removeItem('user');
 }
 
 function getAll() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(config.apiUrl + '/users', requestOptions).then(handleResponse, handleError);
+    return fetch(config.apiUrl + '/users', GETOptions).then(handleResponse, handleError);
 }
 
 function getById(id) {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-
-    return fetch(config.apiUrl + '/users/' + id, requestOptions).then(handleResponse, handleError);
+    return fetch(config.apiUrl + '/users/' + id, GETOptions).then(handleResponse, handleError);
 }
 
 function register(user) {

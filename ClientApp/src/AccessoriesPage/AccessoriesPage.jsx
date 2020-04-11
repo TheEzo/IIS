@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import {accessoriesActions} from "../_actions/accessories.actios";
 import {ShopCard} from "../_components/ShopCard/ShopCard";
+import {Loader} from "../_components";
 
 class AccessoriesPage extends React.Component {
     componentDidMount() {
@@ -12,12 +13,15 @@ class AccessoriesPage extends React.Component {
     render() {
         const {accessories, loading} = this.props;
 
-        return (
-            <div className="col-md-12 col-md-offset-3">
-                <h1>Doplňky</h1>
-                <h3>{loading ? "Načítám data" : "Dostupné doplňky"}</h3>
-                {loading ? "" : accessories.map(a => <ShopCard key={a.id} item={a}/>)}
-            </div>
+        return (loading ? (
+                <Loader/>
+            ) : (
+                <div className="col-md-12 col-md-offset-3">
+                    <h1>Doplňky</h1>
+                    <h3>{loading ? "Načítám data" : "Dostupné doplňky"}</h3>
+                    {loading ? "" : accessories.map(a => <ShopCard key={a.id} item={a}/>)}
+                </div>
+            )
         );
     }
 }

@@ -2,6 +2,9 @@ import React, {Component} from 'react'
 import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faCoffee, faShoppingCart} from '@fortawesome/free-solid-svg-icons'
+
 import {
     Navbar,
     NavbarToggler,
@@ -27,10 +30,10 @@ class MyNavbar extends Component {
         return (
             <div>
                 <Navbar color="dark" dark expand="md" fixed={"top"}>
-                    <NavLink className='navbar-brand' to='/home'>Home</NavLink>
-                    <NavbarToggler onClick={() => {
+                    <NavLink className='navbar-brand' to='/home'>Půjčovna kostýmů</NavLink>
+                    <NavbarToggler id="togg1" onClick={() => {
                     }}/>
-                    <UncontrolledCollapse toggler={[]} navbar>
+                    <UncontrolledCollapse toggler={"togg1"} navbar>
                         <Nav className="mr-auto" navbar>
                             <NavItem>
                                 <NavLink className='nav-link' to="/costumes">Kostýmy</NavLink>
@@ -40,9 +43,17 @@ class MyNavbar extends Component {
                             </NavItem>
                         </Nav>
                         <Nav navbar>
-                            {!loggedIn && <LoginBar />}
+                            {loggedIn && (
+                                <NavItem className="chart-parent">
+                                    <NavLink to="/cart" className="chart-style">
+                                        <FontAwesomeIcon icon={faShoppingCart}/>
+                                    </NavLink>
+                                </NavItem>
+                            )}
+                            {!loggedIn && <LoginBar/>}
                             {loggedIn && admin && <AdministrationDropdown/>}
                             {loggedIn && <AccountDropdown/>}
+
                         </Nav>
 
                     </UncontrolledCollapse>

@@ -1,1 +1,1 @@
-export * from './CostumesPage';
+export {default as CostumesPage} from './CostumesPage';
