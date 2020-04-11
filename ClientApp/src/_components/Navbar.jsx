@@ -3,7 +3,7 @@ import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faCoffee, faShoppingCart} from '@fortawesome/free-solid-svg-icons'
+import {faShoppingCart} from '@fortawesome/free-solid-svg-icons'
 
 import {
     Navbar,

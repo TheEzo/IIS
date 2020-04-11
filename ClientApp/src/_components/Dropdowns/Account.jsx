@@ -2,7 +2,6 @@ import {DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown} from "
 import React from "react";
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
-import {userActions} from "../../_actions";
 
 const AccountDropdown = ({username, dispatch}) => (
     <UncontrolledDropdown nav inNavbar>
@@ -23,7 +22,6 @@ const AccountDropdown = ({username, dispatch}) => (
             </DropdownItem>
             <DropdownItem divider/>
             <DropdownItem >
-                {/*<NavLink onClick={() => dispatch(userActions.logout())} className='black-text' to='/login'>Odhlásit se</NavLink>*/}
                 <NavLink className='black-text' to='/login'>Odhlásit se</NavLink>
             </DropdownItem>
         </DropdownMenu>

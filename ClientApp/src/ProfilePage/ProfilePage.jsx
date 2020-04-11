@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {userActions} from "../_actions";
 import {Loader} from "../_components";
 
+import {Link} from "react-router-dom";
 
 class LoginPage extends React.Component {
     constructor(props) {
@@ -27,6 +28,7 @@ class LoginPage extends React.Component {
                     <h1>Profil uživatele {profile && profile.name}</h1>
                     <p>{profileLoading}</p>
                     <p>{profile && profile.id}</p>
+                    <Link to="/editProfile">Upravit profil</Link>
                 </Fragment>
             )
         );

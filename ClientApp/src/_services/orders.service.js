@@ -4,6 +4,7 @@ import {GETOptions} from "./requestOptions";
 
 export const orderService = {
     getMine,
+    deleteOrder,
 }
 
 function getMine() {
@@ -12,4 +13,10 @@ function getMine() {
         .then(orders => {
             return orders
         });
+}
+
+function deleteOrder(id) {
+    return fetch(config.apiUrl + "/")
+        .then(handleResponse, handleError)
+        .then()
 }

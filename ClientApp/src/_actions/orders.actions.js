@@ -3,6 +3,7 @@ import {orderService} from "../_services";
 
 export const orderActions = {
     getMine,
+    deleteOrder,
 }
 
 function getMine() {
@@ -27,4 +28,9 @@ function getMine() {
     function failure(error) {
         return {type: ordersConstants.GETMINE_FAILURE, error}
     }
+}
+
+function deleteOrder(id){
+    console.log("Odstranuji order id:", id);
+    //TODO: dělej!
 }
