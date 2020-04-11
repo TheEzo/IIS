@@ -30,7 +30,8 @@ class Orders(MethodView):
             user=Users.data_json(v),
             returned=bool(v.Vypujcka.vracen),
             approved_by=v.Vypujcka.zamestnanec,
-            price=sum([c.Kostym.cena for c in costumes] + [a.Doplnek.cena for a in accessories]) * days
+            price=sum([c.Kostym.cena for c in costumes] + [a.Doplnek.cena for a in accessories]) * days,
+            name=v.Vypujcka.nazev_akce
         )
 
 

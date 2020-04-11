@@ -10,7 +10,7 @@ class UserOrders(MethodView):
     # @login_required
     def get(self):
         user_id = current_user.id
-        v, k, d = db.get_user_orders(user_id)
+        v, k, d = db.get_user_orders(int(user_id))
         data = [UserOrders.data_json(item, k, d) for item in v]
         return jsonify(data)
 
@@ -24,15 +24,17 @@ class UserOrders(MethodView):
         days = (v.Vypujcka.datum_vraceni - v.Vypujcka.datum_vypujceni).days
         return dict(
             id=v.Vypujcka.id,
-            costumes=[f'{item.Kostym.nazev} ({item.Kostym.velikost})' for item in costumes],
-            accessories=[f'{item.Doplnek.nazev} ({item.Doplnek.velikost})' for item in accessories],
+            costumes=', '.join([f'{item.Kostym.nazev} ({item.Kostym.velikost})' for item in costumes]),
+            accessories=', '.join([f'{item.Doplnek.nazev} ({item.Doplnek.velikost})' for item in accessories]),
             date_from=str(v.Vypujcka.datum_vypujceni),
             date_to=str(v.Vypujcka.datum_vraceni),
             user=Users.data_json(v),
             returned=bool(v.Vypujcka.vracen),
             approved_by=v.Vypujcka.zamestnanec,
-            price=sum([c.Kostym.cena for c in costumes] + [a.Doplnek.cena for a in accessories]) * days
+            price=sum([c.Kostym.cena for c in costumes] + [a.Doplnek.cena for a in accessories]) * days,
+            name=v.Vypujcka.nazev_akce
         )
+
 
 def configure(app):
     app.add_url_rule('/orders', view_func=UserOrders.as_view('orders'))

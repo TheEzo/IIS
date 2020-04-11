@@ -7,13 +7,10 @@ class ShopCard extends Component {
         const item = this.props.item;
         const loggedIn = this.props.loggedIn;
 
-        console.log("Karta: ", item);
-        console.log("Prihlasen: ", loggedIn);
-
         return (
             <div className="item">
                 <div className="item-image">
-                    <img src={config.apiUrl + item.image} />
+                    <img src={config.apiUrl + item.image} alt="" />
                 </div>
                 <div className="item-body">
                     <div className="item-header">{ item.name } ({item.size})</div>

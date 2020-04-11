@@ -18,49 +18,51 @@ const getOptions = (data) => ({
     data: {
         columns: [
             {
-                id: "id",
-                label: "id",
-                colSize: "80px",
-                dataType: "text",
-            },
-            {
                 id: "name",
-                label: "name",
-                colSize: "150px",
-                dataType: "text",
+                label: "Název akce",
+                colSize: '55px'
             },
             {
-                id: "age",
-                label: "age",
-                colSize: "50px",
-                dataType: "text",
+                id: "date_from",
+                label: "Datum vypůjčení",
+                colSize: '40px'
             },
             {
-                id: "action",
-                label: "action",
-                colSize: "80px",
-                dataType: "action",
-            }
+                id: "date_to",
+                label: "Platnost vypůjčky",
+                colSize: '40px'
+            },
+            {
+                id: "costumes",
+                label: "Kostýmy",
+                colSize: '200px'
+            },
+            {
+                id: "accessories",
+                label: "Doplňky",
+            },
+            {
+                id: "price",
+                label: "Cena",
+                colSize: '20px'
+            },
+            {
+                id: "returned",
+                label: "Vráceno",
+                colSize: '20px'
+            },
         ],
         rows: data.map((d) => ({
-            id: d.id,
-            name: d.id,
-            age: d.id,
-            action: d.id,
+            name: d.name,
+            date_from: d.date_from,
+            date_to: d.date_to,
+            costumes: d.costumes,
+            accessories: d.accessories,
+            price: d.price,
+            returned: d.returned ? "Ano" : "Ne"
         }))
-
     }
 });
-
-const createCustomDataTypes = (dispatch) => [
-    {
-        dataType: "action",
-        component: id => <Fragment>
-            <button onClick={() => dispatch(orderActions.deleteOrder(id))}>Odstranit</button>
-            <button onClick={() => dispatch(orderActions.deleteOrder(id))}>Odstranit</button>
-        </Fragment>,
-    }
-]
 
 
 class MyOrdersPage extends React.Component {
@@ -79,17 +81,13 @@ class MyOrdersPage extends React.Component {
     render() {
         const {myOrders = [], loading, dispatch} = this.props;
 
-
-        console.log("Loading: ", loading);
-
         return (loading ? (
                 <Loader/>
             ) : (
                 <Fragment>
-                    <h1>Počet objednávek {myOrders.length}</h1>
+                    <h3>Počet objednávek: {myOrders.length}</h3>
                     <Datatable
                         options={getOptions(myOrders)}
-                        customDataTypes={createCustomDataTypes(dispatch)}
                     />
                 </Fragment>
             )

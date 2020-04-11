@@ -18,37 +18,63 @@ const getOptions = (data) => ({
     data: {
         columns: [
             {
-                id: "id",
-                label: "id",
-                colSize: "80px",
-                dataType: "text",
-            },
-            {
                 id: "name",
-                label: "name",
-                colSize: "150px",
-                dataType: "text",
+                label: "Kostým",
+                colSize: "100px",
             },
             {
-                id: "age",
-                label: "age",
+                id: "manufacturer",
+                label: "Výrobce",
+                colSize: "80px",
+            },
+            {
+                id: "material",
+                label: "Materiál",
                 colSize: "50px",
-                dataType: "text",
+            },
+            {
+                id: "size",
+                label: "Velikost",
+                colSize: "20px"
+            },
+            {
+                id: "count",
+                label: "Počet kusů",
+                colSize: "20px"
+            },
+            {
+                id: "price",
+                label: "Cena",
+                colSize: "20px"
+            },
+            {
+                id: "color",
+                label: "Barva",
+                colSize: "80px"
+            },
+            {
+                id: "wear_level",
+                label: "Opotřebení",
+                colSize: "50px"
             },
             {
                 id: "action",
-                label: "action",
-                colSize: "80px",
+                label: "Akce",
                 dataType: "action",
+                colSize: "160px",
             }
         ],
         rows: data.map((d) => ({
-            id: d.id,
-            name: d.id,
-            age: d.id,
+            name: d.name,
+            manufacturer: d.manufacturer,
+            material: d.material,
+            size: d.size,
+            count: d.count,
+            price: d.price,
+            color: d.color,
+            wear_level: d.wear_level,
             action: d.id,
         }))
-
     }
 });
 
@@ -56,8 +82,8 @@ const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
         component: id => <Fragment>
-            <button onClick={() => dispatch(null)}>Odstranit</button>
-            <button onClick={() => dispatch(null)}>Odstranit</button>
+            <button onClick={() => dispatch(null)} className="btn btn-primary">Editovat</button>
+            <button onClick={() => dispatch(null)} className="btn btn-danger">Odstranit</button>
         </Fragment>,
     }
 ]
@@ -86,7 +112,7 @@ class ManageCostumesPage extends React.Component {
                 <Loader/>
             ) : (
                 <Fragment>
-                    <h1>Počet kostýmů: {items.length}</h1>
+                    <h3>Počet kostýmů: {items.length}</h3>
                     <Datatable
                         options={getOptions(items)}
                         customDataTypes={createCustomDataTypes(dispatch)}
