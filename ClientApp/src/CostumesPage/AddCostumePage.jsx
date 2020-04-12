@@ -19,11 +19,11 @@ class AddCostumePage extends React.Component {
                 description: '',
                 count: '',
                 price: '',
-                size: '',
+                size: 'M',
                 image: '',
                 color: '',
                 material: '',
-                wear_level: '',
+                wear_level: 'nove',
             },
             submitted: false
         };
@@ -88,21 +88,17 @@ class AddCostumePage extends React.Component {
                             <input type="number" className="form-control" name="price" value={item && item.price}
                                    onChange={this.handleChange} />
                         </div>
-                        {/*<div className="form-group col-sm-3">*/}
-                        {/*    <label htmlFor="size">Velikost</label>*/}
-                        {/*    <select name="size">*/}
-                        {/*        <option value="S">S</option>*/}
-                        {/*        <option value="M">M</option>*/}
-                        {/*        <option value="L">L</option>*/}
-                        {/*        <option value="XL">XL</option>*/}
-                        {/*        <option value="XXL">XXL</option>*/}
-                        {/*        <option value="XXXL">XXXL</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
                         <div className="form-group col-sm-3">
                             <label htmlFor="size">Velikost</label>
-                            <input type="text" className="form-control" name="size" value={item && item.size}
-                                   onChange={this.handleChange}/>
+                            <select name="size" className="form-control"
+                                    onChange={this.handleChange}>
+                                <option value="S">S</option>
+                                <option value="M" selected>M</option>
+                                <option value="L">L</option>
+                                <option value="XL">XL</option>
+                                <option value="XXL">XXL</option>
+                                <option value="XXXL">XXXL</option>
+                            </select>
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="image">Obrázek</label>
@@ -121,19 +117,14 @@ class AddCostumePage extends React.Component {
                             <input type="text" className="form-control" name="material" value={item && item.material}
                                    onChange={this.handleChange} />
                         </div>
-                        {/*<div className="form-group col-sm-4">*/}
-                        {/*    <label htmlFor="wear_level">Opotřebení</label>*/}
-                        {/*    <select name="wear_level">*/}
-                        {/*        <option value="nove">Nové</option>*/}
-                        {/*        <option value="zanovni">Zánovní</option>*/}
-                        {/*        <option value="stare">Staré</option>*/}
-                        {/*    </select>*/}
-                        {/*</div>*/}
                         <div className="form-group col-sm-4">
                             <label htmlFor="wear_level">Opotřebení</label>
-                            <input type="text" className="form-control" name="wear_level"
-                                   value={item && item.wear_level}
-                                   onChange={this.handleChange}/>
+                            <select name="wear_level" className="form-control"
+                                    onChange={this.handleChange}>
+                                <option value="nove" selected>Nové</option>
+                                <option value="zanovni">Zánovní</option>
+                                <option value="stare">Staré</option>
+                            </select>
                         </div>
                     </div>
                     <div className="row">

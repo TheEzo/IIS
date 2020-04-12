@@ -53,9 +53,9 @@ class AddAccessoriePage extends React.Component {
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="size">Velikost</label>
-                            <select name="size">
+                            <select name="size" onChange={this.handleChange} className="form-control">
                                 <option value="S">S</option>
-                                <option value="M">M</option>
+                                <option selected value="M">M</option>
                                 <option value="L">L</option>
                                 <option value="XL">XL</option>
                                 <option value="XXL">XXL</option>
@@ -81,8 +81,8 @@ class AddAccessoriePage extends React.Component {
                         </div>
                         <div className="form-group col-sm-4">
                             <label htmlFor="wear_level">Opotřebení</label>
-                            <select name="wear_level">
-                                <option value="nove">Nové</option>
+                            <select name="wear_level" onChange={this.handleChange} className="form-control">
+                                <option value="nove" selected>Nové</option>
                                 <option value="zanovni">Zánovní</option>
                                 <option value="stare">Staré</option>
                             </select>
