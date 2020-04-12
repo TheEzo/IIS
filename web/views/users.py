@@ -11,13 +11,12 @@ class Users(MethodView):
         data = [self.data_json(item) for item in db.get_users_data()]
         return jsonify(data)
 
-    #@admin_or_current
     def post(self):
         data = request.form
         db_data = dict(
             rc=data.get('id'),
             email=data['email'],
-            heslo=data.get('password'),
+            password=data.get('password'),
             jmeno=data['name'],
             prijmeni=data['surname'],
             obec=data.get('city'),
