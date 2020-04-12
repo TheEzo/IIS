@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {userActions} from "../_actions";
+import {costumesActions, userActions} from "../_actions";
 import {Link} from "react-router-dom";
 
 class AddCostumePage extends React.Component {
@@ -41,6 +41,15 @@ class AddCostumePage extends React.Component {
                 [name]: value
             }
         });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        console.log("Odesilam");
+        this.setState({submitted: true});
+        const {user} = this.state;
+        const {dispatch} = this.props;
+        dispatch(costumesActions.edit(user));
     }
 
     render() {

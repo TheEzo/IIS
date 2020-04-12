@@ -1,12 +1,14 @@
 import {ordersConstants} from "../_constants";
 import {orderService} from "../_services";
 import {alertActions} from "./alert.actions";
+import {history} from '../_helpers';
 
 export const orderActions = {
     getMine,
     deleteOrder,
     getAll,
     getCart,
+    returnItem,
 }
 
 function getMine() {
@@ -93,4 +95,15 @@ function getCart() {
     function failure(error) {
         return {type: ordersConstants.GETCART_FAILURE, error}
     }
+}
+
+function returnItem(id) {
+    return dispatch => {
+        orderService.returnItem(id)
+            .then(() => {
+                history.push("/adminOrders");
+                dispatch(alertActions.success("Objednávka byla vrácena"));
+            });
+    }
+
 }
