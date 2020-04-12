@@ -18,6 +18,9 @@ class EditCostumePage extends React.Component {
             user: this.props.editing,
             submitted: false
         };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -55,7 +58,6 @@ class EditCostumePage extends React.Component {
         }
 
         const item = this.state.user;
-        console.log("item: ", item);
 
         return (
             <div className="col-md-12 col-md-offset-3">

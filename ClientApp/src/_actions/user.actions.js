@@ -15,9 +15,11 @@ export const userActions = {
 
 function edit(profile) {
     return dispatch => {
-        console.log("EDIT: ", profile);
         userService.update(profile)
-            .then(() => history.push("/profile")
+            .then(() => {
+                    history.push("/profile")
+                    dispatch(alertActions.success("Profil byl upraven"));
+                }
             );
     }
 }
