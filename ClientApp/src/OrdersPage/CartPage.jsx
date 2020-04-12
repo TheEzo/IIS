@@ -15,7 +15,7 @@ class CartPage extends React.Component {
         return (
             <Fragment>
                 <h2>Nákupní košík</h2>
-                <h4>Položek v košíku: </h4>
+                <h4>Položek v košíku: {this.props.cart.length}</h4>
             </Fragment>
 
         );

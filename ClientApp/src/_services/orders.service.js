@@ -50,11 +50,11 @@ function getCart() {
         .then(cart => {return cart});
 }
 
-function addToCart(id, type, count) {
+function addToCart(id, type, action) {
     const formData = new FormData();
     formData.append('id', id.toString());
     formData.append('item', type);
-    formData.append('count', count.toString());
+    formData.append('action', action);
 
     return fetch(config.apiUrl + "/cart_manage", POSTOptions(formData));
 

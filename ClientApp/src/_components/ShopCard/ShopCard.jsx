@@ -11,9 +11,9 @@ class ShopCard extends Component {
     }
 
     handleAdd(id, type) {
-        console.log("Id:", id, "Type: ", type);
+        console.log("Id:", id, "Type: ", type, "Action: ", "add");
         const {dispatch} = this.props;
-        dispatch(orderActions.addToCart(id, this.props.type));
+        dispatch(orderActions.addToCart(id, this.props.type, "add"));
     }
 
     render() {

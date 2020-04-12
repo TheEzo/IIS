@@ -104,14 +104,17 @@ function returnItem(id) {
             .then(() => {
                 history.push("/adminOrders");
                 dispatch(alertActions.success("Objednávka byla vrácena"));
+            })
+            .catch(() => {
+                dispatch(alertActions.error("Nepodařilo se zpracovat objednávku"));
             });
     }
 
 }
 
-function addToCart(id, type) {
+function addToCart(id, type, action) {
     return dispatch => {
-        orderService.addToCart(id, type)
+        orderService.addToCart(id, type, action)
             .then(() => {
                 dispatch(alertActions.success("Přidáno do košíku"));
             })
