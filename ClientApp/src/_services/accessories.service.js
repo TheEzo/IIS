@@ -24,7 +24,7 @@ function edit(acc) {
     formData.append('count', acc.count.toString());
     formData.append('description', acc.description.toString());
     formData.append('id', acc.id.toString());
-    formData.append('image', acc.image.toString());
+    formData.append('image', acc.image);
     formData.append('manufacturer', acc.manufacturer.toString());
     formData.append('material', acc.material.toString());
     formData.append('name', acc.name.toString());
@@ -40,7 +40,7 @@ function create(acc) {
     formData.append('color', acc.color.toString());
     formData.append('count', acc.count.toString());
     formData.append('description', acc.description.toString());
-    formData.append('image', acc.image.toString());
+    formData.append('image', acc.image);
     formData.append('manufacturer', acc.manufacturer.toString());
     formData.append('material', acc.material.toString());
     formData.append('name', acc.name.toString());

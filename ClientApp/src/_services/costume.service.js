@@ -41,7 +41,7 @@ function create(costume) {
     formData.append('color', costume.color.toString());
     formData.append('count', costume.count.toString());
     formData.append('description', costume.description.toString());
-    formData.append('image', costume.image.toString());
+    formData.append('image', costume.image);
     formData.append('manufacturer', costume.manufacturer.toString());
     formData.append('material', costume.material.toString());
     formData.append('name', costume.name.toString());
