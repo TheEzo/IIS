@@ -46,7 +46,7 @@ function setEdit(id) {
     };
 }
 
-function edit(costume){
+function edit(costume) {
     return dispatch => {
         costumeService.edit(costume)
             .then(() => {
@@ -56,7 +56,7 @@ function edit(costume){
     }
 }
 
-function _delete(id){
+function _delete(id) {
     return dispatch => {
         costumeService.delete(id)
             .then(() => {
@@ -68,7 +68,7 @@ function _delete(id){
 }
 
 function create(item) {
-    return  dispatch => {
+    return dispatch => {
         costumeService.create(item)
             .then(() => {
                 history.push("/adminCostumes");
