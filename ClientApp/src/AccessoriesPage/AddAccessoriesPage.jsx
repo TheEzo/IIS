@@ -35,12 +35,22 @@ class AddAccessoriePage extends React.Component {
     handleChange(event) {
         const { name, value } = event.target;
         const { item } = this.state;
-        this.setState({
-            item: {
-                ...item,
-                [name]: value
-            }
-        });
+
+        if (name === "image") {
+            this.setState({
+                item: {
+                    ...item,
+                    [name]: event.target.files[0],
+                }
+            })
+        }else {
+            this.setState({
+                item: {
+                    ...item,
+                    [name]: value
+                }
+            });
+        }
     }
 
     handleSubmit(event) {

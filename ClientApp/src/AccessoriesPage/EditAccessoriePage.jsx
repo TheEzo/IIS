@@ -40,12 +40,22 @@ class EditAccessoriePage extends React.Component {
     handleChange(event) {
         const {name, value} = event.target;
         const {user} = this.state;
-        this.setState({
-            user: {
-                ...user,
-                [name]: value
-            }
-        });
+
+        if (name === "image") {
+            this.setState({
+                user: {
+                    ...user,
+                    [name]: event.target.files[0],
+                }
+            })
+        }else {
+            this.setState({
+                user: {
+                    ...user,
+                    [name]: value
+                }
+            });
+        }
     }
 
     render() {
