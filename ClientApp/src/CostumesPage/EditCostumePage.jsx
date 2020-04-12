@@ -47,26 +47,11 @@ class EditCostumePage extends React.Component {
         const {user} = this.state;
 
         if (name === "image") {
-            const reader = new FileReader();
             const file = event.target.files[0];
-
-            reader.onload = () => ({
-                id: file.name,
-                fileName: file.name,
-                size: file.size,
-                fileFormat: file.type,
-                data: reader.result,
-            });
-
-            const fileData = reader.readAsArrayBuffer(event.target.files[0]);
-
-            console.log("DATA: ", fileData);
-
-            console.log("HANDLER: ", event.target.files[0]);
             this.setState({
                 user: {
                     ...user,
-                    [name]: fileData,
+                    [name]: file,
                 }
             })
         } else {
