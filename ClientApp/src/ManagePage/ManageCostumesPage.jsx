@@ -14,7 +14,7 @@ const getOptions = (data) => ({
     dimensions: {
         datatable: {
             height: "500px",
-            width: "1500px",
+            width: "100%",
         },
     },
     data: {
