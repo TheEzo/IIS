@@ -99,7 +99,8 @@ const createCustomDataTypes = (dispatch) => [
             {/*TODO zmenit akci na edit*/}
             <a href="#" onClick={() => dispatch(userActions.delete(id))}><FontAwesomeIcon icon={faUserCog}/></a>
             <a href="#" onClick={() => dispatch(userActions.delete(id))} className="red">
-                <FontAwesomeIcon icon={faTrashAlt}/></a>
+                <FontAwesomeIcon icon={faTrashAlt}/>
+            </a>
         </Fragment>,
     }
 ]
