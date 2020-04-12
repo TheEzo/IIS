@@ -62,7 +62,7 @@ class AddAccessoriePage extends React.Component {
     }
 
     render() {
-        const item = null;
+        const item = this.state.item;
         return (
             <div className="col-md-12 col-md-offset-3">
                 <h2>Přidat nový doplněk</h2>
@@ -112,7 +112,7 @@ class AddAccessoriePage extends React.Component {
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="image">Obrázek</label>
-                            <input type="file" className="form-control" name="image" value={item && item.image}
+                            <input type="file" className="form-control" name="image"
                                    onChange={this.handleChange}/>
                         </div>
                     </div>

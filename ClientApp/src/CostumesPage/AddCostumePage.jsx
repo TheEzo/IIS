@@ -111,7 +111,7 @@ class AddCostumePage extends React.Component {
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="image">Obrázek</label>
-                            <input type="file" className="form-control" name="image" value={item && item.image}
+                            <input type="file" className="form-control" name="image"
                                    onChange={this.handleChange} />
                         </div>
                     </div>

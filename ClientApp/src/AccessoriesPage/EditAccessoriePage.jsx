@@ -104,17 +104,17 @@ class EditAccessoriePage extends React.Component {
                         <div className="form-group col-sm-3">
                             <label htmlFor="size">Velikost</label>
                             <select name="size" onChange={this.handleChange} className="form-control">
-                                <option selected={item.size === 'S'} value="S">S</option>
-                                <option selected={item.size === 'M'} value="M">M</option>
-                                <option selected={item.size === 'L'} value="L">L</option>
-                                <option selected={item.size === 'XL'} value="XL">XL</option>
-                                <option selected={item.size === 'XXL'} value="XXL">XXL</option>
-                                <option selected={item.size === 'XXXL'} value="XXXL">XXXL</option>
+                                <option selected={item && item.size === 'S'} value="S">S</option>
+                                <option selected={item && item.size === 'M'} value="M">M</option>
+                                <option selected={item && item.size === 'L'} value="L">L</option>
+                                <option selected={item && item.size === 'XL'} value="XL">XL</option>
+                                <option selected={item && item.size === 'XXL'} value="XXL">XXL</option>
+                                <option selected={item && item.size === 'XXXL'} value="XXXL">XXXL</option>
                             </select>
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="image">Obrázek</label>
-                            <input type="file" className="form-control" name="image" value=""
+                            <input type="file" className="form-control" name="image"
                                    onChange={this.handleChange}/>
                         </div>
                     </div>
@@ -132,9 +132,9 @@ class EditAccessoriePage extends React.Component {
                         <div className="form-group col-sm-4">
                             <label htmlFor="wear_level">Opotřebení</label>
                             <select name="wear_level" onChange={this.handleChange} className="form-control">
-                                <option selected={item.wear_level === 'nove'} value="nove">Nové</option>
-                                <option selected={item.wear_level === 'zanovni'} value="zanovni">Zánovní</option>
-                                <option selected={item.wear_level === 'stare'} value="stare">Staré</option>
+                                <option selected={item && item.wear_level === 'nove'} value="nove">Nové</option>
+                                <option selected={item && item.wear_level === 'zanovni'} value="zanovni">Zánovní</option>
+                                <option selected={item && item.wear_level === 'stare'} value="stare">Staré</option>
                             </select>
                         </div>
                     </div>
