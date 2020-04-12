@@ -4,73 +4,107 @@ import {userActions} from "../_actions";
 import {Loader} from "../_components";
 
 import {Link} from "react-router-dom";
+import {history} from "../_helpers";
 
 class EditProfilePage extends React.Component {
     constructor(props) {
         super(props);
 
-        if(this.props.loggedIn) {
+        if (this.props.loggedIn) {
             const id = this.props.user.id;
             this.props.dispatch(userActions.getProfile(id));
-        }else{
+        } else {
             this.props.dispatch(userActions.logout());
         }
+
+        console.log("Profile: ", this.props.profile);
+        this.state = {
+            user: this.props.profile,
+            submitted: false
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        const {name, value} = event.target;
+        const {user} = this.state;
+        this.setState({
+            user: {
+                ...user,
+                [name]: value
+            }
+        });
+    }
+
+    handleSubmit(event) {
+        console.log("Handle submit");
+        event.preventDefault();
+
+        this.setState({submitted: true});
+        const {user} = this.state;
+        const {dispatch} = this.props;
+        dispatch(userActions.edit(user));
     }
 
     render() {
-        console.log("Aktuální propsy: ", this.props);
-        const {profileLoading, profile} = this.props;
+        if (this.state.user == null) {
+            history.push("/profile");
+        }
 
+        const {profileLoading} = this.props;
+        const {user} = this.state;
         return (profileLoading ? (
-                <Loader />
+                <Loader/>
             ) : (
                 <div className="col-md-12">
                     <h2>Editace profilu</h2>
-                    <form name="form" onSubmit="TODO">
+                    <form name="form" onSubmit={this.handleSubmit}>
                         <div className="row">
                             <div className={'form-group col-sm-4'}>
                                 <label htmlFor="id">Rodné číslo</label>
-                                <input type="text" className="form-control" name="id" value={profile.id}
-                                       onChange="" disabled />
+                                <input type="text" className="form-control" name="id" value={user.id}
+                                       onChange={this.handleChange} disabled/>
                             </div>
                             <div className={'form-group col-sm-4'}>
                                 <label htmlFor="name">Jméno</label>
-                                <input type="text" className="form-control" name="name" value={profile.name}
-                                       onChange="" />
+                                <input type="text" className="form-control" name="name" value={user.name}
+                                       onChange={this.handleChange}/>
                             </div>
                             <div className={'form-group col-sm-4'}>
                                 <label htmlFor="surname">Příjmení</label>
-                                <input type="text" className="form-control" name="surname" value={profile.surname}
-                                       onChange="" />
+                                <input type="text" className="form-control" name="surname" value={user.surname}
+                                       onChange={this.handleChange}/>
                             </div>
                         </div>
                         <div className="row">
                             <div className={'form-group col-sm-6'}>
                                 <label htmlFor="email">Email</label>
-                                <input type="text" className="form-control" name="email" value={profile.email}
-                                       onChange="" />
+                                <input type="text" className="form-control" name="email" value={user.email}
+                                       onChange={this.handleChange}/>
                             </div>
                             <div className={'form-group col-sm-6'}>
                                 <label htmlFor="tel_number">Telefonní číslo</label>
-                                <input type="text" className="form-control" name="tel_number" value={profile.tel_number}
-                                       onChange="" />
+                                <input type="text" className="form-control" name="tel_number" value={user.tel_number}
+                                       onChange={this.handleChange}/>
                             </div>
                         </div>
                         <div className="row">
                             <div className={'form-group col-sm-4'}>
                                 <label htmlFor="city">Město</label>
-                                <input type="text" className="form-control" name="city" value={profile.city}
-                                       onChange="" />
+                                <input type="text" className="form-control" name="city" value={user.city}
+                                       onChange={this.handleChange}/>
                             </div>
                             <div className={'form-group col-sm-4'}>
                                 <label htmlFor="address">Ulice</label>
-                                <input type="text" className="form-control" name="address" value={profile.address}
-                                       onChange="" />
+                                <input type="text" className="form-control" name="address" value={user.address}
+                                       onChange={this.handleChange}/>
                             </div>
                             <div className={'form-group col-sm-4'}>
                                 <label htmlFor="addr_num">Číslo popisné</label>
-                                <input type="text" className="form-control" name="addr_num" value={profile.addr_num}
-                                       onChange="" />
+                                <input type="text" className="form-control" name="addr_num" value={user.addr_num}
+                                       onChange={this.handleChange}/>
                             </div>
                         </div>
                         <div className="row">

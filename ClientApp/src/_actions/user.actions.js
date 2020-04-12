@@ -9,8 +9,18 @@ export const userActions = {
     register,
     getAll,
     getProfile,
-    delete: _delete
+    delete: _delete,
+    edit,
 };
+
+function edit(profile) {
+    return dispatch => {
+        console.log("EDIT: ", profile);
+        userService.update(profile)
+            .then(() => history.push("/profile")
+            );
+    }
+}
 
 function login(email, password) {
     return dispatch => {
