@@ -35,7 +35,8 @@ class Accessories(MethodView):
 
     @staticmethod
     @admin
-    def delete(obj_id):
+    def delete():
+        obj_id = int(request.form['id'])
         if db.get_accessory_by_id(obj_id):
             db.delete_accessory(obj_id)
             return '', 200

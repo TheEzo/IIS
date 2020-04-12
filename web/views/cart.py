@@ -1,11 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import render_template, request, redirect, url_for, jsonify, flash, session
+from flask import request, jsonify, session
 from flask.views import MethodView
-from flask_login import current_user
-from collections import Counter
-from datetime import timedelta
 
 from web.roles import login_required
 from web.core import db
@@ -32,6 +29,7 @@ class Cart(MethodView):
             nazev_akce=data['name'],
 
         ))
+        return '', 200
 
     def delete(self):
         session['cart'] = {'costumes': [], 'accessories': []}

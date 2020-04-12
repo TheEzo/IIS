@@ -69,7 +69,8 @@ class Costumes(MethodView):
 
     @staticmethod
     @admin
-    def delete(obj_id):
+    def delete():
+        obj_id = int(request.form['id'])
         if db.get_costume_by_id(obj_id):
             db.delete_costume(obj_id)
             return '', 200
