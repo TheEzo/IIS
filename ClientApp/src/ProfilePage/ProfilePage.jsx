@@ -27,6 +27,8 @@ class ProfilePage extends React.Component {
         }
         const positionMap = {
             vedouci: "Vedoucí",
+            zamestnanec: "Zaměstnanec",
+            null: "Zákazník"
         }
         return (profileLoading ? (
                 <Loader />
@@ -34,36 +36,37 @@ class ProfilePage extends React.Component {
                 <Fragment>
                     <p>{profileLoading}</p>
                     <h2>Profil</h2>
-                    <div className="col-sm-6">
-                        <h5>Informace o uživateli</h5>
-                        <dl>
-                            <dt>Jméno:</dt>
-                            <dd>{profile.name}</dd>
-                            <dt>Příjmení:</dt>
-                            <dd>{profile.surname}</dd>
-                            <dt>Rodné číslo:</dt>
-                            <dd>{profile.id}</dd>
-                            <dt>Email:</dt>
-                            <dd>{profile.email}</dd>
-                            <dt>Telefon:</dt>
-                            <dd>{profile.tel_number}</dd>
-                            <dt>Ulice:</dt>
-                            <dd>{profile.address + ', ' + profile.addr_num}</dd>
-                            <dt>Obec:</dt>
-                            <dd>{profile.city}</dd>
-                        </dl>
-                        <Link to="/editProfile" className="btn btn-primary">Upravit profil</Link>
-                        <br/> <br/>
+                    <div className="row">
+                        <div className="col-sm-6">
+                            <h5>Informace o uživateli</h5>
+                            <dl>
+                                <dt>Jméno:</dt>
+                                <dd>{profile.name}</dd>
+                                <dt>Příjmení:</dt>
+                                <dd>{profile.surname}</dd>
+                                <dt>Rodné číslo:</dt>
+                                <dd>{profile.id}</dd>
+                                <dt>Email:</dt>
+                                <dd>{profile.email}</dd>
+                                <dt>Telefon:</dt>
+                                <dd>{profile.tel_number || "Nezadáno"}</dd>
+                                <dt>Ulice:</dt>
+                                <dd>{(profile.address || "Nezadáno") + ', ' + (profile.addr_num || "Nezadáno")}</dd>
+                                <dt>Obec:</dt>
+                                <dd>{profile.city || "Nezadáno"}</dd>
+                            </dl>
+                            <Link to="/editProfile" className="btn btn-primary">Upravit profil</Link>
+                            <br/> <br/>
+                        </div>
+                        <div className="col-sm-6">
+                            <h5>Další informace</h5>
+                            <dl>
+                                <dt>Členství:</dt>
+                                <dd>{membershipMap[profile.membership]}</dd>
+                                {pos(profile.position)}
+                            </dl>
+                        </div>
                     </div>
-                    <div className="col-sm-6">
-                        <h5>Další informace</h5>
-                        <dl>
-                            <dt>Členství:</dt>
-                            <dd>{membershipMap[profile.membership]}</dd>
-                            {pos(profile.position)}
-                        </dl>
-                    </div>
-
                 </Fragment>
             )
         );
