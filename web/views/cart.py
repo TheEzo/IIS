@@ -44,8 +44,7 @@ def configure(app):
     @app.route('/cart_manage', methods=['POST'])
     @login_required
     def cart_add():
-        data = dict(request.form)
-
+        data = request.form
         try:
             if data['item'] not in ['costumes', 'accessories']:
                 raise ValueError()
