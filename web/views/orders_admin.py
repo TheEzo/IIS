@@ -14,7 +14,9 @@ class Orders(MethodView):
         return jsonify(data)
 
     def post(self):
-        ...
+        item = dict(request.form)['id']
+        db.return_order(item)
+        return '', 200
 
     @staticmethod
     def data_json(v, k, d):

@@ -159,6 +159,26 @@ def get_all_costumes():
     return Kostym.query.all()
 
 
+def return_order(ord_id):
+    v = session.query(Vypujcka).filter(Vypujcka.id == ord_id).first()
+    v.vracen = True
+    session.add(v)
+
+    costumes = session.query(Kostym, VypujckaKostym)\
+        .join(VypujckaKostym, VypujckaKostym.kostym_id == Kostym.id)\
+        .filter(VypujckaKostym.vypujcka_id == ord_id).all()
+    for c in costumes:
+        c.Kostym.pocet += c.VypujckaKostym.pocet
+        session.add(c.Kostym)
+    accessories = session.query(Doplnek, DoplnekVypujcka)\
+        .join(DoplnekVypujcka, DoplnekVypujcka.doplnek_id == Doplnek.id)\
+        .filter(DoplnekVypujcka.vypujcka_id == ord_id).all()
+    for a in accessories:
+        a.Doplnek.pocet += a.DoplnekVypujcka.pocet
+        session.add(a.Doplnek)
+    session.commit()
+
+
 def create_order(*args, **kwargs):
     cz_datetime = datetime.strptime(kwargs['datum_vraceni'], '%d.%m.%Y')
     stmt = Vypujcka(nazev_akce=kwargs['nazev_akce'],
@@ -368,7 +388,6 @@ def get_user_profile(email):
         .outerjoin(Klient, Osoba.rc == Klient.osoba_rc) \
         .filter(Osoba.email == email)\
         .first()
-
 
 
 def get_all_orders():
