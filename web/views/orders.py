@@ -14,9 +14,6 @@ class UserOrders(MethodView):
         data = [UserOrders.data_json(item, k, d) for item in v]
         return jsonify(data)
 
-    def post(self):
-        ...
-
     @staticmethod
     def data_json(v, k, d):
         costumes = [c for c in k if c.VypujckaKostym.vypujcka_id == v.Vypujcka.id]
@@ -47,5 +44,3 @@ def configure(app):
             if data:
                 return jsonify(UserOrders.data_json(data, k, d))
             return '', 400
-        if request.method == 'DELETE':
-            ...
