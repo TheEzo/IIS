@@ -23,12 +23,12 @@ class Cart(MethodView):
 
     def post(self):
         data = dict(request.form)
-        # TODO submit request, upravit pocty v db
-        db.create_order(dict(
-            datum_vraceni=data['return_date'], # TODO asi nepojede datum v db
+        db.create_order(**dict(
+            datum_vraceni=data['return_date'],  # TODO asi nepojede datum v db
             nazev_akce=data['name'],
 
         ))
+        session['cart'] = {'costumes': [], 'accessories': []}
         return '', 200
 
     def delete(self):

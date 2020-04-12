@@ -8,6 +8,7 @@ import time
 from flask_login import current_user
 from datetime import datetime
 from collections import Counter
+from flask import session as f_s
 
 
 def get_user(email):
@@ -128,7 +129,7 @@ def add_accessory(image, *args, **kwargs):
                        velikost=kwargs['velikost'],
                        opotrebeni=kwargs['opotrebeni'],
                        pocet=kwargs['pocet'],
-                       typ=kwargs['typ'],
+                       typ=kwargs.get('typ'),
                        material=kwargs['material'],
                        cena=kwargs['cena'],
                        obrazek=image,
@@ -144,7 +145,8 @@ def add_accessory(image, *args, **kwargs):
         accessory.velikost = kwargs['velikost']
         accessory.opotrebeni = kwargs['opotrebeni']
         accessory.pocet = kwargs['pocet']
-        accessory.typ = kwargs['typ']
+        if 'typ' in kwargs:
+            accessory.typ = kwargs['typ']
         accessory.material = kwargs['material']
         accessory.cena = kwargs['cena']
         accessory.barva = kwargs['barva']
@@ -155,6 +157,26 @@ def add_accessory(image, *args, **kwargs):
 
 def get_all_costumes():
     return Kostym.query.all()
+
+
+def return_order(ord_id):
+    v = session.query(Vypujcka).filter(Vypujcka.id == ord_id).first()
+    v.vracen = True
+    session.add(v)
+
+    costumes = session.query(Kostym, VypujckaKostym)\
+        .join(VypujckaKostym, VypujckaKostym.kostym_id == Kostym.id)\
+        .filter(VypujckaKostym.vypujcka_id == ord_id).all()
+    for c in costumes:
+        c.Kostym.pocet += c.VypujckaKostym.pocet
+        session.add(c.Kostym)
+    accessories = session.query(Doplnek, DoplnekVypujcka)\
+        .join(DoplnekVypujcka, DoplnekVypujcka.doplnek_id == Doplnek.id)\
+        .filter(DoplnekVypujcka.vypujcka_id == ord_id).all()
+    for a in accessories:
+        a.Doplnek.pocet += a.DoplnekVypujcka.pocet
+        session.add(a.Doplnek)
+    session.commit()
 
 
 def create_order(*args, **kwargs):
@@ -170,8 +192,7 @@ def create_order(*args, **kwargs):
 
     new_order_id = session.query(Vypujcka).order_by(Vypujcka.id.desc()).first()
 
-    costumes_occurences = Counter(args[0]['costumes'])
-
+    costumes_occurences = Counter(f_s['cart']['costumes'])
     for item, occurence in costumes_occurences.items():
 
         stmt = VypujckaKostym(kostym_id=item,
@@ -182,8 +203,7 @@ def create_order(*args, **kwargs):
         session.add(costume)
         session.add(stmt)
 
-    accessories_occurences = Counter(args[0]['accessories'])
-
+    accessories_occurences = Counter(f_s['cart']['accessories'])
     for item, occurence in accessories_occurences.items():
         stmt = DoplnekVypujcka(doplnek_id=item,
                                vypujcka_id=new_order_id.id,
@@ -368,7 +388,6 @@ def get_user_profile(email):
         .outerjoin(Klient, Osoba.rc == Klient.osoba_rc) \
         .filter(Osoba.email == email)\
         .first()
-
 
 
 def get_all_orders():

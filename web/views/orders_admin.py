@@ -14,7 +14,9 @@ class Orders(MethodView):
         return jsonify(data)
 
     def post(self):
-        ...
+        item = dict(request.form)['id']
+        db.return_order(item)
+        return '', 200
 
     @staticmethod
     def data_json(v, k, d):
@@ -46,5 +48,3 @@ def configure(app):
             if data:
                 return jsonify(Orders.data_json(data, k, d))
             return '', 400
-        if request.method == 'DELETE':
-            ...
