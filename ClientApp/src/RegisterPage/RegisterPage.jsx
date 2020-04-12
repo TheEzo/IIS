@@ -13,7 +13,8 @@ class RegisterPage extends React.Component {
                 name: '',
                 surname: '',
                 email: '',
-                password: ''
+                password: '',
+                rodne: ''
             },
             submitted: false
         };
@@ -70,6 +71,13 @@ class RegisterPage extends React.Component {
                         <input type="text" className="form-control" name="email" value={user.email} onChange={this.handleChange} />
                         {submitted && !user.email &&
                             <div className="help-block">Username is required</div>
+                        }
+                    </div>
+                    <div className={'form-group' + (submitted && !user.email ? ' has-error' : '')}>
+                        <label htmlFor="email">Rodné číslo</label>
+                        <input type="text" className="form-control" name="rodne" value={user.rodne} onChange={this.handleChange} />
+                        {submitted && !user.email &&
+                        <div className="help-block">Username is required</div>
                         }
                     </div>
                     <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>

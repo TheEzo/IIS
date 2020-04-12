@@ -42,13 +42,14 @@ function getById(id) {
 }
 
 function register(user) {
-    const requestOptions = {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(user)
-    };
+    const formData = new FormData();
+    formData.append('id', user.rodne.toString());
+    formData.append('name', user.name.toString());
+    formData.append('surname', user.surname.toString());
+    formData.append('email', user.email.toString());
+    formData.append('password', user.password.toString());
 
-    return fetch(config.apiUrl + '/users/register', requestOptions).then(handleResponse, handleError);
+    return fetch(config.apiUrl + '/users', POSTOptions(formData)).then(handleResponse, handleError);
 }
 
 function update(user) {
