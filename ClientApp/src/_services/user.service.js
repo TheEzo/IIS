@@ -63,6 +63,8 @@ function update(user) {
     formData.append('tel_number', user.tel_number);
     formData.append('city', user.city);
     formData.append('addr_num', user.addr_num);
+    formData.append('membership', user.membership);
+    formData.append('position', user.position);
 
     const options = POSTOptions(formData)
     return fetch(config.apiUrl + '/users', options).then(handleResponse, handleError);
