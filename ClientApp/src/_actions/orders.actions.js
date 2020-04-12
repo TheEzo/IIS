@@ -102,6 +102,7 @@ function returnItem(id) {
         orderService.returnItem(id)
             .then(() => {
                 history.push("/adminOrders");
+                dispatch(orderActions.getAll());
                 dispatch(alertActions.success("Objednávka byla vrácena"));
             })
             .catch(() => {
@@ -115,7 +116,7 @@ function addToCart(id, type, action) {
     return dispatch => {
         orderService.addToCart(id, type, action)
             .then(() => {
-                if (action == "add")
+                if (action === "add")
                     dispatch(alertActions.success("Přidáno do košíku"));
                 else
                     dispatch(alertActions.success("Odebráno z košíku"));

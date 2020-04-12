@@ -31,10 +31,10 @@ class App extends React.Component {
         const {alert} = this.props;
         return (
             <div className="jumbotron">
-                <div className="container">
+                <div className="">
                     <Router history={history}>
                         <Navbar/>
-                        <div className="col-sm-12">
+                        <div className="">
                             {alert.message &&
                             <div className={`alert ${alert.type}`}>{alert.message}</div>
                             }

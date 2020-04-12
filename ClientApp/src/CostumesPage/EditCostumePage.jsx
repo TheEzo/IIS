@@ -18,6 +18,10 @@ class EditCostumePage extends React.Component {
             submitted: false
         };
 
+        if (!this.props.editing) {
+            history.push("/adminCostumes");
+        }
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -49,9 +53,7 @@ class EditCostumePage extends React.Component {
     }
 
     render() {
-        if (this.props.editing == null) {
-            //history.push("/adminCostumes");
-        }
+
 
         const item = this.state.user;
 
