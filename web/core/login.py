@@ -14,7 +14,8 @@ class LoginForm(Form):
     email = StringField('Email', validators=[email(message='Toto není email'),
                                              data_required('Pole musí být vyplněno')])
     password = PasswordField('Heslo', validators=[regexp(r'^(?=.*\d)(?=.*[A-ZĚŠČŘŽÝÁÍÉÚŮ]).{8,}$',
-                                                         message='Heslo musí obsahovat číslo, velké písmeno a musí být alespoň 8 znalů dlouhé'),
+                                                         message='Heslo musí obsahovat číslo, velké písmeno a musí '
+                                                                 'být alespoň 8 znalů dlouhé'),
                                                   data_required('Pole musí být vyplněno')])
 
 
