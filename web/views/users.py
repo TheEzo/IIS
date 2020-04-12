@@ -11,9 +11,9 @@ class Users(MethodView):
         data = [self.data_json(item) for item in db.get_users_data()]
         return jsonify(data)
 
-    @admin_or_current
+    #@admin_or_current
     def post(self):
-        data = dict(request.form)
+        data = request.form
         db_data = dict(
             rc=data.get('id'),
             email=data['email'],
