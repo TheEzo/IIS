@@ -1,6 +1,6 @@
 import {authHeader, config} from '../_helpers';
 import {handleError, handleResponse} from "./responseHandlers";
-import {GETOptions} from "./requestOptions";
+import {GETOptions, POSTOptions, PUTOptions} from "./requestOptions";
 
 export const userService = {
     login,
@@ -17,18 +17,7 @@ function login(email, password) {
     formData.append('email', email.toString());
     formData.append('password', password.toString());
 
-
-    const requestOptions = {
-        method: 'POST',
-        headers: {
-            'Accept': '*/*',
-        },
-        credentials: 'include',
-        mode: 'cors',
-        body: formData
-    };
-
-    return fetch(config.apiUrl + '/login', requestOptions)
+    return fetch(config.apiUrl + '/login', POSTOptions(formData))
         .then(handleResponse, handleError)
         .then(user => {
             // login successful if there's a jwt token in the response
@@ -64,13 +53,19 @@ function register(user) {
 }
 
 function update(user) {
-    const requestOptions = {
-        method: 'PUT',
-        headers: {...authHeader(), 'Content-Type': 'application/json'},
-        body: JSON.stringify(user)
-    };
+    console.log("USER: ", user);
 
-    return fetch(config.apiUrl + '/users/' + user.id, requestOptions).then(handleResponse, handleError);
+    const formData = new FormData();
+    formData.append('id', user.id.toString());
+    formData.append('name', user.name.toString());
+    formData.append('surname', user.surname.toString());
+    formData.append('email', user.email.toString());
+    formData.append('tel_number', user.tel_number.toString());
+    formData.append('city', user.city.toString());
+    formData.append('addr_num', user.arrd_num);
+
+    const options = POSTOptions(formData)
+    return fetch(config.apiUrl + '/users', options).then(handleResponse, handleError);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
