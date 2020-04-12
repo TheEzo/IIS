@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {connect} from "react-redux";
 import {orderActions} from "../_actions";
 
@@ -13,9 +13,11 @@ class CartPage extends React.Component {
 
     render() {
         return (
-            <div>
-                Košík
-            </div>
+            <Fragment>
+                <h2>Nákupní košík</h2>
+                <h4>Položek v košíku: </h4>
+            </Fragment>
+
         );
     }
 }

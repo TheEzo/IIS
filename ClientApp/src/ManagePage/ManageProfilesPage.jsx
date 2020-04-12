@@ -5,6 +5,8 @@ import {userActions} from "../_actions";
 import {Loader} from "../_components";
 
 import {Datatable} from "@o2xp/react-datatable";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faUserCog, faTrashAlt} from '@fortawesome/free-solid-svg-icons'
 
 // https://github.com/o2xp/react-datatable
 const getOptions = (data) => ({
@@ -18,46 +20,86 @@ const getOptions = (data) => ({
     data: {
         columns: [
             {
-                id: "id",
-                label: "id",
-                colSize: "80px",
-                dataType: "text",
-            },
-            {
                 id: "name",
-                label: "name",
-                colSize: "150px",
-                dataType: "text",
+                label: "Jméno",
+                colSize: "60px",
             },
             {
-                id: "age",
-                label: "age",
+                id: "surname",
+                label: "Příjmení",
+                colSize: "80px",
+            },
+            {
+                id: "email",
+                label: "Email",
+                colSize: "150px",
+            },
+            {
+                id: "city",
+                label: "Město",
                 colSize: "50px",
-                dataType: "text",
+            },
+            {
+                id: "address",
+                label: "Adresa",
+                colSize: "100px",
+            },
+            {
+                id: "tel_number",
+                label: "Tel.",
+                colSize: "60px",
+            },
+            {
+                id: "membership",
+                label: "Členství",
+                colSize: "60px",
+            },
+            {
+                id: "position",
+                label: "Pozice",
+                colSize: "60px",
             },
             {
                 id: "action",
-                label: "action",
-                colSize: "80px",
+                label: "Akce",
+                colSize: "15px",
                 dataType: "action",
             }
         ],
         rows: data.map((d) => ({
-            id: d.id,
-            name: d.id,
-            age: d.id,
+            name: d.name,
+            surname: d.surname,
+            email: d.email,
+            city: d.city,
+            address: d.address + " " + d.addr_num,
+            tel_number: d.tel_number,
+            membership: membershipMap[d.membership],
+            position: positionMap[d.position],
             action: d.id,
         }))
 
     }
 });
 
+const membershipMap = {
+    zlate: "Zlaté",
+    stribrne: "Stříbrné",
+    bronzove: "Bronzové"
+}
+const positionMap = {
+    vedouci: "Vedoucí",
+    zamestnanec: "Zaměstnanec",
+    null: "Zákazník"
+}
+
 const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
         component: id => <Fragment>
-            <button onClick={() => dispatch(userActions.delete(id))}>Odstranit</button>
-            <button onClick={() => dispatch(userActions.delete(id))}>Odstranit</button>
+            {/*TODO zmenit akci na edit*/}
+            <a href="#" onClick={() => dispatch(userActions.delete(id))}><FontAwesomeIcon icon={faUserCog}/></a>
+            <a href="#" onClick={() => dispatch(userActions.delete(id))} className="red">
+                <FontAwesomeIcon icon={faTrashAlt}/></a>
         </Fragment>,
     }
 ]
@@ -86,7 +128,7 @@ class ManageProfilesPage extends React.Component {
                 <Loader/>
             ) : (
                 <Fragment>
-                    <h1>Počet uživatelů {items.length}</h1>
+                    <h2>Počet uživatelů {items.length}</h2>
                     <Datatable
                         options={getOptions(items)}
                         customDataTypes={createCustomDataTypes(dispatch)}

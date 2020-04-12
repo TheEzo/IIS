@@ -3,6 +3,8 @@ import {connect} from 'react-redux';
 
 import {costumesActions, orderActions, userActions} from "../_actions";
 import {Loader} from "../_components";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCheckSquare} from '@fortawesome/free-solid-svg-icons'
 
 import {Datatable} from "@o2xp/react-datatable";
 
@@ -58,8 +60,8 @@ const getOptions = (data) => ({
             },
             {
                 id: "action",
-                label: "action",
-                colSize: "60px",
+                label: "Akce",
+                colSize: "10px",
                 dataType: "action",
             }
         ],
@@ -72,7 +74,7 @@ const getOptions = (data) => ({
             accessories: d.accessories.join(', '),
             price: d.price,
             returned: d.returned ? "Ano" : "Ne",
-            action: d.id,
+            action: d.returned ? null : d.id,
         }))
 
     }
@@ -81,9 +83,12 @@ const getOptions = (data) => ({
 const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
-        component: id => <Fragment>
-            <button onClick={() => dispatch(null)}>Vráceno</button>
-        </Fragment>,
+        component: id => id ? (<Fragment>
+            {/*TODO: onclick*/}
+            <a href="" onClick={() => dispatch(null)}><FontAwesomeIcon className="returned-checkbox"
+                                                                       title="Potvrdit vrácení"
+                                                                       icon={faCheckSquare} /></a>
+        </Fragment>) : null,
     }
 ]
 

@@ -5,6 +5,8 @@ import {costumesActions, userActions} from "../_actions";
 import {Loader} from "../_components";
 
 import {Datatable} from "@o2xp/react-datatable";
+import {faTrashAlt, faUserCog} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 // https://github.com/o2xp/react-datatable
 const getOptions = (data) => ({
@@ -61,7 +63,7 @@ const getOptions = (data) => ({
                 id: "action",
                 label: "Akce",
                 dataType: "action",
-                colSize: "160px",
+                colSize: "15px",
             }
         ],
         rows: data.map((d) => ({
@@ -82,9 +84,13 @@ const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
         component: id => <Fragment>
-            <button onClick={() => dispatch(costumesActions.setEdit(id))} className="btn btn-primary">Editovat</button>
-            <button onClick={() => dispatch(null)} className="btn btn-danger">Odstranit</button>
-        </Fragment>,
+            <a href="" onClick={() => dispatch(costumesActions.setEdit(id))}>
+                <FontAwesomeIcon icon={faUserCog}/>
+            </a>
+            <a href="" onClick={() => dispatch(null)}>
+                <FontAwesomeIcon className="red" icon={faTrashAlt}/>
+            </a>
+        </Fragment>
     }
 ]
 
@@ -112,7 +118,7 @@ class ManageCostumesPage extends React.Component {
                 <Loader/>
             ) : (
                 <Fragment>
-                    <h3>Počet kostýmů: {items.length}</h3>
+                    <h2>Počet kostýmů: {items.length}</h2>
                     <Datatable
                         options={getOptions(items)}
                         customDataTypes={createCustomDataTypes(dispatch)}

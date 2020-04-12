@@ -5,6 +5,8 @@ import {accessoriesActions, userActions} from "../_actions";
 import {Loader} from "../_components";
 
 import {Datatable} from "@o2xp/react-datatable";
+import {faTrashAlt, faUserCog} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 // https://github.com/o2xp/react-datatable
 const getOptions = (data) => ({
@@ -45,7 +47,7 @@ const getOptions = (data) => ({
             {
                 id: "price",
                 label: "Cena",
-                colSize: "20px"
+                colSize: "15px"
             },
             {
                 id: "color",
@@ -61,7 +63,7 @@ const getOptions = (data) => ({
                 id: "action",
                 label: "Akce",
                 dataType: "action",
-                colSize: "160px",
+                colSize: "15px",
             }
         ],
         rows: data.map((d) => ({
@@ -83,8 +85,12 @@ const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
         component: id => <Fragment>
-            <button onClick={() => dispatch(accessoriesActions.deleteAcc(id))} className="btn btn-primary">Editovat</button>
-            <button onClick={() => dispatch(accessoriesActions.deleteAcc(id))} className="btn btn-danger">Odstranit</button>
+            <a href="" onClick={() => dispatch(accessoriesActions.deleteAcc(id))}>
+                <FontAwesomeIcon icon={faUserCog}/>
+            </a>
+            <a href="" onClick={() => dispatch(accessoriesActions.deleteAcc(id))}>
+                <FontAwesomeIcon className="red" icon={faTrashAlt}/>
+            </a>
         </Fragment>,
     }
 ]
@@ -113,7 +119,7 @@ class ManageAccessoriesPage extends React.Component {
                 <Loader/>
             ) : (
                 <Fragment>
-                    <h1>Počet doplňků {items.length}</h1>
+                    <h2>Počet doplňků {items.length}</h2>
                     <Datatable
                         options={getOptions(items)}
                         customDataTypes={createCustomDataTypes(dispatch)}

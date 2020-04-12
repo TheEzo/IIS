@@ -145,3 +145,13 @@ dd {
     float: left;
     width: 50%;
 }
+
+.red {
+    color: red;
+    margin-left: 10px;
+}
+
+.returned-checkbox {
+    color: green;
+    font-size: 140%;
+}
