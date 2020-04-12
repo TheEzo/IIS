@@ -8,6 +8,7 @@ export const accessoriesActions = {
     getAll,
     deleteAcc,
     setEdit,
+    edit,
 };
 
 function getAll() {
@@ -50,4 +51,14 @@ function setEdit(id) {
         dispatch({type: accessoriesConstants.SETONE_EDITING, id});
         history.push("/editAccessorie/" + id);
     };
+}
+
+function edit(acc) {
+    return dispatch => {
+        accessoriesService.edit(acc)
+            .then(() => {
+                history.push("adminAccessories");
+                dispatch(alertActions.success("Doplněk byl upraven"));
+            })
+    }
 }

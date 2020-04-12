@@ -85,12 +85,10 @@ const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
         component: id => <Fragment>
-            <button onClick={() => dispatch(accessoriesActions.setEdit(id))} className="btn btn-primary">Editovat</button>
-            <button onClick={() => dispatch(accessoriesActions.deleteAcc(id))} className="btn btn-danger">Odstranit</button>
-            <a href="" onClick={() => dispatch(accessoriesActions.deleteAcc(id))}>
+            <a href="#" onClick={() => dispatch(accessoriesActions.setEdit(id))}>
                 <FontAwesomeIcon icon={faUserCog}/>
             </a>
-            <a href="" onClick={() => dispatch(accessoriesActions.deleteAcc(id))}>
+            <a href="#" onClick={() => dispatch(accessoriesActions.deleteAcc(id))}>
                 <FontAwesomeIcon className="red" icon={faTrashAlt}/>
             </a>
         </Fragment>,

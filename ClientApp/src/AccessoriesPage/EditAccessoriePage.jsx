@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import {costumesActions, userActions} from "../_actions";
+import {accessoriesActions, userActions} from "../_actions";
 import {history} from "../_helpers";
 import {Link} from "react-router-dom";
 
@@ -26,7 +26,7 @@ class EditAccessoriePage extends React.Component {
     componentDidMount() {
         if (this.props.match.params) {
             const {id} = this.props.match.params;
-            this.props.dispatch(costumesActions.setEdit(id));
+            this.props.dispatch(accessoriesActions.setEdit(id));
         }
     }
 
@@ -36,7 +36,7 @@ class EditAccessoriePage extends React.Component {
         this.setState({submitted: true});
         const {user} = this.state;
         const {dispatch} = this.props;
-        dispatch(costumesActions.edit(user));
+        dispatch(accessoriesActions.edit(user));
     }
 
     handleChange(event) {
@@ -51,7 +51,7 @@ class EditAccessoriePage extends React.Component {
     }
 
     render() {
-        if (this.props.editing == null) {
+        if (this.state.user == null) {
             history.push("/adminAccessories");
         }
 
@@ -124,7 +124,7 @@ class EditAccessoriePage extends React.Component {
                     </div>
                     <div className="row">
                         <input type="submit" value="Odeslat" className="btn btn-success"/>
-                        <Link to="/adminCostumes" className="btn btn-link">Zrušit</Link>
+                        <Link to="/adminAccessories" className="btn btn-link">Zrušit</Link>
                     </div>
                 </form>
             </div>

@@ -28,6 +28,8 @@ export function accessories(state = initialState, action) {
             };
         case accessoriesConstants.SETONE_EDITING:
             const acc = state.items.filter(a => a.id == action.id);
+            console.log("Accessories in state: ", state.items);
+            console.log("Selected acc: ", acc);
             return {
                 ...state,
                 editing: acc[0],

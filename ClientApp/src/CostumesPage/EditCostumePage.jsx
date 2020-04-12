@@ -52,7 +52,7 @@ class EditCostumePage extends React.Component {
 
     render() {
         if (this.props.editing == null) {
-            history.push("/adminCostumes");
+            //history.push("/adminCostumes");
         }
 
         const item = this.state.user;
