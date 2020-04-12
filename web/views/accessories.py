@@ -5,7 +5,7 @@ from flask import request, url_for, jsonify
 from flask.views import MethodView
 
 from web.core import db
-from web.roles import admin
+from web.roles import admin, employee
 
 
 class Accessories(MethodView):
@@ -13,11 +13,12 @@ class Accessories(MethodView):
         data = [self.data_json(d) for d in db.get_accessories_data()]
         return jsonify(data)
 
+    @employee
     def post(self):
         # TODO save image from form to static
-        data = request.json
+        data = request.form
         db.add_accessory(**dict(
-            id=data['id'],
+            id=data.get('id'),
             nazev=data['name'],
             vyrobce=data['manufacturer'],
             material=data['material'],

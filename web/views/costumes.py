@@ -4,7 +4,7 @@
 from flask import request, url_for, jsonify
 from flask.views import MethodView
 from web.core import db
-from web.roles import admin
+from web.roles import admin, employee
 from wtforms import StringField, validators, TextAreaField, SelectField, Form, IntegerField, FileField, SelectMultipleField
 from wtforms.validators import data_required
 
@@ -32,12 +32,12 @@ class Costumes(MethodView):
         data = [self.data_json(item) for item in db.get_all_costumes()]
         return jsonify(data)
 
-    @admin
+    @employee
     def post(self):
         # TODO save image from form to static
         data = request.form
         db.add_or_update_costume(**dict(
-            id=data['id'],
+            id=data.get('id'),
             nazev=data['name'],
             vyrobce=data['manufacturer'],
             material=data['material'],

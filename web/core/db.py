@@ -184,7 +184,7 @@ def create_order(*args, **kwargs):
 
     accessories_occurences = Counter(args[0]['accessories'])
 
-    for item,occurence in accessories_occurences.items():
+    for item, occurence in accessories_occurences.items():
         stmt = DoplnekVypujcka(doplnek_id=item,
                                vypujcka_id=new_order_id.id,
                                pocet=occurence)
@@ -194,6 +194,7 @@ def create_order(*args, **kwargs):
         session.add(accessoory)
 
     session.commit()
+
 
 def get_costume_order(id):
     return session.query(VypujckaKostym, Vypujcka).join(Vypujcka, Vypujcka.id == VypujckaKostym.vypujcka_id)\

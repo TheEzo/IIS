@@ -13,87 +13,10 @@ from web.views.costumes import Costumes
 from web.views.accessories import Accessories
 
 
-# class Cart(MethodView):
-#     def actualizePrize(self, action, type, id):
-#         if(action=="add"):
-#             session['cart']['prize'] += db.get_prize(type,id)[0]
-#         elif(action=="remove"):
-#             session['cart']['prize'] -= db.get_prize(type, id)[0]
-#             if (session['cart']['prize'] < 0):
-#                 session['cart']['prize'] = 0
-#
-#     def actualizeAmount(self,action,type,id):
-#         if (action == "add"):
-#             amount = db.get_product_amount(type, id)[0]
-#             db.set_product_amount(type,id,amount-1)
-#         elif (action == "remove"):
-#             amount = db.get_product_amount(type, id)[0]
-#             db.set_product_amount(type, id, amount + 1)
-#
-#     @login_required
-#     def get(self):
-#         items = []
-#         price = 0
-#         for id in session['cart']['costumes']:
-#             data = db.get_product(id, "costumes")
-#             price += data.cena
-#             items.append(data)
-#
-#         for id in session['cart']['accessories']:
-#             data = db.get_product(id, "accessories")
-#             items.append(data)
-#             price += data.cena
-#         session['cart']['prize'] = price
-#
-#         return render_template('cart.html', items=list(set(items)), cos_count=Counter(session['cart']['costumes']),
-#                                acc_count=Counter(session['cart']['accessories']), price=price)
-#
-#     def post(self):
-#         if not current_user.is_authenticated():
-#             flash('Pro tuto akci je vyžadováno přihlášení. <a href="' + url_for('login') + '">Přihlásit?</a>', "alert-warning")
-#             return jsonify({})
-#         data = request.json
-#         if data['action'] == 'add':
-#             db_data = db.get_product_amount(data['type'], data['value'])[0]
-#             if db_data == 0:
-#                 flash('Toto zboží je momentálně nedostupné', 'alert-danger')
-#                 return jsonify({})
-#             if session['cart'][data['type']].count(data['value']) == db_data:
-#                 order = db.get_costume_order(data['value'])
-#                 if order:
-#                     flash("Položku není aktuálně možná vložit do košíku, dostupná bude od %s" %
-#                           (order.Vypujcka.datum_vraceni + timedelta(days=1)).strftime('%d.%m.%Y'), "alert-danger")
-#                 else:
-#                     flash('Nelze vložit více těchto položek', 'alert-danger')
-#                 return jsonify({})
-#
-#             if data['type'] == 'costumes':
-#                 session['cart']['costumes'].append(data['value'])
-#             elif data['type'] == 'accessories':
-#                 session['cart']['accessories'].append(data['value'])
-#             else:
-#                 flash('Něco se pokazilo', 'alert-danger')
-#                 return jsonify({})
-#             flash("Položka byla přidána do košíku", 'alert-success')
-#
-#         elif data['action'] == 'remove':
-#             if data['type'] == 'costumes':
-#                     session['cart']['costumes'].remove(data['value'])
-#             elif data['type'] == 'accessories':
-#                     session['cart']['accessories'].remove(data['value'])
-#             else:
-#                 flash('Něco se pokazilo', 'alert-danger')
-#                 return jsonify({})
-#             flash("Položka byla odebrána z košíku", 'alert-success')
-#         return jsonify({})
-
 class Cart(MethodView):
     # @login_required
     def get(self):
-        session['cart'] = {}
-        session['cart']['accessories'] = [17, 9, 8, 8]
-        session['cart']['costumes'] = [31, 33, 44]
-        items = dict(costumes=[], accessories=[])
+        items = dict(price=0, costumes=[], accessories=[])
         for costume in session.get('cart', {}).get('costumes', []):
             items['costumes'].append(Costumes.data_json(db.get_costume_by_id(costume)))
         for accessory in session.get('cart', {}).get('accessories', []):
@@ -102,12 +25,47 @@ class Cart(MethodView):
         return jsonify(items)
 
     def post(self):
-        # zkontrolovat pocet v db >0
-        ...
+        data = dict(request.form)
+        # TODO submit request, upravit pocty v db
+        db.create_order(dict(
+            datum_vraceni=data['return_date'], # TODO asi nepojede datum v db
+            nazev_akce=data['name'],
+
+        ))
 
     def delete(self):
-        ...
+        session['cart'] = {'costumes': [], 'accessories': []}
+        return '', 200
 
 
 def configure(app):
     app.add_url_rule('/cart', view_func=Cart.as_view('cart'))
+
+    @app.route('/cart_manage', methods=['POST'])
+    # @login_required
+    def cart_add():
+        data = dict(request.form)
+        if data['item'] not in ['costumes', 'accessories']:
+            return '', 400
+        try:
+            cnt = int(data['count'])
+            item = int(data['id'])
+            if cnt == 0:
+                while item in session['cart'][data['item']]:
+                    session['cart'][data['item']].remove(item)
+            elif cnt > 0:
+                if data['item'] == 'costumes':
+                    obj = db.get_costume_by_id(item)
+                else:
+                    obj = db.get_accessory_by_id(item)
+                if obj.pocet < cnt:
+                    return '', 400
+                for i in range(cnt):
+                    session['cart'][data['item']].append(item)
+            else:
+                for i in range(cnt):
+                    if item in session['cart'][data['item']]:
+                        session['cart'][data['item']].remove(item)
+        except Exception:
+            return '', 400
+        return '', 200
