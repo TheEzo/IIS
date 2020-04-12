@@ -1,10 +1,30 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import request, url_for, jsonify, session, make_response
+from flask import request, url_for, jsonify
 from flask.views import MethodView
 from web.core import db
 from web.roles import admin
+from wtforms import StringField, validators, TextAreaField, SelectField, Form, IntegerField, FileField, SelectMultipleField
+from wtforms.validators import data_required
+
+
+class AddCostume(Form):
+    id = StringField('id')
+    nazev = StringField("Název", [validators.Length(min=5, max=128), data_required('Pole musí být vyplněno')])
+    vyrobce = StringField("Výrobce",[validators.Length(min=1, max=45),data_required('Pole musí být vyplněno')])
+    material = StringField("Materiál", [validators.Length(min=2, max=45),data_required('Pole musí být vyplněno')])
+    popis = TextAreaField("Popis", [validators.Length(min=10, max=512),data_required('Pole musí být vyplněno')])
+    velikost = SelectField("Velikost",choices=[('S','S'),('M','M'),('L','L'),('XL','XL'),('XXL','XXL'),('XXXL','XXXL')])
+    opotrebeni = SelectField("Opotřebení",
+                           choices=[('nove', 'Nové'), ('stare', 'Staré'), ('zanovni', 'Zánovní')])
+    pocet = IntegerField("Počet", [data_required('Pole musí být vyplněno')])
+    datum_vyroby = StringField("Datum výroby", [data_required('Pole musí být vyplněno')])
+    cena = IntegerField("Cena za kus", [data_required('Pole musí být vyplněno')])
+    obrazek = FileField("Náhled")
+    barva = StringField("Barva")
+    vyuziti = SelectMultipleField("Využití", choices=[(record.id, record.druh_akce)
+                                                      for record in db.get_usages()], default=[])
 
 
 class Costumes(MethodView):
@@ -15,7 +35,7 @@ class Costumes(MethodView):
     @admin
     def post(self):
         # TODO save image from form to static
-        data = request.json
+        data = request.form
         db.add_or_update_costume(**dict(
             id=data['id'],
             nazev=data['name'],
