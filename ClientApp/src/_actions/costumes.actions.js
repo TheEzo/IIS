@@ -7,6 +7,7 @@ export const costumesActions = {
     getAll,
     setEdit,
     edit,
+    delete: _delete,
 };
 
 function getAll() {
@@ -50,6 +51,16 @@ function edit(costume){
             .then(() => {
                 history.push("/adminCostumes");
                 dispatch(alertActions.success("Kostým byl upraven"));
+            })
+    }
+}
+
+function _delete(id){
+    return dispatch => {
+        costumeService.delete(id)
+            .then(() => {
+                history.push("/adminCostumes");
+                dispatch(alertActions.success("Kostým byl odstraněn"));
             })
     }
 }
