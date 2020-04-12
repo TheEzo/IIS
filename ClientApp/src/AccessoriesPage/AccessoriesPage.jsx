@@ -18,7 +18,7 @@ class AccessoriesPage extends React.Component {
                 <div className="col-md-12 col-md-offset-3">
                     <h1>Doplňky</h1>
                     <h3>{loading ? "Načítám data" : "Dostupné doplňky"}</h3>
-                    {loading ? "" : accessories.map(a => <ShopCard key={a.id} type={"accessorie"} loggedIn={loggedIn} item={a}/>)}
+                    {loading ? "" : accessories.map(a => <ShopCard key={a.id} type={"accessories"} loggedIn={loggedIn} item={a}/>)}
                 </div>
             )
         );
