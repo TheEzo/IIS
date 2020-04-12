@@ -9,7 +9,7 @@ itsdangerous==1.1.0
 Jinja2==2.11.1
 # MarkupSafe==1.1.1
 # mysql-connector==2.2.9
-# mysql-connector-python==8.0.19
+mysql-connector-python==8.0.19
 # mysqlclient-deps==0.0.2
 # protobuf==3.11.3
 pycparser==2.20
