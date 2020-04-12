@@ -41,6 +41,12 @@ function getAll() {
 
 function deleteAcc(id) {
     return dispatch => {
+        accessoriesService.delete(id)
+            .then(() => {
+                history.push("/adminAccessories");
+                getAll();
+                dispatch(alertActions.success("Doplněk byl odstraněn"))
+            })
         console.log("Delete acc id: ", id);
 
     }

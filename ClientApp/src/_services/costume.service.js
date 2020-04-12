@@ -39,5 +39,5 @@ function _delete(id) {
     const formData = new FormData();
     formData.append('id', id.toString());
 
-    return fetch(config.apiUrl + "/costumes/" + id, DELETEOptions(formData));
+    return fetch(config.apiUrl + "/costumes", DELETEOptions(formData));
 }

@@ -1,10 +1,11 @@
 import {config} from '../_helpers';
 import {handleResponse, handleError} from "./responseHandlers";
-import {GETOptions, POSTOptions} from "./requestOptions";
+import {DELETEOptions, GETOptions, POSTOptions} from "./requestOptions";
 
 export const accessoriesService = {
     getAll,
     edit,
+    delete: _delete,
 }
 
 function getAll() {
@@ -31,4 +32,11 @@ function edit(acc) {
     formData.append('wear_level', acc.wear_level.toString());
 
     return fetch(config.apiUrl + '/accessories', POSTOptions(formData));
+}
+
+function _delete(id) {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+
+    return fetch(config.apiUrl + "/accessories", DELETEOptions(formData))
 }
