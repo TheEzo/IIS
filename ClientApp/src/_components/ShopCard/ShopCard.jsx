@@ -1,19 +1,32 @@
 import React, {Component} from 'react';
 import {config} from "../../_helpers";
+import {connect} from 'react-redux';
 
 class ShopCard extends Component {
+    constructor(props) {
+        super(props);
+
+        this.handleAdd = this.handleAdd.bind(this);
+    }
+
+    handleAdd(id, type) {
+        console.log("Id:", id, "Type: ", type);
+        const {dispatch} = this.props;
+        dispatch(orderActions.addToCart(id, this.props.type));
+    }
 
     render() {
         const item = this.props.item;
+        const type = this.props.type;
         const loggedIn = this.props.loggedIn;
 
         return (
             <div className="item">
                 <div className="item-image">
-                    <img src={config.apiUrl + item.image} alt="" />
+                    <img src={config.apiUrl + item.image} alt=""/>
                 </div>
                 <div className="item-body">
-                    <div className="item-header">{ item.name } ({item.size})</div>
+                    <div className="item-header">{item.name} ({item.size})</div>
                     <div>
                         <dl>
                             <dt>Počet kusů:</dt>
@@ -33,7 +46,7 @@ class ShopCard extends Component {
                     </div>
                     <div className="item-rent">
                         <span>{item.price}/den</span>
-                        <button className="btn btn-success" disabled={!loggedIn}>Do košíku</button>
+                        <button onClick={() => this.handleAdd(item.id, type)} className="btn btn-success" disabled={!loggedIn}>Do košíku</button>
                     </div>
                 </div>
             </div>
@@ -41,4 +54,11 @@ class ShopCard extends Component {
     }
 }
 
-export {ShopCard};
+function mapStateToProps(state) {
+    const {loggedIn} = state.authentication;
+    return {
+        loggedIn,
+    }
+}
+
+export default connect(mapStateToProps)(ShopCard);

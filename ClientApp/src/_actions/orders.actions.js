@@ -9,6 +9,7 @@ export const orderActions = {
     getAll,
     getCart,
     returnItem,
+    addToCart,
 }
 
 function getMine() {
@@ -106,4 +107,16 @@ function returnItem(id) {
             });
     }
 
+}
+
+function addToCart(id, type) {
+    return dispatch => {
+        orderService.addToCart(id, type)
+            .then(() => {
+                dispatch(alertActions.success("Přidáno do košíku"));
+            })
+            .catch(() => {
+                dispatch(alertActions.error("Nepodařilo se přidat do košíku"));
+            })
+    }
 }
