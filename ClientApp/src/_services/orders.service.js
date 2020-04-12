@@ -8,6 +8,7 @@ export const orderService = {
     getAll,
     getCart,
     returnItem,
+    addToCart,
 }
 
 function returnItem(id) {
@@ -47,4 +48,14 @@ function getCart() {
     return fetch(config.apiUrl + "/cart", GETOptions)
         .then(handleResponse, handleError)
         .then(cart => {return cart});
+}
+
+function addToCart(id, type, count) {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('item', type);
+    formData.append('count', count.toString());
+
+    return fetch(config.apiUrl + "/cart_manage", POSTOptions(formData));
+
 }

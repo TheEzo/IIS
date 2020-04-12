@@ -18,7 +18,7 @@ class CostumesPage extends React.Component {
                 <div className="col-md-12 col-md-offset-3">
                     <h1>Kostýmy</h1>
                     <h3>{loading ? "Načítám data" : "Dostupné kostýmy"}</h3>
-                    {loading ? "" : costumes.map((c) => (<ShopCard key={c.id} loggedIn={loggedIn} item={c}/>))}
+                    {loading ? "" : costumes.map((c) => (<ShopCard key={c.id} type={"costume"} loggedIn={loggedIn} item={c}/>))}
                 </div>
             )
         );

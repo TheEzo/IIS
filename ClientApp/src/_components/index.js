@@ -4,4 +4,4 @@ export {default as AccountDropdown} from './Dropdowns/Account';
 export {default as AdministrationDropdown} from './Dropdowns/Administration';
 export {default as LoginBar} from './Dropdowns/LoginBar';
 export {default as Loader} from './Loader';
-export * from './ShopCard/ShopCard';
+export {default as ShopCard} from './ShopCard/ShopCard';
