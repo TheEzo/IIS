@@ -289,10 +289,10 @@ def update_user(**kwargs):
     else:
         if session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc']).first():
             session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc']). \
-                update({'pozice': kwargs['role'][0]})
+                update({'pozice': kwargs['role']})
         else:
-            stmt = Zamestnanec(osoba_rc=kwargs['rc'][0],
-                               pozice=kwargs['role'][0])
+            stmt = Zamestnanec(osoba_rc=kwargs['rc'],
+                               pozice=kwargs['pozice'])
             session.add(stmt)
     session.commit()
 

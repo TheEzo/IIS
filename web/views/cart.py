@@ -45,27 +45,18 @@ def configure(app):
     @login_required
     def cart_add():
         data = dict(request.form)
-        if data['item'] not in ['costumes', 'accessories']:
-            return '', 400
+
         try:
-            cnt = int(data['count'])
+            if data['item'] not in ['costumes', 'accessories']:
+                raise ValueError()
+            if data['action'] not in ['add', 'remove']:
+                raise ValueError()
+
             item = int(data['id'])
-            if cnt == 0:
-                while item in session['cart'][data['item']]:
-                    session['cart'][data['item']].remove(item)
-            elif cnt > 0:
-                if data['item'] == 'costumes':
-                    obj = db.get_costume_by_id(item)
-                else:
-                    obj = db.get_accessory_by_id(item)
-                if obj.pocet < cnt:
-                    return '', 400
-                for i in range(cnt):
-                    session['cart'][data['item']].append(item)
+            if data['action'] == 'add':
+                session['cart'][data['item']].append(item)
             else:
-                for i in range(cnt):
-                    if item in session['cart'][data['item']]:
-                        session['cart'][data['item']].remove(item)
+                session['cart'][data['item']].remove(item)
         except Exception:
             return '', 400
         return '', 200

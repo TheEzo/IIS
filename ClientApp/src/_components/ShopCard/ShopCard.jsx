@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {config} from "../../_helpers";
 import {connect} from 'react-redux';
+import {orderActions} from "../../_actions/orders.actions";
 
 class ShopCard extends Component {
     constructor(props) {
