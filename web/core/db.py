@@ -156,7 +156,7 @@ def add_accessory(image, *args, **kwargs):
 
 
 def get_all_costumes():
-    return Kostym.query.all()
+    return Kostym.query.order_by(Kostym.id).all()
 
 
 def return_order(ord_id):
@@ -222,7 +222,8 @@ def get_costume_order(id):
 
 
 def get_user_orders(rc):
-    return (session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).filter(Vypujcka.klient == rc).all(),
+    return (session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).filter(Vypujcka.klient == rc)
+                .order_by(Vypujcka.id).all(),
             session.query(VypujckaKostym, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
             session.query(DoplnekVypujcka, Doplnek).outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all())
 
@@ -231,7 +232,7 @@ def get_users_data():
     return session.query(Osoba, Zamestnanec.pozice, Klient.clenstvi)\
         .outerjoin(Zamestnanec, Osoba.rc == Zamestnanec.osoba_rc)\
         .outerjoin(Klient, Osoba.rc == Klient.osoba_rc)\
-        .all()
+        .order_by(Osoba.rc).all()
 
 
 def insert_base_users():
@@ -392,7 +393,8 @@ def get_user_profile(email):
 
 def get_all_orders():
     return (
-        session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc).all(),
+        session.query(Vypujcka, Osoba).outerjoin(Osoba, Vypujcka.klient == Osoba.rc)
+            .order_by(Vypujcka.id).all(),
         session.query(VypujckaKostym, Kostym).outerjoin(Kostym, VypujckaKostym.kostym_id == Kostym.id).all(),
         session.query(DoplnekVypujcka, Doplnek).outerjoin(Doplnek, DoplnekVypujcka.doplnek_id == Doplnek.id).all()
     )
@@ -416,4 +418,4 @@ def delete_order(id):
 
 
 def get_all_accessories():
-    session.query(Doplnek).all()
+    session.query(Doplnek).order_by(Doplnek.id).all()
