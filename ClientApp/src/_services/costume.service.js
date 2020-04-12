@@ -6,6 +6,7 @@ export const costumeService = {
     getAll,
     edit,
     delete: _delete,
+    create,
 }
 
 function getAll() {
@@ -24,6 +25,22 @@ function edit(costume) {
     formData.append('count', costume.count.toString());
     formData.append('description', costume.description.toString());
     formData.append('id', costume.id.toString());
+    formData.append('image', costume.image.toString());
+    formData.append('manufacturer', costume.manufacturer.toString());
+    formData.append('material', costume.material.toString());
+    formData.append('name', costume.name.toString());
+    formData.append('price', costume.price.toString());
+    formData.append('size', costume.size.toString());
+    formData.append('wear_level', costume.wear_level.toString());
+
+    return fetch(config.apiUrl + '/costumes', POSTOptions(formData));
+}
+
+function create(costume) {
+    const formData = new FormData();
+    formData.append('color', costume.color.toString());
+    formData.append('count', costume.count.toString());
+    formData.append('description', costume.description.toString());
     formData.append('image', costume.image.toString());
     formData.append('manufacturer', costume.manufacturer.toString());
     formData.append('material', costume.material.toString());
