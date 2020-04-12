@@ -36,8 +36,8 @@ class UserOrders(MethodView):
 def configure(app):
     app.add_url_rule('/orders', view_func=UserOrders.as_view('orders'))
 
-    @app.route('/orders/<int:obj_id>', methods=['GET', 'POST'])
     @login_required
+    @app.route('/orders/<int:obj_id>', methods=['GET', 'POST'])
     def get_orders(obj_id):
         if request.method == 'GET':
             v, k, d = db.get_all_orders()
