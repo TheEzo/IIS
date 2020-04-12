@@ -4,6 +4,7 @@ const initialState = {
     loading: true,
     items: [],
     error: null,
+    editing: null,
 }
 
 export function accessories(state = initialState, action) {
@@ -25,6 +26,12 @@ export function accessories(state = initialState, action) {
                 loading: false,
                 error: action.error
             };
+        case accessoriesConstants.SETONE_EDITING:
+            const acc = state.items.filter(a => a.id == action.id);
+            return {
+                ...state,
+                editing: acc[0],
+            }
         default:
             return state;
     }

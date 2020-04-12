@@ -31,5 +31,5 @@ function edit(costume) {
     formData.append('size', costume.size.toString());
     formData.append('wear_level', costume.wear_level.toString());
 
-    return fetch(config.apiUrl + '/costumes', POSTOptions(null));
+    return fetch(config.apiUrl + '/costumes', POSTOptions(formData));
 }

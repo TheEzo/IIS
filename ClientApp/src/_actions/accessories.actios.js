@@ -1,10 +1,13 @@
 import {accessoriesConstants} from "../_constants/accessories.constants";
 import {accessoriesService} from "../_services/accessories.service";
 import {alertActions} from "./alert.actions";
+import {costumesConstants} from "../_constants/costumes.constants";
+import {history} from "../_helpers";
 
 export const accessoriesActions = {
     getAll,
     deleteAcc,
+    setEdit,
 };
 
 function getAll() {
@@ -40,4 +43,11 @@ function deleteAcc(id) {
         console.log("Delete acc id: ", id);
 
     }
+}
+
+function setEdit(id) {
+    return dispatch => {
+        dispatch({type: accessoriesConstants.SETONE_EDITING, id});
+        history.push("/editAccessorie/" + id);
+    };
 }

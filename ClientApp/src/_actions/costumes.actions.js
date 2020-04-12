@@ -48,7 +48,7 @@ function edit(costume){
     return dispatch => {
         costumeService.edit(costume)
             .then(() => {
-                history.push("/admin-costumes");
+                history.push("/adminCostumes");
                 dispatch(alertActions.success("Kostým byl upraven"));
             })
     }

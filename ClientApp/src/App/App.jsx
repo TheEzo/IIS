@@ -11,7 +11,7 @@ import {RegisterPage} from '../RegisterPage';
 
 import {Navbar} from "../_components";
 import {AddCostumePage, CostumesPage, EditCostumePage} from "../CostumesPage";
-import {AccessoriesPage, AddAccessoriePage} from "../AccessoriesPage";
+import {AccessoriesPage, AddAccessoriePage, EditAccessoriePage} from "../AccessoriesPage";
 import {CartPage, MyOrdersPage} from "../OrdersPage";
 import {EditProfilePage, ProfilePage} from "../ProfilePage";
 import {ManageAccessoriesPage, ManageOrdersPage, ManageCostumesPage, ManageProfilesPage} from "../ManagePage";
@@ -60,6 +60,7 @@ class App extends React.Component {
                                 <Route path="/addCostume" component={AddCostumePage} />
                                 <Route path="/editCostume/:id" component={EditCostumePage} />
                                 <Route path="/addAccessorie" component={AddAccessoriePage} />
+                                <Route path="/editAccessorie/:id" component={EditAccessoriePage} />
 
                                 <Route path="/costumes" component={CostumesPage}/>
                                 <Route path="/accessories" component={AccessoriesPage}/>

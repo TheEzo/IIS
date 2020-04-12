@@ -5,7 +5,7 @@ import {costumesActions, userActions} from "../_actions";
 import {history} from "../_helpers";
 import {Link} from "react-router-dom";
 
-class EditCostumePage extends React.Component {
+class EditAccessoriePage extends React.Component {
     constructor(props) {
         super(props);
 
@@ -13,7 +13,7 @@ class EditCostumePage extends React.Component {
         if (!loggedIn)
             dispatch(userActions.logout());
 
-        console.log("Editing costume: ", this.props.editing);
+        console.log("Editing accessorie: ", this.props.editing);
         this.state = {
             user: this.props.editing,
             submitted: false
@@ -52,7 +52,7 @@ class EditCostumePage extends React.Component {
 
     render() {
         if (this.props.editing == null) {
-            history.push("/adminCostumes");
+            history.push("/adminAccessories");
         }
 
         const item = this.state.user;
@@ -134,11 +134,11 @@ class EditCostumePage extends React.Component {
 
 function mapStateToProps(state) {
     const {loggedIn} = state.authentication;
-    const {editing} = state.costumes;
+    const {editing} = state.accessories;
     return {
         loggedIn,
         editing,
     };
 }
 
-export default connect(mapStateToProps)(EditCostumePage);
+export default connect(mapStateToProps)(EditAccessoriePage);
