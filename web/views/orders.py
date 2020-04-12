@@ -7,7 +7,7 @@ from web.views.users import Users
 
 
 class UserOrders(MethodView):
-    # @login_required
+    @login_required
     def get(self):
         user_id = current_user.id
         v, k, d = db.get_user_orders(int(user_id))
@@ -36,6 +36,7 @@ class UserOrders(MethodView):
 def configure(app):
     app.add_url_rule('/orders', view_func=UserOrders.as_view('orders'))
 
+    @login_required
     @app.route('/orders/<int:obj_id>', methods=['GET', 'POST'])
     def get_orders(obj_id):
         if request.method == 'GET':

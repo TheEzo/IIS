@@ -6,11 +6,12 @@ from web.core import db
 
 
 class Users(MethodView):
-    # @admin
+    @admin
     def get(self):
         data = [self.data_json(item) for item in db.get_users_data()]
         return jsonify(data)
 
+    @admin_or_current
     def post(self):
         data = dict(request.form)
         db_data = dict(

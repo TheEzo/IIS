@@ -1,6 +1,6 @@
 from functools import wraps
 from flask_login import current_user
-from flask import abort, redirect, url_for, session, request,flash
+from flask import abort, session
 
 
 # role decorators
@@ -36,7 +36,7 @@ def admin_or_current(func):
     @wraps(func)
     @login_required
     def _func(*args, **kwargs):
-        if str(current_user.id) == str(kwargs.get('obj_id')) or current_user.is_admin():
+        if str(current_user.id) == str(session.get('user_id')) or current_user.is_admin():
             return func(*args, **kwargs)
         return abort(403)
     return _func

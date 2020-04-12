@@ -11,7 +11,7 @@ from web.views.accessories import Accessories
 
 
 class Cart(MethodView):
-    # @login_required
+    @login_required
     def get(self):
         items = dict(price=0, costumes=[], accessories=[])
         for costume in session.get('cart', {}).get('costumes', []):
@@ -21,6 +21,7 @@ class Cart(MethodView):
         items['price'] = sum([i['price'] for i in items['costumes'] + items['accessories']])
         return jsonify(items)
 
+    @login_required
     def post(self):
         data = dict(request.form)
         db.create_order(**dict(
@@ -31,6 +32,7 @@ class Cart(MethodView):
         session['cart'] = {'costumes': [], 'accessories': []}
         return '', 200
 
+    @login_required
     def delete(self):
         session['cart'] = {'costumes': [], 'accessories': []}
         return '', 200
@@ -40,30 +42,21 @@ def configure(app):
     app.add_url_rule('/cart', view_func=Cart.as_view('cart'))
 
     @app.route('/cart_manage', methods=['POST'])
-    # @login_required
+    @login_required
     def cart_add():
         data = dict(request.form)
-        if data['item'] not in ['costumes', 'accessories']:
-            return '', 400
+
         try:
-            cnt = int(data['count'])
+            if data['item'] not in ['costumes', 'accessories']:
+                raise ValueError()
+            if data['action'] not in ['add', 'remove']:
+                raise ValueError()
+
             item = int(data['id'])
-            if cnt == 0:
-                while item in session['cart'][data['item']]:
-                    session['cart'][data['item']].remove(item)
-            elif cnt > 0:
-                if data['item'] == 'costumes':
-                    obj = db.get_costume_by_id(item)
-                else:
-                    obj = db.get_accessory_by_id(item)
-                if obj.pocet < cnt:
-                    return '', 400
-                for i in range(cnt):
-                    session['cart'][data['item']].append(item)
+            if data['action'] == 'add':
+                session['cart'][data['item']].append(item)
             else:
-                for i in range(cnt):
-                    if item in session['cart'][data['item']]:
-                        session['cart'][data['item']].remove(item)
+                session['cart'][data['item']].remove(item)
         except Exception:
             return '', 400
         return '', 200

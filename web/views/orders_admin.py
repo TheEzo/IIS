@@ -2,17 +2,18 @@ from flask.views import MethodView
 from flask import render_template, request,jsonify
 from web.core import db
 from flask_login import current_user
-from web.roles import login_required
+from web.roles import admin
 from web.views.users import Users
 
 
 class Orders(MethodView):
-    # @login_required
+    @admin
     def get(self):
         v, k, d = db.get_all_orders()
         data = [Orders.data_json(item, k, d) for item in v]
         return jsonify(data)
 
+    @admin
     def post(self):
         item = dict(request.form)['id']
         db.return_order(item)
@@ -41,6 +42,7 @@ def configure(app):
     app.add_url_rule('/orders_admin', view_func=Orders.as_view('orders_admin'))
 
     @app.route('/orders_admin/<int:obj_id>', methods=['GET', 'POST'])
+    @admin
     def get_orders_admin(obj_id):
         if request.method == 'GET':
             v, k, d = db.get_all_orders()

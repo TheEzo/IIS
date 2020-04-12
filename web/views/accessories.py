@@ -13,7 +13,7 @@ class Accessories(MethodView):
         data = [self.data_json(d) for d in db.get_accessories_data()]
         return jsonify(data)
 
-    @employee
+    @admin
     def post(self):
         # TODO save image from form to static
         data = request.form
