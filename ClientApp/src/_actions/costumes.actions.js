@@ -61,6 +61,7 @@ function _delete(id){
         costumeService.delete(id)
             .then(() => {
                 history.push("/adminCostumes");
+                dispatch(costumesActions.getAll());
                 dispatch(alertActions.success("Kostým byl odstraněn"));
             })
     }

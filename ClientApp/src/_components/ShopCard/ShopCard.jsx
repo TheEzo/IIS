@@ -69,7 +69,7 @@ class ShopCard extends Component {
                             <button
                                 onClick={() => this.handleAdd(item.id, type, "add")}
                                 className="btn btn-success"
-                                disabled={!loggedIn}
+                                disabled={!(!loggedIn || item.count > 0)}
                             >
                                 Do košíku
                             </button>
