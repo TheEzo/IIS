@@ -46,6 +46,10 @@ function setEdit(id) {
 
 function edit(costume){
     return dispatch => {
-
+        costumeService.edit(costume)
+            .then(() => {
+                history.push("/admin-costumes");
+                dispatch(alertActions.success("Kostým byl upraven"));
+            })
     }
 }
