@@ -3,6 +3,7 @@ import {userActions} from "../_actions";
 import {history} from "../_helpers";
 import {Loader} from "../_components";
 import {connect} from 'react-redux';
+import {Link} from "react-router-dom";
 
 class EditUserPage extends React.Component {
     constructor(props) {
@@ -61,7 +62,74 @@ class EditUserPage extends React.Component {
                 <div className="col-md-12">
                     <h2>Editace profilu</h2>
                     <form name="form" onSubmit={this.handleSubmit}>
-
+                        <div className="row">
+                            <div className={'form-group col-sm-4'}>
+                                <label htmlFor="id">Rodné číslo</label>
+                                <input type="text" className="form-control" name="id" value={user.id}
+                                       onChange={this.handleChange} disabled/>
+                            </div>
+                            <div className={'form-group col-sm-4'}>
+                                <label htmlFor="name">Jméno</label>
+                                <input type="text" className="form-control" name="name" value={user.name}
+                                       onChange={this.handleChange}/>
+                            </div>
+                            <div className={'form-group col-sm-4'}>
+                                <label htmlFor="surname">Příjmení</label>
+                                <input type="text" className="form-control" name="surname" value={user.surname}
+                                       onChange={this.handleChange}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={'form-group col-sm-6'}>
+                                <label htmlFor="email">Email</label>
+                                <input type="text" className="form-control" name="email" value={user.email}
+                                       onChange={this.handleChange}/>
+                            </div>
+                            <div className={'form-group col-sm-6'}>
+                                <label htmlFor="tel_number">Telefonní číslo</label>
+                                <input type="text" className="form-control" name="tel_number" value={user.tel_number}
+                                       onChange={this.handleChange}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={'form-group col-sm-4'}>
+                                <label htmlFor="city">Město</label>
+                                <input type="text" className="form-control" name="city" value={user.city}
+                                       onChange={this.handleChange}/>
+                            </div>
+                            <div className={'form-group col-sm-4'}>
+                                <label htmlFor="address">Ulice</label>
+                                <input type="text" className="form-control" name="address" value={user.address}
+                                       onChange={this.handleChange}/>
+                            </div>
+                            <div className={'form-group col-sm-4'}>
+                                <label htmlFor="addr_num">Číslo popisné</label>
+                                <input type="text" className="form-control" name="addr_num" value={user.addr_num}
+                                       onChange={this.handleChange}/>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className={'form-group col-sm-6'}>
+                                <label htmlFor=""></label>
+                                <select name="position" onChange={this.handleChange} className="form-control">
+                                    <option selected={user.position === null} value="zakaznik">Zákazník</option>
+                                    <option selected={user.position === 'zamestnanec'} value="zamestnanec">Zaměstnanec</option>
+                                    <option selected={user.position === 'vedouci'} value="vedouci">Vedoucí</option>
+                                </select>
+                            </div>
+                            <div className={'form-group col-sm-6'}>
+                                <label htmlFor=""></label>
+                                <select name="membership" onChange={this.handleChange} className="form-control">
+                                    <option selected={user.membership === 'bronzove'} value="bronzove">Bronzové</option>
+                                    <option selected={user.membership === 'stribrne'} value="stribrne">Stříbrné</option>
+                                    <option selected={user.membership === 'zlate'} value="zlate">Zlaté</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <input type="submit" value="Odeslat" className="btn btn-success" />
+                            <Link to="/profile" className="btn btn-link">Zrušit</Link>
+                        </div>
                     </form>
                 </div>
             )
