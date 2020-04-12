@@ -110,7 +110,7 @@ class EditUserPage extends React.Component {
                         </div>
                         <div className="row">
                             <div className={'form-group col-sm-6'}>
-                                <label htmlFor=""></label>
+                                <label htmlFor="position">Pozice</label>
                                 <select name="position" onChange={this.handleChange} className="form-control">
                                     <option selected={user.position === null} value="zakaznik">Zákazník</option>
                                     <option selected={user.position === 'zamestnanec'} value="zamestnanec">Zaměstnanec</option>
@@ -118,7 +118,7 @@ class EditUserPage extends React.Component {
                                 </select>
                             </div>
                             <div className={'form-group col-sm-6'}>
-                                <label htmlFor=""></label>
+                                <label htmlFor="membership">Členství</label>
                                 <select name="membership" onChange={this.handleChange} className="form-control">
                                     <option selected={user.membership === 'bronzove'} value="bronzove">Bronzové</option>
                                     <option selected={user.membership === 'stribrne'} value="stribrne">Stříbrné</option>
@@ -128,7 +128,7 @@ class EditUserPage extends React.Component {
                         </div>
                         <div className="row">
                             <input type="submit" value="Odeslat" className="btn btn-success" />
-                            <Link to="/profile" className="btn btn-link">Zrušit</Link>
+                            <Link to="/adminUsers" className="btn btn-link">Zrušit</Link>
                         </div>
                     </form>
                 </div>

@@ -19,6 +19,7 @@ class Users(MethodView):
             heslo=data.get('password'),
             jmeno=data['name'],
             prijmeni=data['surname'],
+            obec=data.get('city'),
             ulice=data.get('address'),
             cislo_popisne=data.get('addr_num'),
             tel_cislo=data.get('tel_number'),
@@ -26,7 +27,7 @@ class Users(MethodView):
             pozice=data.get('position')
         )
         if 'id' in data and db.get_user_by_id(data.get('id')):
-            db.update_users_data(**db_data)
+            db.update_users_data(db_data)
             db.update_user(**db_data)
         else:
             db.create_user(**db_data)
