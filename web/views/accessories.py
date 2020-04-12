@@ -48,13 +48,17 @@ class Accessories(MethodView):
 
     @staticmethod
     def data_json(data):
+        try:
+            image = url_for('static', filename=data.obrazek)
+        except Exception:
+            image = ''
         return dict(
             color=data.barva,
             price=data.cena,
             id=data.id,
             material=data.material,
             name=data.nazev,
-            image=url_for('static', filename=data.obrazek),
+            image=image,
             wear_level=data.opotrebeni,
             count=data.pocet,
             description=data.popis_vyuziti,
