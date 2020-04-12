@@ -42,14 +42,41 @@ class EditCostumePage extends React.Component {
     }
 
     handleChange(event) {
+
         const {name, value} = event.target;
         const {user} = this.state;
-        this.setState({
-            user: {
-                ...user,
-                [name]: value
-            }
-        });
+
+        if (name === "image") {
+            const reader = new FileReader();
+            const file = event.target.files[0];
+
+            reader.onload = () => ({
+                id: file.name,
+                fileName: file.name,
+                size: file.size,
+                fileFormat: file.type,
+                data: reader.result,
+            });
+
+            const fileData = reader.readAsArrayBuffer(event.target.files[0]);
+
+            console.log("DATA: ", fileData);
+
+            console.log("HANDLER: ", event.target.files[0]);
+            this.setState({
+                user: {
+                    ...user,
+                    [name]: fileData,
+                }
+            })
+        } else {
+            this.setState({
+                user: {
+                    ...user,
+                    [name]: value
+                }
+            });
+        }
     }
 
     render() {
@@ -106,8 +133,12 @@ class EditCostumePage extends React.Component {
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="image">Obrázek</label>
-                            <input type="file" className="form-control" name="image" value=""
-                                   onChange={this.handleChange}/>
+                            <input
+                                type="file"
+                                className="form-control"
+                                name="image"
+                                onChange={this.handleChange}
+                            />
                         </div>
                     </div>
                     <div className="row">
