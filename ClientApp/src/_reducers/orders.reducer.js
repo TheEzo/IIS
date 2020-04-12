@@ -1,11 +1,11 @@
 import {ordersConstants} from "../_constants";
-import {act} from "react-dom/test-utils";
 
 const initialState = {
     loading: true,
     myOrders: [],
     error: null,
     allOrders: [],
+    cart: [],
 }
 
 export function orders(state = initialState, action) {
@@ -23,6 +23,7 @@ export function orders(state = initialState, action) {
                 ...initialState,
                 error: action.error,
             }
+
         case ordersConstants.GETALL_REQUEST:
             return {
                 ...state,
@@ -40,6 +41,25 @@ export function orders(state = initialState, action) {
                 loading: false,
                 error: action.error,
             }
+
+        case ordersConstants.GETCART_REQUEST:
+            return {
+                ...state,
+                loading: true,
+            }
+        case ordersConstants.GETCART_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                cart: action.cart,
+            }
+        case ordersConstants.GETCART_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.error,
+            }
+
         default:
             return state;
     }

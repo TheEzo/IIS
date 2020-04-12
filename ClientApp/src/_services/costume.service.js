@@ -1,9 +1,10 @@
 import {config} from '../_helpers';
 import {handleResponse, handleError} from "./responseHandlers";
-import {GETOptions} from "./requestOptions";
+import {GETOptions, POSTOptions} from "./requestOptions";
 
 export const costumeService = {
     getAll,
+    edit,
 }
 
 function getAll() {
@@ -13,4 +14,9 @@ function getAll() {
         .then(costumes => {
             return costumes
         });
+}
+
+function edit(costume) {
+    //TODO
+    return fetch(config.apiUrl + '/costumes', POSTOptions(null));
 }

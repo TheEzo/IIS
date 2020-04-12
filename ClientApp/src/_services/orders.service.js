@@ -6,6 +6,7 @@ export const orderService = {
     getMine,
     deleteOrder,
     getAll,
+    getCart,
 }
 
 function getMine() {
@@ -32,4 +33,10 @@ function getAll() {
     return fetch(config.apiUrl + "/orders_admin", GETOptions)
         .then(handleResponse, handleError)
         .then(orders => {return orders});
+}
+
+function getCart() {
+    return fetch(config.apiUrl + "/cart", GETOptions)
+        .then(handleResponse, handleError)
+        .then(cart => {return cart});
 }

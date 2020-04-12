@@ -12,7 +12,7 @@ const getOptions = (data) => ({
     dimensions: {
         datatable: {
             height: "500px",
-            width: "100%",
+            width: "1500px",
         },
     },
     data: {
@@ -82,7 +82,7 @@ const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
         component: id => <Fragment>
-            <button onClick={() => dispatch(null)} className="btn btn-primary">Editovat</button>
+            <button onClick={() => dispatch(costumesActions.setEdit(id))} className="btn btn-primary">Editovat</button>
             <button onClick={() => dispatch(null)} className="btn btn-danger">Odstranit</button>
         </Fragment>,
     }

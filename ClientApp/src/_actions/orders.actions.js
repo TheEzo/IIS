@@ -6,6 +6,7 @@ export const orderActions = {
     getMine,
     deleteOrder,
     getAll,
+    getCart,
 }
 
 function getMine() {
@@ -64,5 +65,32 @@ function getAll() {
 
     function failure(error) {
         return {type: ordersConstants.GETALL_FAILURE, error}
+    }
+}
+
+function getCart() {
+    return dispatch => {
+        dispatch(request())
+
+        orderService.getCart()
+            .then(
+                orders => dispatch(success(orders)),
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.error(error));
+                },
+            )
+    }
+
+    function request() {
+        return {type: ordersConstants.GETCART_REQUEST}
+    }
+
+    function success(cart) {
+        return {type: ordersConstants.GETCART_SUCCESS, cart}
+    }
+
+    function failure(error) {
+        return {type: ordersConstants.GETCART_FAILURE, error}
     }
 }
