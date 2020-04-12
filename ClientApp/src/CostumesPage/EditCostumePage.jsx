@@ -95,8 +95,14 @@ class EditCostumePage extends React.Component {
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="size">Velikost</label>
-                            <input type="text" className="form-control" name="size" value={item && item.size}
-                                   onChange={this.handleChange}/>
+                            <select name="size" onChange={this.handleChange} className="form-control">
+                                <option selected={item.size === 'S'} value="S">S</option>
+                                <option selected={item.size === 'M'} value="M">M</option>
+                                <option selected={item.size === 'L'} value="L">L</option>
+                                <option selected={item.size === 'XL'} value="XL">XL</option>
+                                <option selected={item.size === 'XXL'} value="XXL">XXL</option>
+                                <option selected={item.size === 'XXXL'} value="XXXL">XXXL</option>
+                            </select>
                         </div>
                         <div className="form-group col-sm-3">
                             <label htmlFor="image">Obrázek</label>
@@ -117,9 +123,11 @@ class EditCostumePage extends React.Component {
                         </div>
                         <div className="form-group col-sm-4">
                             <label htmlFor="wear_level">Opotřebení</label>
-                            <input type="text" className="form-control" name="wear_level"
-                                   value={item && item.wear_level}
-                                   onChange={this.handleChange}/>
+                            <select name="wear_level" onChange={this.handleChange} className="form-control">
+                                <option selected={item.wear_level === 'nove'} value="nove">Nové</option>
+                                <option selected={item.wear_level === 'zanovni'} value="zanovni">Zánovní</option>
+                                <option selected={item.wear_level === 'stare'} value="stare">Staré</option>
+                            </select>
                         </div>
                     </div>
                     <div className="row">
