@@ -31,7 +31,7 @@ const AccountDropdown = () => (
             </DropdownItem>
             <DropdownItem divider/>
             <DropdownItem>
-                <NavLink className='black-text' to='/adminUsers'>Spravovat zaměstnance</NavLink>
+                <NavLink className='black-text' to='/adminUsers'>Spravovat uživatele</NavLink>
             </DropdownItem>
         </DropdownMenu>
     </UncontrolledDropdown>
