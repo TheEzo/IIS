@@ -1,4 +1,4 @@
-import {userConstants} from '../_constants';
+import {accessoriesConstants, userConstants} from '../_constants';
 import {userService} from '../_services';
 import {alertActions} from './';
 import {history} from '../_helpers';
@@ -11,6 +11,7 @@ export const userActions = {
     getProfile,
     delete: _delete,
     edit,
+    setEdit,
 };
 
 function edit(profile) {
@@ -172,5 +173,12 @@ function _delete(id) {
 
     function failure(id, error) {
         return {type: userConstants.DELETE_FAILURE, id, error}
+    }
+}
+
+function setEdit(id) {
+    return dispatch => {
+        dispatch({type: userConstants.SETONE_EDITING, id});
+        history.push("/editUser/" + id);
     }
 }

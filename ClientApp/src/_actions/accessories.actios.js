@@ -64,7 +64,7 @@ function edit(acc) {
     return dispatch => {
         accessoriesService.edit(acc)
             .then(() => {
-                history.push("adminAccessories");
+                history.push("/adminAccessories");
                 dispatch(alertActions.success("Doplněk byl upraven"));
             })
             .catch(() => {

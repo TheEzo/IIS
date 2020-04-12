@@ -84,7 +84,6 @@ const createCustomDataTypes = (dispatch) => [
     {
         dataType: "action",
         component: id => id ? (<Fragment>
-            {/*TODO: onclick*/}
             <a href="#" onClick={() => dispatch(orderActions.returnItem(id))}><FontAwesomeIcon className="returned-checkbox"
                                                                        title="Potvrdit vrácení"
                                                                        icon={faCheckSquare} /></a>

@@ -4,6 +4,7 @@ const initialState = {
     profile: null,
     profileLoading: true,
     items: [],
+    editing: null
 };
 
 export function users(state = initialState, action) {
@@ -33,6 +34,12 @@ export function users(state = initialState, action) {
             return {
                 profileLoading: false,
                 error: action.error,
+            }
+        case userConstants.SETONE_EDITING:
+            const user = state.items.filter(u => u.id == action.id);
+            return {
+                ...state,
+                editing: user[0],
             }
         case userConstants.DELETE_REQUEST:
             // add 'deleting:true' property to user being deleted
