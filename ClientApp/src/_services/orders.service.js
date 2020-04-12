@@ -1,12 +1,20 @@
 import {config} from "../_helpers";
 import {handleResponse, handleError} from "./responseHandlers";
-import {GETOptions} from "./requestOptions";
+import {DELETEOptions, GETOptions, POSTOptions} from "./requestOptions";
 
 export const orderService = {
     getMine,
     deleteOrder,
     getAll,
     getCart,
+    returnItem,
+}
+
+function returnItem(id) {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    return fetch(config.apiUrl + "/orders_admin", POSTOptions(formData));
+
 }
 
 function getMine() {

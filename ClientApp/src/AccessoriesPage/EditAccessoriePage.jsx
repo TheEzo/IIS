@@ -59,7 +59,7 @@ class EditAccessoriePage extends React.Component {
 
         return (
             <div className="col-md-12 col-md-offset-3">
-                <h2>Upravit kostým {item && item.id}</h2>
+                <h2>Upravit doplněk {item && item.id}</h2>
                 <form name="form" onSubmit={this.handleSubmit} encType="multipart/form-data">
                     <div className="row">
                         <div className="form-group col-sm-6">

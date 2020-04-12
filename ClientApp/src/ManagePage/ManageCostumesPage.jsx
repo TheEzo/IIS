@@ -87,7 +87,7 @@ const createCustomDataTypes = (dispatch) => [
             <a href="#" onClick={() => dispatch(costumesActions.setEdit(id))}>
                 <FontAwesomeIcon icon={faUserCog}/>
             </a>
-            <a href="#" onClick={() => dispatch(null)}>
+            <a href="#" onClick={() => dispatch(costumesActions.delete(id))}>
                 <FontAwesomeIcon className="red" icon={faTrashAlt}/>
             </a>
         </Fragment>

@@ -7,6 +7,8 @@ export const costumesActions = {
     getAll,
     setEdit,
     edit,
+    delete: _delete,
+    create,
 };
 
 function getAll() {
@@ -52,4 +54,25 @@ function edit(costume){
                 dispatch(alertActions.success("Kostým byl upraven"));
             })
     }
+}
+
+function _delete(id){
+    return dispatch => {
+        costumeService.delete(id)
+            .then(() => {
+                history.push("/adminCostumes");
+                dispatch(alertActions.success("Kostým byl odstraněn"));
+            })
+    }
+}
+
+function create(item) {
+    return  dispatch => {
+        costumeService.create(item)
+            .then(() => {
+                history.push("/adminCostumes");
+                dispatch(alertActions.success("Kostým byl přidán"));
+            })
+    }
+
 }

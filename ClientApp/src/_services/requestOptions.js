@@ -8,6 +8,16 @@ export const GETOptions = {
     mode: 'cors',
 };
 
+export const DELETEOptions = (id) => ({
+    method: 'DELETE',
+    headers: {
+        'Accept': '*/*',
+    },
+    credentials: 'include',
+    mode: 'cors',
+    body: id
+});
+
 export const POSTOptions = (formData) => ({
     method: 'POST',
     headers: {
