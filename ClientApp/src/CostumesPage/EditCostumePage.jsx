@@ -47,10 +47,11 @@ class EditCostumePage extends React.Component {
         const {user} = this.state;
 
         if (name === "image") {
+            const file = event.target.files[0];
             this.setState({
                 user: {
                     ...user,
-                    [name]: event.target.files[0],
+                    [name]: file,
                 }
             })
         } else {

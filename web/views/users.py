@@ -11,13 +11,12 @@ class Users(MethodView):
         data = [self.data_json(item) for item in db.get_users_data()]
         return jsonify(data)
 
-    #@admin_or_current
     def post(self):
         data = request.form
         db_data = dict(
-            rc=data.get('id'),
+            rc=data['id'],
             email=data['email'],
-            heslo=data.get('password'),
+            password=data.get('password'),
             jmeno=data['name'],
             prijmeni=data['surname'],
             obec=data.get('city'),
@@ -25,9 +24,9 @@ class Users(MethodView):
             cislo_popisne=data.get('addr_num'),
             tel_cislo=data.get('tel_number'),
             clenstvi=data.get('membership'),
-            pozice=data.get('position')
+            pozice=None if data.get('position') == 'null' else data.get('position')
         )
-        if 'id' in data and db.get_user_by_id(data.get('id')):
+        if db.get_user_by_id(data['id']):
             db.update_users_data(db_data)
             db.update_user(**db_data)
         else:

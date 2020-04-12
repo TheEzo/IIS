@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-from flask import request, url_for, jsonify
+import os
+from flask import request, url_for, jsonify, current_app
 from flask.views import MethodView
 from web.core import db
 from web.roles import admin, employee
@@ -16,8 +16,8 @@ class Costumes(MethodView):
 
     @admin
     def post(self):
-        # TODO save image from form to static
         data = request.form
+        file = request.files.get('image')
         db.add_or_update_costume(**dict(
             id=data.get('id'),
             nazev=data['name'],
@@ -30,7 +30,9 @@ class Costumes(MethodView):
             pocet=data['count'],
             cena=data['price'],
             vyuziti=[],
-            barva=data['color']), image=data['image'])
+            barva=data['color']), image=file.filename if file else None)
+        if file:
+            file.save(os.path.join(current_app.root_path, file.filename))
         return '', 200
 
     @staticmethod
