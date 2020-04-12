@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from flask import request, url_for, jsonify
+import os
+from flask import request, url_for, jsonify, current_app
 from flask.views import MethodView
 
 from web.core import db
@@ -17,6 +18,7 @@ class Accessories(MethodView):
     def post(self):
         # TODO save image from form to static
         data = request.form
+        file = request.files.get('image')
         db.add_accessory(**dict(
             id=data.get('id'),
             nazev=data['name'],
@@ -29,8 +31,10 @@ class Accessories(MethodView):
             pocet=data['count'],
             cena=data['price'],
             barva=data['color'],
-            image=data['image']
+            image=file.filename if file else None
         ))
+        if file:
+            file.save(os.path.join(current_app.root_path, file.filename))
         return '', 200
 
     @staticmethod
