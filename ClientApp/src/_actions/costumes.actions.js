@@ -1,9 +1,12 @@
 import {costumesConstants} from "../_constants/costumes.constants";
 import {costumeService} from "../_services/costume.service";
 import {alertActions} from "./alert.actions";
+import {history} from '../_helpers';
 
 export const costumesActions = {
     getAll,
+    setEdit,
+    edit,
 };
 
 function getAll() {
@@ -31,5 +34,18 @@ function getAll() {
 
     function failure(error) {
         return {type: costumesConstants.GETALL_FAILURE, error}
+    }
+}
+
+function setEdit(id) {
+    return dispatch => {
+        dispatch({type: costumesConstants.SETONE_EDITING, id});
+        history.push("/editCostume/" + id);
+    };
+}
+
+function edit(costume){
+    return dispatch => {
+
     }
 }

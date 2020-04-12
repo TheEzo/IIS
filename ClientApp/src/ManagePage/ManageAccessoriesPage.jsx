@@ -134,4 +134,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(ManageAccessoriesPage)
+export default connect(mapStateToProps)(ManageAccessoriesPage);

@@ -11,6 +11,36 @@ class AddCostumePage extends React.Component {
         const {dispatch, loggedIn} = this.props;
         if (!loggedIn)
             dispatch(userActions.logout());
+
+        this.state = {
+            user: {
+                name: '',
+                manufacturer: '',
+                description: '',
+                count: '',
+                price: '',
+                size: '',
+                image: '',
+                color: '',
+                material: '',
+                wear_level: '',
+            },
+            submitted: false
+        };
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleChange(event) {
+        const { name, value } = event.target;
+        const { user } = this.state;
+        this.setState({
+            user: {
+                ...user,
+                [name]: value
+            }
+        });
     }
 
     render() {
