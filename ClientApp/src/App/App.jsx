@@ -12,7 +12,7 @@ import {RegisterPage} from '../RegisterPage';
 import {Navbar} from "../_components";
 import {AddCostumePage, CostumesPage, EditCostumePage} from "../CostumesPage";
 import {AccessoriesPage, AddAccessoriePage, EditAccessoriePage} from "../AccessoriesPage";
-import {CartPage, MyOrdersPage} from "../OrdersPage";
+import {CartContinuePage, CartPage, MyOrdersPage} from "../OrdersPage";
 import {EditProfilePage, EditUserPage, ProfilePage} from "../ProfilePage";
 import {ManageAccessoriesPage, ManageOrdersPage, ManageCostumesPage, ManageProfilesPage} from "../ManagePage";
 
@@ -47,6 +47,7 @@ class App extends React.Component {
                                 <Route path="/register" component={RegisterPage}/>
 
                                 <Route path="/cart" component={CartPage} />
+                                <Route path="/cartContinue" component={CartContinuePage} />
 
                                 <Route path="/profile" component={ProfilePage} />
                                 <Route path="/editProfile" component={EditProfilePage} />

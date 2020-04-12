@@ -23,7 +23,7 @@ class Cart(MethodView):
 
     @login_required
     def post(self):
-        data = dict(request.form)
+        data = request.form
         db.create_order(**dict(
             datum_vraceni=data['return_date'],  # TODO asi nepojede datum v db
             nazev_akce=data['name'],

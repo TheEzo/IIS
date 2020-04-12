@@ -33,13 +33,11 @@ class EditUserPage extends React.Component {
         event.preventDefault();
         this.setState({submitted: true});
         const {user} = this.state;
-        console.log("Odesilam", user);
         const {dispatch} = this.props;
         dispatch(userActions.edit(user));
     }
 
     handleChange(event) {
-        console.log("Change: ", event.target);
         const {name, value} = event.target;
         const {user} = this.state;
         this.setState({

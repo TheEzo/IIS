@@ -13,7 +13,6 @@ class EditCostumePage extends React.Component {
         if (!loggedIn)
             dispatch(userActions.logout());
 
-        console.log("Editing costume: ", this.props.editing);
         this.state = {
             user: this.props.editing,
             submitted: false
@@ -32,7 +31,6 @@ class EditCostumePage extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("Odesilam");
         this.setState({submitted: true});
         const {user} = this.state;
         const {dispatch} = this.props;

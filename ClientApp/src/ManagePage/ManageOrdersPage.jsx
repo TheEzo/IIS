@@ -108,11 +108,6 @@ class ManageOrdersPage extends React.Component {
     render() {
         const {allOrders = [], loading, dispatch} = this.props;
 
-
-        console.log("Loading: ", loading);
-
-
-
         return (loading ? (
                 <Loader/>
             ) : (

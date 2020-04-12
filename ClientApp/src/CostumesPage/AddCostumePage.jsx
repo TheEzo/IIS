@@ -45,7 +45,6 @@ class AddCostumePage extends React.Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log("Odesilam");
         this.setState({submitted: true});
         const {item} = this.state;
         const {dispatch} = this.props;

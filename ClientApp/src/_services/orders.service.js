@@ -9,6 +9,7 @@ export const orderService = {
     getCart,
     returnItem,
     addToCart,
+    makeOrder,
 }
 
 function returnItem(id) {
@@ -16,6 +17,16 @@ function returnItem(id) {
     formData.append('id', id.toString());
     return fetch(config.apiUrl + "/orders_admin", POSTOptions(formData));
 
+}
+
+function makeOrder(order) {
+    const date = new Date(order.orderDate);
+    const strDate = `${date.getDate()}.${date.getMonth()+1}.${date.getFullYear()}`;
+
+    const formData = new FormData();
+    formData.append('return_date', strDate.toString());
+    formData.append('name', order.orderName.toString());
+    return fetch(config.apiUrl + "/cart", POSTOptions(formData));
 }
 
 function getMine() {

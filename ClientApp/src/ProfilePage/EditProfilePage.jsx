@@ -17,7 +17,6 @@ class EditProfilePage extends React.Component {
             this.props.dispatch(userActions.logout());
         }
 
-        console.log("Profile: ", this.props.profile);
         this.state = {
             user: this.props.profile,
             submitted: false
@@ -39,7 +38,6 @@ class EditProfilePage extends React.Component {
     }
 
     handleSubmit(event) {
-        console.log("Handle submit");
         event.preventDefault();
 
         this.setState({submitted: true});

@@ -18,7 +18,6 @@ class ProfilePage extends React.Component {
     }
 
     render() {
-        console.log("Aktuální propsy: ", this.props);
         const {profileLoading, profile} = this.props;
         const pos = (pos) => (<Fragment><dt>Pozice:</dt><dd>{positionMap[pos]}</dd></Fragment>);
         const membershipMap = {

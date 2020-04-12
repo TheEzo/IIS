@@ -10,6 +10,7 @@ export const orderActions = {
     getCart,
     returnItem,
     addToCart,
+    makeOrder,
 }
 
 function getMine() {
@@ -40,8 +41,6 @@ function getMine() {
 }
 
 function deleteOrder(id) {
-    console.log("Odstranuji order id:", id);
-    //TODO: dělej!
 }
 
 function getAll() {
@@ -116,10 +115,29 @@ function addToCart(id, type, action) {
     return dispatch => {
         orderService.addToCart(id, type, action)
             .then(() => {
-                dispatch(alertActions.success("Přidáno do košíku"));
+                if (action == "add")
+                    dispatch(alertActions.success("Přidáno do košíku"));
+                else
+                    dispatch(alertActions.success("Odebráno z košíku"));
+
+                dispatch(orderActions.getCart());
             })
             .catch(() => {
-                dispatch(alertActions.error("Nepodařilo se přidat do košíku"));
+                dispatch(alertActions.error("Nepodařilo se zpracovat požadavek"));
             })
     }
+}
+
+function makeOrder(order) {
+    return dispatch => {
+        orderService.makeOrder(order)
+            .then(() => {
+                dispatch(alertActions.success("Rezervace byla vytvořena"));
+                history.push("/orderHistory")
+            })
+            .catch(() => {
+                dispatch(alertActions.error("Nepodařilo se zpracovat požadavek"));
+            });
+    }
+
 }

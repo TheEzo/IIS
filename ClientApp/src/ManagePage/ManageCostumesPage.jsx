@@ -110,10 +110,6 @@ class ManageCostumesPage extends React.Component {
 
     render() {
         const {items = [], loading, dispatch} = this.props;
-
-
-        console.log("Loading: ", loading);
-
         return (loading ? (
                 <Loader/>
             ) : (

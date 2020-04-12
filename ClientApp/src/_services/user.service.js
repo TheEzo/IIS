@@ -23,7 +23,6 @@ function login(email, password) {
             // login successful if there's a jwt token in the response
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
-            console.log("UserRespond: ", user);
             return user;
         });
 }
@@ -53,7 +52,6 @@ function register(user) {
 }
 
 function update(user) {
-    console.log("USER: ", user);
 
     const formData = new FormData();
     formData.append('id', user.id.toString());
