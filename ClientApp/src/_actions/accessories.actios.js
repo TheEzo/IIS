@@ -1,7 +1,6 @@
 import {accessoriesConstants} from "../_constants/accessories.constants";
 import {accessoriesService} from "../_services/accessories.service";
 import {alertActions} from "./alert.actions";
-import {costumesConstants} from "../_constants/costumes.constants";
 import {history} from "../_helpers";
 
 export const accessoriesActions = {
@@ -9,6 +8,7 @@ export const accessoriesActions = {
     deleteAcc,
     setEdit,
     edit,
+    create,
 };
 
 function getAll() {
@@ -47,8 +47,9 @@ function deleteAcc(id) {
                 getAll();
                 dispatch(alertActions.success("Doplněk byl odstraněn"))
             })
-        console.log("Delete acc id: ", id);
-
+            .catch(() => {
+                dispatch(alertActions.error("Nepodařilo se odstranit doplněk"));
+            })
     }
 }
 
@@ -66,5 +67,22 @@ function edit(acc) {
                 history.push("adminAccessories");
                 dispatch(alertActions.success("Doplněk byl upraven"));
             })
+            .catch(() => {
+                dispatch(alertActions.error("Nepodařilo se upravit doplněk"));
+            })
     }
+}
+
+function create(item) {
+    return  dispatch => {
+        accessoriesService.create(item)
+            .then(() => {
+                history.push("/adminAccessories");
+                dispatch(alertActions.success("Doplněk byl přidán"));
+            })
+            .catch(() => {
+                dispatch(alertActions.error("Nepodařilo se přidat nový doplněk"));
+            })
+    }
+
 }
