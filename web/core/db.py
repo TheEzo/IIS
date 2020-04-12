@@ -282,10 +282,10 @@ def delete_user(rc):
 
 
 def update_user(**kwargs):
-    session.query(Klient).filter(Klient.osoba_rc==kwargs['rc']).\
-        update({'clenstvi': kwargs['membership'][0]})
-    if kwargs['role'][0] == 'zakaznik':
-        session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc'][0]).delete()
+    session.query(Klient).filter(Klient.osoba_rc == kwargs['rc']).\
+        update({'clenstvi': kwargs['clenstvi']})
+    if kwargs['pozice'] == 'zakaznik' or kwargs['pozice'] is None:
+        session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc']).delete()
     else:
         if session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc']).first():
             session.query(Zamestnanec).filter(Zamestnanec.osoba_rc == kwargs['rc']). \
