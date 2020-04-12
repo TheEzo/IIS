@@ -34,7 +34,7 @@ class Accessories(MethodView):
             image=file.filename if file else None
         ))
         if file:
-            file.save(os.path.join(current_app.root_path, file.filename))
+            file.save(os.path.join(current_app.root_path, 'static', file.filename))
         return '', 200
 
     @staticmethod
